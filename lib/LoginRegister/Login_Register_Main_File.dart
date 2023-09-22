@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' ;
+import 'package:tic_tech_teo_2023/LoginRegister/forgotPasswordScreen.dart';
 import '../Color_File/colors.dart';
 import '../models/User.dart';
 
@@ -246,7 +247,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 ],
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPasswordScreen()));
+                },
                 child: Text("Forgot Password?",
                     style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold, color: Login_Palette.PrimaryColor)),
               )
@@ -264,7 +267,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
       margin: EdgeInsets.only(top: 20),
       child: Column(
         children: [
-          buildTextField(Icons.account_box_outlined, "User.dart Name",
+          buildTextField(Icons.account_box_outlined, "a@b.com",
               false, false,name),
           buildTextField(
               Icons.email, "email", false, true,email1),
@@ -794,33 +797,34 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
     );
   }
 
-  Widget buildTextField(
-      IconData icon, String hintText, bool isPassword, bool isEmail,  TextEditingController control) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: TextField(
-        controller: control,
-        obscureText: isPassword,
-        keyboardType: isEmail ? TextInputType.emailAddress : TextInputType.number,
-        decoration: InputDecoration(
-          prefixIcon: Icon(
-            icon,
-            color: Login_Palette.PrimaryColor,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color:Login_Palette.PrimaryColor),
-            borderRadius: BorderRadius.all(Radius.circular(35.0)),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Login_Palette.PrimaryColor),
-            borderRadius: BorderRadius.all(Radius.circular(35.0)),
-          ),
-          contentPadding: EdgeInsets.all(10),
-          hintText: hintText,
-          hintStyle: TextStyle(fontSize: 14, color: Colors.grey),
-        ),
-      ),
-    );
-  }
+
 }
 
+Widget buildTextField(
+    IconData icon, String hintText, bool isPassword, bool isEmail,  TextEditingController control) {
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 8.0),
+    child: TextField(
+      controller: control,
+      obscureText: isPassword,
+      keyboardType: isEmail ? TextInputType.emailAddress : TextInputType.number,
+      decoration: InputDecoration(
+        prefixIcon: Icon(
+          icon,
+          color: Login_Palette.PrimaryColor,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color:Login_Palette.PrimaryColor),
+          borderRadius: BorderRadius.all(Radius.circular(35.0)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Login_Palette.PrimaryColor),
+          borderRadius: BorderRadius.all(Radius.circular(35.0)),
+        ),
+        contentPadding: EdgeInsets.all(10),
+        hintText: hintText,
+        hintStyle: TextStyle(fontSize: 14, color: Colors.grey),
+      ),
+    ),
+  );
+}
