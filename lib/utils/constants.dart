@@ -1,0 +1,1 @@
+const String BASIC_URL = "https://10.200.55.66:8070";
