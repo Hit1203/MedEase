@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart' ;
 import '../Color_File/colors.dart';
+import '../Home_Screen Pages/Home_Page_Main_Screen.dart';
 import '../models/User.dart';
+import 'forgotPasswordScreen.dart';
 
 
 class LoginSignupScreen extends StatefulWidget {
