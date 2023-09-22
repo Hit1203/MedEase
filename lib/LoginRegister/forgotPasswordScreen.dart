@@ -36,10 +36,10 @@ class ForgotPasswordScreen extends StatelessWidget {
         children: [
           buildTextField(Icons.mail_outline, "info@demouri.com", false, true,email),
           TextButton(
-              onPressed: (){
-                final res = postReq(email.text);
+              onPressed: () async {
+                final res = await postReq(email.text);
 
-
+                print("res: $res");
               },
               child: const Text("Continue")),
         ],

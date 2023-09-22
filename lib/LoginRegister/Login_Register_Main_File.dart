@@ -739,7 +739,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
 
 
               print("res: $res");
-              bool isCreated = res["responseData"]["isAuthenticated"];
+              bool isCreated = isSignupScreen?res["responseData"]["created"]:res["responseData"]["isAuthenticated"];
               if(isCreated==true){
                 user.storeUser(user);
                 user.auth_token = res["responseData"]["token"];
@@ -747,10 +747,10 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 print(user.auth_token);
                 print(user.isDoctor);
                 print("stored user");
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage())) ;
               };
               print("ok");
 
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage())) ;
             },
 
             child: Container(
