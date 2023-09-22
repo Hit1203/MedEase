@@ -17,25 +17,11 @@ class _ProfileState extends State<Profile> {
         body: Container(
           child: Stack(
             children: [
-             Positioned(
-               top: 0,
-               right: 0,
-               left: 0,
-                 child: Container(
-                   height: 200,
-                   color: Colors.red,
-                   child: Center(
-                     child: Padding(
-                       padding: const EdgeInsets.only(top: 90.0),
-                       child: CircleAvatar(
-                         radius: 40,
-                         // child: ,
-
-                       ),
-                     ),
-                   ),
-                 ),
-             ),
+              Container(color: Colors.red,width: MediaQuery.of(context).size.width*1,height: MediaQuery.of(context).size.height*0.25,),
+              Padding(
+                padding:  EdgeInsets.only(top: 118.0,left: MediaQuery.of(context).size.width*0.3),
+                child: CircleAvatar(radius: 80,),
+              ),
             ],
           )
         ),
