@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart' ;
-import 'package:tic_tech_teo_2023/LoginRegister/forgotPasswordScreen.dart';
 import '../Color_File/colors.dart';
 import '../models/User.dart';
 
@@ -27,7 +26,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
   List<String>? nonWorkingDays = ["Sunday"];
 
   // for time picker
-  TimeOfDay timeStart = TimeOfDay(hour: 9, minute: 00);
+  TimeOfDay timeStart = TimeOfDay(hour: 8, minute: 00);
   TimeOfDay timeEnd = TimeOfDay(hour: 18, minute: 00);
 
 
@@ -748,10 +747,11 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 print("stored user");
               };
               print("ok");
+
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage())) ;
             },
 
             child: Container(
-
               height: 70,
               width: 70,
               padding: EdgeInsets.all(15),
