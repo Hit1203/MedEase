@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' ;
+import 'package:tic_tech_teo_2023/Home_Screen%20Pages/Home_Page_Main_Screen.dart';
 import '../Color_File/colors.dart';
 
 
@@ -13,8 +14,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
   bool isMale = true;
   bool isRememberMe = false;
 
-  // filtercheep
+
   bool isDoctor = true ;
+  // filtercheep
   bool isMonday = false ;
   bool isTuesday = false ;
   bool isWednesday = false ;
@@ -25,7 +27,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
 
 
   // for time picker
-  TimeOfDay timeStart = TimeOfDay(hour: 9, minute: 00);
+  TimeOfDay timeStart = TimeOfDay(hour: 8, minute: 00);
   TimeOfDay timeEnd = TimeOfDay(hour: 18, minute: 00);
 
 
@@ -662,9 +664,11 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
         padding: const EdgeInsets.only(left: 250.0),
         child: Center(
           child: InkWell(
-            onTap: (){print("ok");},
+            onTap: ()
+              {
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage())) ;
+              },
             child: Container(
-
               height: 70,
               width: 70,
               padding: EdgeInsets.all(15),
