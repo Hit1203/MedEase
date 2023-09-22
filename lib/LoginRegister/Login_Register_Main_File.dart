@@ -273,7 +273,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
           buildTextField(
               Icons.email, "email", false, true,email1),
           buildTextField(
-              Icons.lock_outline, "password", false, false,password1),
+              Icons.lock_outline, "password", false, true,password1),
 
           Padding(
             padding: const EdgeInsets.only(top: 10, left: 10),
