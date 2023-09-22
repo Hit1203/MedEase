@@ -747,10 +747,10 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 print(user.auth_token);
                 print(user.isDoctor);
                 print("stored user");
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage())) ;
               };
               print("ok");
 
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage())) ;
             },
 
             child: Container(
