@@ -24,6 +24,16 @@ class _ProfileState extends State<Profile> {
                  child: Container(
                    height: 200,
                    color: Colors.red,
+                   child: Center(
+                     child: Padding(
+                       padding: const EdgeInsets.only(top: 90.0),
+                       child: CircleAvatar(
+                         radius: 40,
+                         // child: ,
+
+                       ),
+                     ),
+                   ),
                  ),
              ),
             ],

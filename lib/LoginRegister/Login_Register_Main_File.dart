@@ -228,7 +228,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
         children: [
           buildTextField(Icons.mail_outline, "info@demouri.com", false, true,email2),
           buildTextField(
-              Icons.lock_outline, "**********", true, false,password2),
+              Icons.lock_outline, "**********", false, false,password2),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -269,11 +269,11 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
       child: Column(
         children: [
           buildTextField(Icons.account_box_outlined, "a@b.com",
-              false, false,name),
+              false, true,name),
           buildTextField(
               Icons.email, "email", false, true,email1),
           buildTextField(
-              Icons.lock_outline, "password", true, false,password1),
+              Icons.lock_outline, "password", false, false,password1),
 
           Padding(
             padding: const EdgeInsets.only(top: 10, left: 10),
@@ -739,18 +739,18 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
 
 
               print("res: $res");
-              bool isAuthenticated = res["responseData"]["isAuthenticated"];
-              if(isAuthenticated==true){
+              bool isCreated = res["responseData"]["isAuthenticated"];
+              if(isCreated==true){
                 user.storeUser(user);
                 user.auth_token = res["responseData"]["token"];
                 user.isDoctor = res["responseData"]["is_doctor"];
                 print(user.auth_token);
                 print(user.isDoctor);
                 print("stored user");
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage())) ;
               };
               print("ok");
 
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage())) ;
             },
 
             child: Container(
