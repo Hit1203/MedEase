@@ -228,7 +228,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
         children: [
           buildTextField(Icons.mail_outline, "info@demouri.com", false, true,email2),
           buildTextField(
-              Icons.lock_outline, "**********", true, false,password2),
+              Icons.lock_outline, "**********", false, true,password2),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -269,11 +269,11 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
       child: Column(
         children: [
           buildTextField(Icons.account_box_outlined, "a@b.com",
-              false, false,name),
+              false, true,name),
           buildTextField(
               Icons.email, "email", false, true,email1),
           buildTextField(
-              Icons.lock_outline, "password", true, false,password1),
+              Icons.lock_outline, "password", false, true,password1),
 
           Padding(
             padding: const EdgeInsets.only(top: 10, left: 10),
@@ -444,7 +444,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 buildTextField(
-                    Icons.app_registration_outlined, "Registration Number", false, false,RegistrationNumber),
+                    Icons.app_registration_outlined, "Registration Number", false, true,RegistrationNumber),
                 Column(
                   children: [
                     SizedBox(height: 20,),
@@ -691,9 +691,19 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
         child: Center(
           child: InkWell(
             onTap: () async {
+
+
               //todo: signIn/signUp
               User user;
               Map<String, dynamic> res;
+
+              showDialog(context: context, builder: (context)
+              {
+                return Center(
+                    child: CircularProgressIndicator(),
+                );
+              } );
+
 
               if(isSignupScreen){
                 // print("============age: ${int.tryParse(Age.text)}");
@@ -725,10 +735,12 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 print("object: name ${user.name} ${user.nonWorkingDays.toString()}");
               }
               else{
+
                 user = User(
                     email: email2.text,
                     pwd: password2.text
                 );
+
 
                 res = await user.signIn(user);
 
@@ -750,7 +762,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
               };
               print("ok");
 
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage())) ;
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage())) ;
+
+
             },
 
             child: Container(
