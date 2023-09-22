@@ -68,7 +68,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                       fit: BoxFit.fill)),
               child: Container(
                 padding: EdgeInsets.only(top: 90, left: 20),
-                color: Color(0xFF3b5999).withOpacity(.85),
+                color: Color(0xFF3b5999).withOpacity(.4),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -78,7 +78,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                           style: TextStyle(
                             fontSize: 25,
                             letterSpacing: 2,
-                            color: Colors.yellow[700],
+                            color: Colors.orange,
                           ),
                           children: [
                             TextSpan(
@@ -86,7 +86,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                               style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.yellow[700],
+                                color: Colors.black,
                               ),
                             )
                           ]),
@@ -665,8 +665,8 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
             onTap: (){print("ok");},
             child: Container(
 
-              height: 60,
-              width: 60,
+              height: 70,
+              width: 70,
               padding: EdgeInsets.all(15),
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -684,8 +684,8 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                         colors: [
-                          Colors.orange,
-                          Colors.red
+                          Colors.blueAccent,
+                          Colors.black
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight),
