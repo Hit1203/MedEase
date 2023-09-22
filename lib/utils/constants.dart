@@ -1,1 +1,1 @@
-const String BASIC_URL = "https://10.200.55.66:8070";
+const String BASIC_URL = "http://172.20.10.3:8070";
