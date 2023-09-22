@@ -17,9 +17,10 @@ class _ProfileState extends State<Profile> {
         body: Container(
           child: Stack(
             children: [
-              Container(color: Colors.red,width: MediaQuery.of(context).size.width*1,height: MediaQuery.of(context).size.height*0.25,),
+              Container(
+                color: Colors.red,width: MediaQuery.of(context).size.width*1,height: MediaQuery.of(context).size.height*0.25,),
               Padding(
-                padding:  EdgeInsets.only(top: 118.0,left: MediaQuery.of(context).size.width*0.3),
+                padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height*0.15,left: MediaQuery.of(context).size.width*0.3),
                 child: CircleAvatar(radius: 80,),
               ),
             ],
