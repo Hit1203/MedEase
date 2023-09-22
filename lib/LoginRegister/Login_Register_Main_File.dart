@@ -12,6 +12,8 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
   bool isSignupScreen = true;
   bool isMale = true;
   bool isRememberMe = false;
+
+  // filtercheep
   bool isDoctor = true ;
   bool isMonday = false ;
   bool isTuesday = false ;
@@ -22,18 +24,31 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
   bool isSunday = true ;
 
 
+  // for time picker
+  TimeOfDay timeStart = TimeOfDay(hour: 9, minute: 00);
+  TimeOfDay timeEnd = TimeOfDay(hour: 18, minute: 00);
 
-  TimeOfDay timeStart = TimeOfDay(hour: 9, minute: 0);
-  TimeOfDay timeEnd = TimeOfDay(hour: 18, minute: 0);
 
+  // signin
   TextEditingController username = TextEditingController();
   TextEditingController email1 = TextEditingController();
   TextEditingController password1 = TextEditingController();
+
+  // signup
   TextEditingController password2 = TextEditingController();
   TextEditingController email2 = TextEditingController();
+
+  // for doctor
   TextEditingController RegistrationNumber = TextEditingController();
   TextEditingController doctorWorkingHoursStart = TextEditingController() ;
   TextEditingController doctorWorkingHoursEnd = TextEditingController() ;
+
+  TextEditingController BloodGroup = TextEditingController();
+  TextEditingController Height = TextEditingController();
+  TextEditingController Weight = TextEditingController() ;
+  TextEditingController Age = TextEditingController() ;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +68,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                       fit: BoxFit.fill)),
               child: Container(
                 padding: EdgeInsets.only(top: 90, left: 20),
-                color: Color(0xFF3b5999).withOpacity(.85),
+                color: Color(0xFF3b5999).withOpacity(.4),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -63,15 +78,15 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                           style: TextStyle(
                             fontSize: 25,
                             letterSpacing: 2,
-                            color: Colors.yellow[700],
+                            color: Colors.orange,
                           ),
                           children: [
                             TextSpan(
-                              text: isSignupScreen ? " to Appname," : " Back,",
+                              text: isSignupScreen ? " to MedEase," : " Back,",
                               style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.yellow[700],
+                                color: Colors.black,
                               ),
                             )
                           ]),
@@ -81,8 +96,8 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                     ),
                     Text(
                       isSignupScreen
-                          ? "Signup to Continue"
-                          : "Signin to Continue",
+                          ? "Sign Up to Continue"
+                          : "Sign In to Continue",
                       style: TextStyle(
                         letterSpacing: 1,
                         color: Colors.white,
@@ -94,6 +109,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
             ),
           ),
           buildBottomHalfContainer(true),
+
+          // Animation of container
+
           AnimatedPositioned(
             duration: Duration(milliseconds: 700),
             curve: Curves.bounceInOut,
@@ -101,7 +119,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
             child: AnimatedContainer(
               duration: Duration(milliseconds: 700),
               curve: Curves.bounceInOut,
-              height: isSignupScreen ? 380 : 250,
+              height: isSignupScreen ? 550 : 270,
               padding: EdgeInsets.all(20),
               width: MediaQuery.of(context).size.width - 40,
               margin: EdgeInsets.symmetric(horizontal: 20),
@@ -129,7 +147,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                           child: Column(
                             children: [
                               Text(
-                                "LOGIN",
+                                "Sign In",
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -156,7 +174,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                           child: Column(
                             children: [
                               Text(
-                                "SIGNUP",
+                                "Sign Up",
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -195,23 +213,10 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
 
 
 
-  // Custom Classes............................................................................
+  // Custom Classes...........................................................................
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  //  Signin screen
 
   Container buildSigninSection() {
     return Container(
@@ -250,6 +255,8 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
       ),
     );
   }
+
+  // Singup screen
 
   Container buildSignupSection() {
     return Container(
@@ -424,6 +431,8 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
             ),
           ),
           SizedBox(height: 30,),
+
+          // Patient and Doctor selection :
           isDoctor ? Container(
 
             child: Column(
@@ -434,155 +443,164 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 Column(
                   children: [
                     SizedBox(height: 20,),
-                    Text("Please Choose Your Working Hours : ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                    Text("Choose Your Working Hours        ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                     SizedBox(height: 20,),
-                    Row(
-                      children: [
-                        Text("TO : ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-                        InkWell(
-                          onTap: ()async{
-                            final TimeOfDay ? timeOfDay = await showTimePicker(
-                                context: context,
-                                initialTime: timeStart,
-                                initialEntryMode: TimePickerEntryMode.dial,
-                                builder: (context, child) {
-                                  return MediaQuery(
-                                    data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
-                                    child: child ?? Container(),
-                                  );
-                                }
+                    Padding(
+                      padding: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.4),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Column(
+                          children: [
+                            Row(children: [Text("To     : ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                              InkWell(
+                                onTap: ()async{
+                                  final TimeOfDay ? timeOfDay = await showTimePicker(
+                                      context: context,
+                                      initialTime: timeStart,
+                                      initialEntryMode: TimePickerEntryMode.dial,
+                                      builder: (context, child) {
+                                        return MediaQuery(
+                                          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+                                          child: child ?? Container(),
+                                        );
+                                      }
 
-                            );
-                            if(timeOfDay!=null)
-                            {
-                              setState(() {
-                                timeStart = timeOfDay ;
-                              });
-                            }
-                          },
-                          child: Container(
-                            width: 100,
-                            height: 30,
-                            child: Center(child: Text("${timeStart.hour}:${timeStart.minute}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              border: Border.all()
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 30,),
-                        Text("From : ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-                        InkWell(
-                          onTap: ()async{
-                            final TimeOfDay ? timeOfDay = await showTimePicker(
-                                context: context,
-                                initialTime: timeEnd,
-                                initialEntryMode: TimePickerEntryMode.dial,
-                                builder: (context, child) {
-                                  return MediaQuery(
-                                    data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
-                                    child: child ?? Container(
-                                    ),
                                   );
-                                }
+                                  if(timeOfDay!=null)
+                                  {
+                                    setState(() {
+                                      timeStart = timeOfDay ;
+                                    });
+                                  }
+                                },
+                                child: Container(
+                                  width: 100,
+                                  height: 30,
+                                  child: Center(child: Text("${timeStart.hour}:${timeStart.minute}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all()
+                                  ),
+                                ),
+                              ),],),
+                            SizedBox(height: 10,),
+                            Row(children: [Text("From : ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                              InkWell(
+                                onTap: ()async{
+                                  final TimeOfDay ? timeOfDay = await showTimePicker(
+                                      context: context,
+                                      initialTime: timeEnd,
+                                      initialEntryMode: TimePickerEntryMode.dial,
+                                      builder: (context, child) {
+                                        return MediaQuery(
+                                          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+                                          child: child ?? Container(
+                                          ),
+                                        );
+                                      }
 
-                            );
-                            if(timeOfDay!=null)
-                            {
-                              setState(() {
-                                timeEnd = timeOfDay ;
-                              });
-                            }
-                          },
-                          child: Container(
-                            width: 100,
-                            height: 30,
-                            child: Center(child: Text("${timeEnd.hour}:${timeEnd.minute}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              border: Border.all(),
-                            ),
-                          ),
+                                  );
+                                  if(timeOfDay!=null)
+                                  {
+                                    setState(() {
+                                      timeEnd = timeOfDay ;
+                                    });
+                                  }
+                                },
+                                child: Container(
+                                  width: 100,
+                                  height: 30,
+                                  child: Center(child: Text("${timeEnd.hour}:${timeEnd.minute}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    border: Border.all(),
+                                  ),
+                                ),
+                              ),],)
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                     SizedBox(height: 20,),
-                    Text("Please Choose Your Non - Working Days : ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-                    Row(
-                      children: [
-                        SizedBox(width: 15,),
-                        FilterChip(
-                            label: Text("Monday",style: TextStyle(color: Colors.white),),
-                            selected: isMonday,
-                            backgroundColor: Colors.black,
-                            selectedColor: Colors.red,
-                            onSelected: (bool value){setState(()
-                        {
-                          isMonday = !isMonday;
-                        });}),
-                        SizedBox(width: 15,),
-                        FilterChip(
-                            label: Text("Tuesday",style: TextStyle(color: Colors.white),),
-                            selected: isTuesday,
-                            backgroundColor: Colors.black,
-                            selectedColor: Colors.red,
-                            onSelected: (bool value){setState(()
-                            {
-                              isTuesday = !isTuesday;
-                            });}),
-                        SizedBox(width: 15,),
-                        FilterChip(
-                            label: Text("Wednesday",style: TextStyle(color: Colors.white),),
-                            selected: isWednesday,
-                            backgroundColor: Colors.black,
-                            selectedColor: Colors.red,
-                            onSelected: (bool value){setState(()
-                            {
-                              isWednesday = !isWednesday;
-                            });}),
-                        SizedBox(width: 15,),
-                        FilterChip(
-                            label: Text("Thusday",style: TextStyle(color: Colors.white),),
-                            selected: isThusday,
-                            backgroundColor: Colors.black,
-                            selectedColor: Colors.red,
-                            onSelected: (bool value){setState(()
-                            {
-                              isThusday = !isThusday;
-                            });}),
-                        SizedBox(width: 15,),
-                        FilterChip(
-                            label: Text("Friday",style: TextStyle(color: Colors.white),),
-                            selected: isFriday,
-                            backgroundColor: Colors.black,
-                            selectedColor: Colors.red,
-                            onSelected: (bool value){setState(()
-                            {
-                              isFriday = !isFriday;
-                            });}),
-                        SizedBox(width: 15,),
-                        FilterChip(
-                            label: Text("sdf",style: TextStyle(color: Colors.white),),
-                            selected: isSaturday,
-                            backgroundColor: Colors.black,
-                            selectedColor: Colors.red,
-                            onSelected: (bool value){setState(()
-                            {
-                              isSaturday= !isSaturday;
-                            });}),
-                        SizedBox(width: 15,),
-                        FilterChip(
-                            label: Text("Sunday",style: TextStyle(color: Colors.white),),
-                            selected: isSunday,
-                            backgroundColor: Colors.black,
-                            selectedColor: Colors.red,
-                            onSelected: (bool value){setState(()
-                            {
-                              isSunday= !isSunday;
-                            });}),
-                        SizedBox(width: 15,),
-                      ],
-                    )
+                    Text("Choose Your Non - Working Days",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          SizedBox(width: 15,),
+                          FilterChip(
+                              label: Text("Mon",style: TextStyle(color: Colors.white),),
+                              selected: isMonday,
+                              backgroundColor: Colors.black,
+                              selectedColor: Colors.red,
+                              onSelected: (bool value){setState(()
+                          {
+                            isMonday = !isMonday;
+                          });}),
+                          SizedBox(width: 15,),
+                          FilterChip(
+                              label: Text("Tue",style: TextStyle(color: Colors.white),),
+                              selected: isTuesday,
+                              backgroundColor: Colors.black,
+                              selectedColor: Colors.red,
+                              onSelected: (bool value){setState(()
+                              {
+                                isTuesday = !isTuesday;
+                              });}),
+                          SizedBox(width: 15,),
+                          FilterChip(
+                              label: Text("Wed",style: TextStyle(color: Colors.white),),
+                              selected: isWednesday,
+                              backgroundColor: Colors.black,
+                              selectedColor: Colors.red,
+                              onSelected: (bool value){setState(()
+                              {
+                                isWednesday = !isWednesday;
+                              });}),
+                          SizedBox(width: 15,),
+                          FilterChip(
+                              label: Text("Thu",style: TextStyle(color: Colors.white),),
+                              selected: isThusday,
+                              backgroundColor: Colors.black,
+                              selectedColor: Colors.red,
+                              onSelected: (bool value){setState(()
+                              {
+                                isThusday = !isThusday;
+                              });}),
+                          SizedBox(width: 15,),
+                          FilterChip(
+                              label: Text("Fri",style: TextStyle(color: Colors.white),),
+                              selected: isFriday,
+                              backgroundColor: Colors.black,
+                              selectedColor: Colors.red,
+                              onSelected: (bool value){setState(()
+                              {
+                                isFriday = !isFriday;
+                              });}),
+                          SizedBox(width: 15,),
+                          FilterChip(
+                              label: Text("Sat",style: TextStyle(color: Colors.white),),
+                              selected: isSaturday,
+                              backgroundColor: Colors.black,
+                              selectedColor: Colors.red,
+                              onSelected: (bool value){setState(()
+                              {
+                                isSaturday= !isSaturday;
+                              });}),
+                          SizedBox(width: 15,),
+                          FilterChip(
+                              label: Text("Sun",style: TextStyle(color: Colors.white),),
+                              selected: isSunday,
+                              backgroundColor: Colors.black,
+                              selectedColor: Colors.red,
+                              onSelected: (bool value){setState(()
+                              {
+                                isSunday= !isSunday;
+                              });}),
+                          SizedBox(width: 15,),
+                        ],
+                      ),
+                    ),
 
 
                   ],
@@ -592,9 +610,25 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
 
               ],
             ),
+          ) :Container(
+            child : Column(
+              children: [
+                buildTextField(
+                    Icons.height, "Height", false, false,Height),
+                buildTextField(
+                    Icons.monitor_weight, "Weight", false, false,Weight),
+                buildTextField(
+                    Icons.bloodtype, "Blood Group", false, true,BloodGroup),
+                buildTextField(
+                    Icons.timelapse, "Age", false, true,Age),
 
 
-          ) :Container(),
+              ],
+            )
+
+          ),
+
+          // TERMS AND CONDITION OPTION :
           Container(
             width: 200,
             margin: EdgeInsets.only(top: 20),
@@ -617,84 +651,59 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
     );
   }
 
-  TextButton buildTextButton(
-      IconData icon, String title, Color backgroundColor
-      ) {
-    return TextButton(
-      onPressed: () {},
-      style: TextButton.styleFrom(
-          side: BorderSide(width: 1, color: Colors.grey),
-          minimumSize: Size(145, 40),
-          shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          primary: Colors.white,
-          backgroundColor: backgroundColor),
-      child: Row(
-        children: [
-          Icon(
-            icon,
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          Text(
-            title,
-          )
-        ],
-      ),
-    );
-  }
-
   Widget buildBottomHalfContainer(bool showShadow) {
     return AnimatedPositioned(
       duration: Duration(milliseconds: 700),
       curve: Curves.bounceInOut,
-      top: isSignupScreen ? 535 : 430,
+      top: isSignupScreen ? 710 : 460,
       right: 0,
       left: 0,
-      child: Center(
-        child: InkWell(
-          onTap: (){print("ok");},
-          child: Container(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 250.0),
+        child: Center(
+          child: InkWell(
+            onTap: (){print("ok");},
+            child: Container(
 
-            height: 90,
-            width: 90,
-            padding: EdgeInsets.all(15),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(50),
-                boxShadow: [
-                  if (showShadow)
-                    BoxShadow(
-                      color: Colors.black.withOpacity(.3),
-                      spreadRadius: 1.5,
-                      blurRadius: 10,
-                    )
-                ]),
-            child: !showShadow
-                ? Container(
+              height: 70,
+              width: 70,
+              padding: EdgeInsets.all(15),
               decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [
-                        Colors.orange,
-                        Colors.red
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight),
-                  borderRadius: BorderRadius.circular(30),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(50),
                   boxShadow: [
-                    BoxShadow(
+                    if (showShadow)
+                      BoxShadow(
                         color: Colors.black.withOpacity(.3),
-                        spreadRadius: 1,
-                        blurRadius: 2,
-                        offset: Offset(0, 1))
+                        spreadRadius: 1.5,
+                        blurRadius: 10,
+                      )
                   ]),
-              child: Icon(
-                Icons.arrow_forward,
-                color: Colors.white,
-              ),
-            )
-                : Center(),
+              child: !showShadow
+                  ? Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [
+                          Colors.blueAccent,
+                          Colors.black
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight),
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black.withOpacity(.3),
+                          spreadRadius: 1,
+                          blurRadius: 2,
+                          offset: Offset(0, 1))
+                    ]),
+                child: Icon(
+                  Icons.arrow_forward,
+                  color: Colors.white,
+                ),
+              )
+                  : Center(),
+            ),
           ),
         ),
       ),
