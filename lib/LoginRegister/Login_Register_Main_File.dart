@@ -228,7 +228,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
         children: [
           buildTextField(Icons.mail_outline, "info@demouri.com", false, true,email2),
           buildTextField(
-              Icons.lock_outline, "**********", false, false,password2),
+              Icons.lock_outline, "**********", false, true,password2),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
