@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart' ;
 import '../Color_File/colors.dart';
-import '../models/User.dart';
 
 
 class LoginSignupScreen extends StatefulWidget {
@@ -13,9 +12,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
   bool isSignupScreen = true;
   bool isMale = true;
   bool isRememberMe = false;
-  bool isDoctor = true ;
 
   // filtercheep
+  bool isDoctor = true ;
   bool isMonday = false ;
   bool isTuesday = false ;
   bool isWednesday = false ;
@@ -23,7 +22,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
   bool isFriday = false ;
   bool isSaturday = false ;
   bool isSunday = true ;
-  List<String>? nonWorkingDays = ["Sunday"];
+
 
   // for time picker
   TimeOfDay timeStart = TimeOfDay(hour: 9, minute: 00);
@@ -31,7 +30,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
 
 
   // signin
-  TextEditingController name = TextEditingController();
+  TextEditingController username = TextEditingController();
   TextEditingController email1 = TextEditingController();
   TextEditingController password1 = TextEditingController();
 
@@ -264,8 +263,8 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
       margin: EdgeInsets.only(top: 20),
       child: Column(
         children: [
-          buildTextField(Icons.account_box_outlined, "User.dart Name",
-              false, false,name),
+          buildTextField(Icons.account_box_outlined, "User Name",
+              false, false,username),
           buildTextField(
               Icons.email, "email", false, true,email1),
           buildTextField(
@@ -534,15 +533,10 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                               selected: isMonday,
                               backgroundColor: Colors.black,
                               selectedColor: Colors.red,
-                              onSelected: (bool value){
-                                setState(()
-                                  {
-                                    isMonday = !isMonday;
-                                    if(isMonday) nonWorkingDays?.add("Monday");
-                                    else nonWorkingDays?.remove("Monday");
-                                  }
-                                  );}
-                          ),
+                              onSelected: (bool value){setState(()
+                          {
+                            isMonday = !isMonday;
+                          });}),
                           SizedBox(width: 15,),
                           FilterChip(
                               label: Text("Tue",style: TextStyle(color: Colors.white),),
@@ -552,9 +546,6 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                               onSelected: (bool value){setState(()
                               {
                                 isTuesday = !isTuesday;
-                                if(isTuesday) nonWorkingDays?.add("Tuesday");
-                                else nonWorkingDays?.remove("Tuesday");
-
                               });}),
                           SizedBox(width: 15,),
                           FilterChip(
@@ -565,9 +556,6 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                               onSelected: (bool value){setState(()
                               {
                                 isWednesday = !isWednesday;
-                                if(isWednesday) nonWorkingDays?.add("Wednesday");
-                                else nonWorkingDays?.remove("Wednesday");
-
                               });}),
                           SizedBox(width: 15,),
                           FilterChip(
@@ -578,9 +566,6 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                               onSelected: (bool value){setState(()
                               {
                                 isThusday = !isThusday;
-                                if(isThusday) nonWorkingDays?.add("Thusday");
-                                else nonWorkingDays?.remove("Thusday");
-
                               });}),
                           SizedBox(width: 15,),
                           FilterChip(
@@ -591,9 +576,6 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                               onSelected: (bool value){setState(()
                               {
                                 isFriday = !isFriday;
-                                if(isFriday) nonWorkingDays?.add("Friday");
-                                else nonWorkingDays?.remove("Friday");
-
                               });}),
                           SizedBox(width: 15,),
                           FilterChip(
@@ -604,9 +586,6 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                               onSelected: (bool value){setState(()
                               {
                                 isSaturday= !isSaturday;
-                                if(isSaturday) nonWorkingDays?.add("Saturday");
-                                else nonWorkingDays?.remove("Saturday");
-
                               });}),
                           SizedBox(width: 15,),
                           FilterChip(
@@ -617,9 +596,6 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                               onSelected: (bool value){setState(()
                               {
                                 isSunday= !isSunday;
-                                if(isSunday) nonWorkingDays?.add("Sunday");
-                                else nonWorkingDays?.remove("Sunday");
-
                               });}),
                           SizedBox(width: 15,),
                         ],
@@ -686,67 +662,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
         padding: const EdgeInsets.only(left: 250.0),
         child: Center(
           child: InkWell(
-            onTap: () async {
-              //todo: signIn/signUp
-              User user;
-              Map<String, dynamic> res;
-
-              if(isSignupScreen){
-                // print("============age: ${int.tryParse(Age.text)}");
-                user = User(
-                  name: name.text,
-                  email: email1.text,
-                  pwd: password1.text,
-                  isDoctor: isDoctor,
-                  gender: isMale? "Male":"Female",
-
-                  age: int.tryParse(Age.text),
-                  weight: double.tryParse(Weight.text),
-                  height: double.tryParse(Height.text),
-                  bloodGroup: BloodGroup.text,
-
-                  qualification: RegistrationNumber.text,
-                  whStart: "${timeStart.hour}:${timeStart.minute}",
-                  whEnd: "${timeEnd.hour}:${timeEnd.minute}",
-                  nonWorkingDays: nonWorkingDays
-
-                );
-
-                print("email: ${user.email} start: ${user.whStart} end ${user.whEnd}");
-
-                res = await user.signUp(user);
-
-                print("==============res: ${res}");
-
-                print("object: name ${user.name} ${user.nonWorkingDays.toString()}");
-              }
-              else{
-                user = User(
-                    email: email2.text,
-                    pwd: password2.text
-                );
-
-                res = await user.signIn(user);
-
-
-
-              }
-
-
-
-              print("res: $res");
-              bool isCreated = res["responseData"]["isAuthenticated"];
-              if(isCreated==true){
-                user.storeUser(user);
-                user.auth_token = res["responseData"]["token"];
-                user.isDoctor = res["responseData"]["is_doctor"];
-                print(user.auth_token);
-                print(user.isDoctor);
-                print("stored user");
-              };
-              print("ok");
-            },
-
+            onTap: (){print("ok");},
             child: Container(
 
               height: 70,

@@ -10,3 +10,11 @@ class Login_Palette
   static const Color PrimaryColor = Colors.black ;
 
 }
+
+class HomeScreen
+{
+  static const Color PrimaryColor = Colors.black ;
+  static const Color Appbar_color1 = Colors.black ;
+  static const Color Appbar_color2 = Colors.blueAccent;
+
+}
