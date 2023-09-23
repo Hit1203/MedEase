@@ -63,7 +63,7 @@ class User {
     qualification: json_["qualification"],
     whStart: json_["wh_start"],
     whEnd: json_["wh_end"],
-    nonWorkingDays: json.decode(json_["non_working_days"]).cast<String>().toList()
+    nonWorkingDays: json.decode(json_["non_working_days"]??"[]").cast<String>().toList()
   );
 
   Map<String, String> toJSONLogIn(User user) {
