@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' ;
 import 'package:tic_tech_teo_2023/Home_Screen%20Pages/Main_screens/Doctor/Home_Page_Main_Screen.dart';
+import 'package:tic_tech_teo_2023/Home_Screen%20Pages/Main_screens/Patient/PatientHomeScreen.dart';
 import 'LoginRegister/Login_Register_Main_File.dart';
 
 
@@ -19,8 +20,9 @@ class _MyappState extends State<Myapp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'My Calendar App',
       debugShowCheckedModeBanner: false ,
-      home: LoginSignupScreen(),
+      home: PatientHomeScreen(),
     );
   }
 }
