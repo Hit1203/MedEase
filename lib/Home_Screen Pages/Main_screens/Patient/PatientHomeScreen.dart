@@ -60,7 +60,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
       body: Column(
         children: [
           isThereAppointment? appointmentCard(appointment):Container(),
-
+          
           FutureBuilder(
               future: DoctorRequests.getDoctors(strDate),
               builder: (context, snapshot){

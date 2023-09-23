@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:tic_tech_teo_2023/Color_File/colors.dart';
 import 'package:tic_tech_teo_2023/Home_Screen%20Pages/Custom_Drawer/sidemenu_options.dart';
+import 'package:tic_tech_teo_2023/utils/constants.dart';
 
 import '../Profile/Doctor/Profile.dart';
+import '../Profile/Patient/Patient_profile.dart';
 import 'Infocard.dart';
 import 'card.dart';
 
@@ -50,25 +52,25 @@ class _drawerPatientState extends State<drawerPatient> {
 
                   InkWell(
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>patientProfile()));
                       },
-                      child: Infocard(name: ' Dr.Harsh Mori', profession: 'Doctor', icon: Icon(Icons.person),)),
+                      child: Infocard(name: curUser.name.toString(), profession: curUser.isDoctor! ? 'Patient':"Doctor", icon: Icon(Icons.person),)),
                   Divider(height: 1,),
                   Sidemenuoptions(
-                      menuname: 'Waiting List',
+                      menuname: 'Appoinments',
                       menuicon: Icon(Icons.list),
                       isActive: activeIndex == 0,
                       index: 0,
                       onTap: () {
                         setActiveIndex(0) ;
                         Future.delayed(Duration(milliseconds: 250), () {
-                          // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => patientProfile()));
                         });
                       }
                   ),
                   Sidemenuoptions(
-                      menuname: 'Administative Dashboard',
-                      menuicon: Icon(Icons.dashboard),
+                      menuname: 'Setting',
+                      menuicon: Icon(Icons.settings),
                       isActive: activeIndex == 1,
                       index: 1,
                       onTap: () {
@@ -79,8 +81,8 @@ class _drawerPatientState extends State<drawerPatient> {
                       }
                   ),
                   Sidemenuoptions(
-                      menuname: 'Settings',
-                      menuicon: Icon(Icons.settings),
+                      menuname: 'Upcoming Appoinments',
+                      menuicon: Icon(Icons.meeting_room_outlined),
                       isActive: activeIndex == 2,
                       index: 2,
                       onTap: () {

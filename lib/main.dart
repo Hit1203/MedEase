@@ -36,9 +36,9 @@ class _MyappState extends State<Myapp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false ,
-      // home: LoginSignupScreen(),
+      home: LoginSignupScreen(),
       // home: CalPatient(),
-      home: PatientHomeScreen(),
+      // home: PatientHomeScreen(),
     );
   }
 }
