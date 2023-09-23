@@ -8,6 +8,7 @@ import '../../../Color_File/colors.dart';
 import '../../Custom_Drawer/patient_drawerfile.dart';
 import 'package:tic_tech_teo_2023/models/Appointment.dart';
 
+import '../../Profile/Doctor/Profile.dart';
 import 'calMain.dart';
 
 class CustomSearchDelegate extends SearchDelegate<String> {
@@ -294,11 +295,13 @@ Container displayDoctors(context, List<Doctor> doctorList){
                       padding: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.34,top:3),
                       child: Text("Dr. ${doctorList[index].name}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(height: 30,),
                     Row(
                       children: [
                         OutlinedButton(
-                            onPressed: (){},
+                            onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile())) ;
+                            },
                             child: Text("Veiw Profile",style: TextStyle(color: Colors.black),)
                         ),
                         SizedBox(width: 10,),
@@ -316,7 +319,7 @@ Container displayDoctors(context, List<Doctor> doctorList){
               ],
             ),
             width: MediaQuery.of(context).size.width*0.85,
-            height: MediaQuery.of(context).size.height*0.12,
+            height: MediaQuery.of(context).size.height*0.15,
             decoration: BoxDecoration(
               color: Colors.transparent,
               border: Border.all(),
