@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 class User {
   // String? username;
-  // String? userID;
+  String? userID;
   String? email;
   String? pwd;
   String? name;
@@ -47,23 +47,26 @@ class User {
     this.whStart,
     this.whEnd,
     this.nonWorkingDays,
+    this.userID,
   });
 
   factory User.fromJSON(Map<String, dynamic> json_) => User(
     email: json_["email"],
-    name: json_["name"],
+    name: json_["fullname"],
     isDoctor: json_["is_doctor"],
     gender: json_["gender"],
 
     age: json_["age"],
     height: json_["height"],
-    weight: json_["weight"],
+    weight: json_["weight"]+0.0,
     bloodGroup: json_["blood_group"],
 
     qualification: json_["qualification"],
     whStart: json_["wh_start"],
     whEnd: json_["wh_end"],
-    nonWorkingDays: json.decode(json_["non_working_days"]??"[]").cast<String>().toList()
+    nonWorkingDays: json_["is_doctor"]?json.decode(json_["non_working_week_days"]??"[]").cast<String>().toList(): null,
+
+    userID: json_["user_id"]
   );
 
   Map<String, String> toJSONLogIn(User user) {
@@ -93,6 +96,7 @@ class User {
         "wh_end":user.whEnd,
         "non_working_week_days": user.nonWorkingDays.toString(),
 
+        "user_id": userID,
       };
   }
 
@@ -140,7 +144,6 @@ class User {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove("auth_token");
     prefs.remove("isDoctor");
-
   }
 
 

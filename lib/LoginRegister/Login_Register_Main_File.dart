@@ -720,9 +720,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                   bloodGroup: BloodGroup.text,
 
                   qualification: RegistrationNumber.text,
-                  whStart: "${timeStart.hour}:${timeStart.minute}",
-                  whEnd: "${timeEnd.hour}:${timeEnd.minute}",
-                  nonWorkingDays: nonWorkingDays
+                  whStart: isDoctor?"${timeStart.hour}:${timeStart.minute}":null,
+                  whEnd: isDoctor?"${timeEnd.hour}:${timeEnd.minute}":null,
+                  nonWorkingDays: isDoctor?nonWorkingDays:null,
 
                 );
 
@@ -732,7 +732,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
 
                 print("==============res: ${res}");
 
-                print("object: name ${user.name} ${user.nonWorkingDays.toString()}");
+                print("object: name ${user.name} ${user.nonWorkingDays}");
               }
               else{
                 user = User(
@@ -756,6 +756,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 print("stored user");
 
                 curUser = User.fromJSON(res["responseData"]);
+                print("object: name ${curUser.name} ${curUser.nonWorkingDays}");
 
                 curUser.isDoctor! ? Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage())) : Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>PatientHomeScreen())) ;
 
