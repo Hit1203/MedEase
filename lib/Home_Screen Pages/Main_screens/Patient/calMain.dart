@@ -26,7 +26,8 @@ class _CalPatientState extends State<CalPatient> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Dr. ${widget.doctorName}"),
+        backgroundColor: Colors.black,
+        title: Text("Dr. ${widget.doctorName}",style: TextStyle(color: Colors.white),),
       ),
       body: SafeArea(
         child: Column(
