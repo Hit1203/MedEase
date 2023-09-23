@@ -74,7 +74,7 @@ class _drawerPatientState extends State<drawerPatient> {
                       onTap: () {
                         setActiveIndex(1) ;
                         Future.delayed(Duration(milliseconds: 250), () {
-                          // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
+                          // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => appointmentCard()));
                         });
                       }
                   ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:tic_tech_teo_2023/models/Appointment.dart';
 
@@ -11,9 +12,7 @@ class CalPatient extends StatefulWidget {
   String? doctorToken;
   String? patientToken;
 
-
-
-  CalPatient({this.doctorName, this.doctorToken, this.patientToken,super.key});
+  CalPatient({this.doctorName, this.doctorToken, this.patientToken, super.key});
 
   @override
   State<CalPatient> createState() => _CalPatientState();
@@ -21,132 +20,151 @@ class CalPatient extends StatefulWidget {
 
 class _CalPatientState extends State<CalPatient> {
   DateTime today = DateTime.now();
-  bool isSelected  = false;
+  bool isSelected = false;
   int? _selectedIndex;
   List<dynamic>? slotList;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-
   }
 
-  Selectecheep()
-  {
-    print("asasas") ;
-  }
 
   @override
   Widget build(BuildContext context) {
-    print("dt: ${widget.doctorToken}" );
+    print("dt: ${widget.doctorToken}");
 
     String strDate = "${today.day}/${today.month}/${today.year}";
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text("Dr. ${widget.doctorName}",style: TextStyle(color: Colors.white),),
+        title: Text(
+          "Dr. ${widget.doctorName}",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: SafeArea(
         child: Column(
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height*0.40,
-              child: SfCalendar(
-                onSelectionChanged: (details){
-                  print(details.date) ;
-                  setState(() {
-                    strDate = "${details.date!.day}/${details.date!.month}/${details.date!.year}";
-                  });
-                },
-                view: CalendarView.month,
-                onTap: (CalendarTapDetails details) {
-                  // Handle tap on a calendar element here, if needed.
-                },
-
+            Padding(
+              padding: EdgeInsets.all(18.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                height: MediaQuery.of(context).size.height * 0.40,
+                child: SfCalendar(
+                  showDatePickerButton: true,
+                  showTodayButton:true,
+                    todayHighlightColor:Colors.black,
+                  onSelectionChanged: (details) {
+                    print(details.date);
+                    setState(() {
+                      strDate =
+                      "${details.date!.day}/${details.date!.month}/${details.date!.year}";
+                    });
+                  },
+                  view: CalendarView.month,
+                  onTap: (CalendarTapDetails details) {
+                    // Handle tap on a calendar element here, if needed.
+                  },
+                ),
               ),
             ),
-
-            // displaySlots(context),
-
-            const Text("Vacant Slots", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
-
+            Text(
+              "Vacant Slots",
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10,),
             SingleChildScrollView(
               child: Container(
-                height: MediaQuery.of(context).size.height*0.2,
-
-                child: slotList==null
-                    ?FutureBuilder(
-                    future: AppointmentRequests.getVacantSlots(widget.doctorToken!, strDate),
-                    builder: (context, snapshot){
-                      if(snapshot.connectionState == ConnectionState.done){
-                        if(snapshot.hasError){
-                          Text("Unble to connet please again later");
-                        }
-                        else if(snapshot.hasData){
+                height: MediaQuery.of(context).size.height * 0.2,
+                child: slotList == null
+                    ? FutureBuilder(
+                    future: AppointmentRequests.getVacantSlots(
+                        widget.doctorToken!, strDate),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState ==
+                          ConnectionState.done) {
+                        if (snapshot.hasError) {
+                          return Text(
+                              "Unable to connect, please try again later");
+                        } else if (snapshot.hasData) {
                           print("res: ${snapshot.data}");
 
-                          List<dynamic> res = snapshot.data["responseData"]["vacant_slots"];
+                          List<dynamic> res = snapshot
+                              .data["responseData"]["vacant_slots"];
                           slotList = res;
                           print("res type: ${res[0].runtimeType}");
 
-
-
-
                           return Container(
                             width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height*0.2,
-                            child: Expanded(
-                              child: Wrap(
-                                alignment: WrapAlignment.spaceEvenly,
-                                children: displaySlots(res),
-                              ),
+                            child: Wrap(
+                              alignment: WrapAlignment.spaceEvenly,
+                              children: displaySlots(res),
                             ),
                           );
-                        }
-                        else {
-                          Text("Sorry no slot avaible for the day");
+                        } else {
+                          // Handle the case where snapshot.data is null or empty
+                          return Text("No data available");
                         }
                       }
-
-                      return Center(child: CircularProgressIndicator(),);
+                      return Center(
+                        child: SpinKitCircle(
+                          color: Colors.blue,
+                          size: 50.0,
+                        ),
+                      );
                     })
                     : Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*0.20,
-                      child: Expanded(
-                        child: Wrap(
-                        alignment: WrapAlignment.spaceEvenly,
-                        children: displaySlots(slotList!),
-                    ),
+                  width: MediaQuery.of(context).size.width,
+                  child: Wrap(
+                    alignment: WrapAlignment.spaceEvenly,
+                    children: displaySlots(slotList!),
                   ),
                 ),
               ),
             ),
-
-            Expanded(child: Container()),
-
+            SizedBox(height: 70,),
             ElevatedButton(
-                child: Text("Confirm", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                onPressed: () async {
-                  print("${slotList![_selectedIndex!]}");
-                  MyAppointment appointment = MyAppointment(
-                    doctorId: widget.doctorToken,
-                    patientId: widget.patientToken,
-                    date: strDate,
-                    slot: slotList![_selectedIndex!]
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+              child: Text(
+                "Confirm",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              onPressed: () async {
+                print("${slotList![_selectedIndex!]}");
+                MyAppointment appointment = MyAppointment(
+                  doctorId: widget.doctorToken,
+                  patientId: widget.patientToken,
+                  date: strDate,
+                  slot: slotList![_selectedIndex!],
+                );
+                final res = await AppointmentRequests.create(appointment);
+
+                print("create appo: $res");
+
+                if (res["responseData"]["created"] == true) {
+                  // Show a success Snackbar
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Appointment created successfully!"),
+                      duration: Duration(seconds: 2), // Optional, set the duration
+                    ),
                   );
-                  final res = await AppointmentRequests.create(appointment);
 
-                  print("create appo: $res");
-
-                  if(res["responseData"]["created"] == true){
-                    //todo add snackbar and back to home
-                  }
-                  else{
-                    //todo failed to create appointment in snackbar
-                  }
+                  // TODO: Navigate back to the home screen or perform other actions as needed.
+                } else {
+                  // Show an error Snackbar
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Failed to create appointment. Please try again."),
+                      duration: Duration(seconds: 2), // Optional, set the duration
+                    ),
+                  );
                 }
-
+              },
             )
 
           ],
@@ -155,10 +173,10 @@ class _CalPatientState extends State<CalPatient> {
     );
   }
 
-  List<Widget> displaySlots (List<dynamic> list){
+  List<Widget> displaySlots(List<dynamic> list) {
     List<Widget> chips = [];
 
-    for (int i=0; i<list.length; i++){
+    for (int i = 0; i < list.length; i++) {
       Widget item = Padding(
         padding: EdgeInsets.all(1),
         child: ChoiceChip(
@@ -167,7 +185,6 @@ class _CalPatientState extends State<CalPatient> {
           backgroundColor: Colors.black,
           selected: _selectedIndex == i,
           selectedColor: Colors.green,
-
           onSelected: (bool value) {
             setState(() {
               _selectedIndex = i;
@@ -180,18 +197,16 @@ class _CalPatientState extends State<CalPatient> {
     }
 
     return chips;
-
   }
 }
 
-String slotFormatString(String time){
+String slotFormatString(String time) {
   print("date: ${DateTime.now().toString()}");
   DateTime sT = DateTime.parse("2001-01-01 $time:00");
   DateTime eT = sT.add(Duration(minutes: 30));
 
-  String formate = "${sT.hour}:${sT.minute==0?'00':sT.minute} - ${eT.hour}:${eT.minute==0?'00':eT.minute}";
+  String formate =
+      "${sT.hour}:${sT.minute == 0 ? '00' : sT.minute} - ${eT.hour}:${eT.minute == 0 ? '00' : eT.minute}";
 
   return formate;
 }
-
-

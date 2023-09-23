@@ -254,21 +254,65 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
 }
 
 
-Container appointmentCard(MyAppointment appointment){
+Padding appointmentCard(MyAppointment appointment){
 
-  return Container(
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: 15.0,vertical: 13),
     child: Column(
       children: [
-        Text("Up Coming Appointment"),
+        Padding(
+          padding: EdgeInsets.only(right: 105.0),
+          child: Text("Upcoming Appoinments",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
+        ),
+        SizedBox(height: 10,),
+        Container(
+          width: 450,
+          height: 130,
+          decoration: BoxDecoration(
+            border: Border.all(),
+                borderRadius: BorderRadius.circular(10),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(width: 20,),
+              Padding(
+                padding:  EdgeInsets.only(bottom: 52.0),
+                child: CircleAvatar(child: Center(child: Icon(Icons.medical_services_outlined,color: Colors.white,),),backgroundColor: Colors.black,radius: 20,),
+              ),
+              SizedBox(width: 20,),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding:  EdgeInsets.only(right: 36,top: 15),
+                    child: Text("Dr.${appointment.doctorName}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                  ),
+               SizedBox(height: 10,),
+               Padding(
+                 padding: EdgeInsets.only(right: 18.0),
+                 child: Text("Date : ${appointment.date}",style: TextStyle(fontSize: 15,),),
+               ),
+               SizedBox(height: 10,),
+               Padding(
+                 padding: EdgeInsets.only(right: 18.0),
+                 child: Text("Time:${appointment.slot}",style: TextStyle(fontSize: 15,),),
+               ),
 
-        Text("Doctor: "),
-        Text(appointment.doctorId!),
 
-        Text("Date: "),
-        Text(appointment.date!),
-
-        Text("Time"),
-        Text(appointment.slot!),
+                ],
+              ),
+              Padding(
+                padding:  EdgeInsets.only(left: 38.0),
+                child: Row(
+                  children: [
+                    OutlinedButton(onPressed: (){}, child: Text("Cancel",style: TextStyle(color: Colors.black),))
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
       ],
     ),
   );
@@ -280,66 +324,74 @@ Container appointmentCard(MyAppointment appointment){
 // display doctor..........
 
 
-Container displayDoctors(context, List<Doctor> doctorList){
-  return Container(
-    decoration: BoxDecoration(
-    ),
-    height: MediaQuery.of(context).size.height-100,
-    child: ListView.builder(
-      itemCount: doctorList.length,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 14.0,vertical: 10),
-          child: Container(
-            child: Row(
-              children: [
-                SizedBox(width: 20,),
-                Padding(
-                  padding:  EdgeInsets.only(bottom: 52.0),
-                  child: CircleAvatar(child: Center(child: Icon(Icons.medical_services_outlined,color: Colors.white,),),backgroundColor: Colors.black,radius: 20,),
-                ),
-                SizedBox(width: 20,),
-                Column(
+Column displayDoctors(context, List<Doctor> doctorList){
+  return Column(
+    children: [
+      Padding(
+        padding:  EdgeInsets.only(right: 118.0),
+        child: Text("Other Doctors for you",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
+      ),
+      Container(
+        decoration: BoxDecoration(
+        ),
+        height: MediaQuery.of(context).size.height-100,
+        child: ListView.builder(
+          itemCount: doctorList.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding:  EdgeInsets.symmetric(horizontal: 14.0,vertical: 10),
+              child: Container(
+                child: Row(
                   children: [
-                    SizedBox(height: 10,),
+                    SizedBox(width: 20,),
                     Padding(
-                      padding: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.34,top:15),
-                      child: Text("Dr. ${doctorList[index].name}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                      padding:  EdgeInsets.only(bottom: 52.0),
+                      child: CircleAvatar(child: Center(child: Icon(Icons.medical_services_outlined,color: Colors.white,),),backgroundColor: Colors.black,radius: 20,),
                     ),
-                    SizedBox(height: 20,),
-                    Row(
+                    SizedBox(width: 20,),
+                    Column(
                       children: [
-                        OutlinedButton(
-                            onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>DoctorProfile(doctor: doctorList[index],))) ;
-                            },
-                            child: Text("Veiw Profile",style: TextStyle(color: Colors.black),)
+                        SizedBox(height: 10,),
+                        Padding(
+                          padding: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.34,top:15),
+                          child: Text("Dr. ${doctorList[index].name}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                         ),
-                        SizedBox(width: 20,),
-                        OutlinedButton(
-                            onPressed: (){
-                              print("doctor: ${doctorList[index]}");
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => CalPatient(doctorName: doctorList[index].name, doctorToken: doctorList[index].id, patientToken: curUser.userID)));
-                            },
-                            child: Text("Take Appointment",style: TextStyle(color: Colors.black),)
-                        ),
-                      ],
-                    )
+                        SizedBox(height: 20,),
+                        Row(
+                          children: [
+                            OutlinedButton(
+                                onPressed: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>DoctorProfile(doctor: doctorList[index],))) ;
+                                },
+                                child: Text("Veiw Profile",style: TextStyle(color: Colors.black),)
+                            ),
+                            SizedBox(width: 20,),
+                            OutlinedButton(
+                                onPressed: (){
+                                  print("doctor: ${doctorList[index]}");
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => CalPatient(doctorName: doctorList[index].name, doctorToken: doctorList[index].id, patientToken: curUser.userID)));
+                                },
+                                child: Text("Take Appointment",style: TextStyle(color: Colors.black),)
+                            ),
+                          ],
+                        )
 
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            ),
-            width: MediaQuery.of(context).size.width*0.85,
-            height: MediaQuery.of(context).size.height*0.15,
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              border: Border.all(),
-              borderRadius: BorderRadius.circular(10),
+                width: MediaQuery.of(context).size.width*0.85,
+                height: MediaQuery.of(context).size.height*0.15,
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  border: Border.all(),
+                  borderRadius: BorderRadius.circular(10),
 
-            ),
-          ),
-        );
-      }),
+                ),
+              ),
+            );
+          }),
+      ),
+    ],
   );
 }
