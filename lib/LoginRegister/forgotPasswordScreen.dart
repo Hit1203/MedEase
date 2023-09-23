@@ -29,19 +29,23 @@ class ForgotPasswordScreen extends StatelessWidget {
     TextEditingController email = TextEditingController();
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Forgot Password"),
+        backgroundColor: Colors.black,
+        title: Text("Forgot Password"),
       ),
 
       body: Column(
         children: [
-          buildTextField(Icons.mail_outline, "info@demouri.com", false, true,email),
-          TextButton(
+          Padding(
+            padding:  EdgeInsets.symmetric(horizontal: 18.0,vertical: 15),
+            child: buildTextField(Icons.mail_outline, "info@demouri.com", false, true,email),
+          ),
+          OutlinedButton(
               onPressed: () async {
                 final res = await postReq(email.text);
 
                 print("res: $res");
               },
-              child: const Text("Continue")),
+              child: const Text("Continue",style: TextStyle(color: Colors.black),)),
         ],
       ),
 
