@@ -54,7 +54,7 @@ class User {
     email: json_["email"],
     name: json_["fullname"],
     isDoctor: json_["is_doctor"],
-    gender: json_["g"],
+    gender: json_["gender"],
 
     age: json_["age"],
     height: json_["height"],
@@ -84,7 +84,7 @@ class User {
         "password": user.pwd!,
         "fullname": user.name!,
         "is_doctor": user.isDoctor!,
-        "g": user.gender!,
+        "gender": user.gender!,
 
         "age": user.age,
         "weight": user.weight,
@@ -117,6 +117,7 @@ class User {
   }
 
   Future signIn(User user) async {
+      print("Signing IN............................................");
       final res = await http.post(
         Uri.parse('$basicUri/login/'),
         headers: <String, String>{

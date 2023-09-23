@@ -39,7 +39,6 @@ class _CalPatientState extends State<CalPatient> {
                   print(details.date) ;
                 },
                 view: CalendarView.month,
-                dataSource: MeetingDataSource(getAppointments()),
                 onTap: (CalendarTapDetails details) {
                   // Handle tap on a calendar element here, if needed.
                 },
@@ -54,51 +53,6 @@ class _CalPatientState extends State<CalPatient> {
     );
   }
 }
-
-class MeetingDataSource extends CalendarDataSource {
-  MeetingDataSource(List<CalAppointment> source) {
-    appointments = source;
-  }
-}
-
-class CalAppointment {
-  final String subject;
-  final DateTime startTime;
-  final DateTime endTime;
-  final Color color;
-  final String description; // Add a description field.
-
-  CalAppointment({
-    required this.subject,
-    required this.startTime,
-    required this.endTime,
-    required this.color,
-    required this.description, // Initialize the description field.
-  });
-}
-
-List<CalAppointment> getAppointments() {
-  List<CalAppointment> meetings = <CalAppointment>[
-    CalAppointment(
-      subject: 'Meeting 1',
-      startTime: DateTime.now().add(Duration(hours: 1)),
-      endTime: DateTime.now().add(Duration(hours: 2)),
-      color: Colors.blue,
-      description: 'Discussion on project A',
-    ),
-    CalAppointment(
-      subject: 'Meeting 2',
-      startTime: DateTime.now().add(Duration(hours: 3)),
-      endTime: DateTime.now().add(Duration(hours: 4)),
-      color: Colors.green,
-      description: 'Planning for upcoming events',
-    ),
-    // Add more appointments as needed
-  ];
-
-  return meetings;
-}
-
 
 Container displaySlots(){
   List<String> sarr = ["12:30-13:00", "13:00-13:30","12:30-13:00", "13:00-13:30","12:30-13:00", "13:00-13:30","12:30-13:00", "13:00-13:30","12:30-13:00", "13:00-13:30","12:30-13:00", "13:00-13:30","12:30-13:00", "13:00-13:30","12:30-13:00", "13:00-13:30",];

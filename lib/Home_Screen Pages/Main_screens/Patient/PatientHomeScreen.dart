@@ -182,61 +182,64 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
         child: drawerPatient(),
       ) ,
 
-      body: Column(
-        children: [
-          FutureBuilder(
-              future: AppointmentRequests.isThereAppointment(curUser.userID!),
-              builder: (context, snapshot){
-
-                if(snapshot.connectionState == ConnectionState.done){
-                  if(snapshot.hasError){
-                    return Container(child: Text("Error"),);
-                  }
-                  else if (snapshot.hasError){
-                    //todo
-                    return appointmentCard(appointment);
-                  }
-                }
-
-                return Container();
-              }
-          ),
+      body: SingleChildScrollView(
+        child: Column(
           
-          FutureBuilder(
-              future: DoctorRequests.getDoctors(strDate),
-              builder: (context, snapshot){
+          children: [
+            FutureBuilder(
+                future: AppointmentRequests.isThereAppointment(curUser.userID!),
+                builder: (context, snapshot){
 
-                if(snapshot.connectionState == ConnectionState.done){
-                  if(snapshot.hasError){
-                    return Text("Error");
+                  if(snapshot.connectionState == ConnectionState.done){
+                    if(snapshot.hasError){
+                      return Container(child: Text("Error"),);
+                    }
+                    else if (snapshot.hasError){
+                      //todo
+                      return appointmentCard(appointment);
+                    }
                   }
-                  else if (snapshot.hasData){
-                    final Map<String, dynamic> res = snapshot.data as Map<String, dynamic>;
-                    List<dynamic> strDoctorList = res["responseData"]["vacant_doctors"];
-                    print("type:${strDoctorList[0].runtimeType}");
-                    print("type:${strDoctorList[0]}");
 
-                    List<Doctor> doctorList = strDoctorList.map((e) => Doctor.fromJSON(e)).toList();
-                    return displayDoctors(context, doctorList);
-                    return Text("$res");
-                  }
+                  return Container();
                 }
+            ),
+            
+            FutureBuilder(
+                future: DoctorRequests.getDoctors(strDate),
+                builder: (context, snapshot){
 
-                return Center(
-                  child: Padding(
-                    padding:  EdgeInsets.only(top: MediaQuery.of(context).size.width*0.9),
-                    child: SpinKitCircle(
-                      color: Colors.blue,
-                      size: 50.0,
+                  if(snapshot.connectionState == ConnectionState.done){
+                    if(snapshot.hasError){
+                      return Text("Error");
+                    }
+                    else if (snapshot.hasData){
+                      final Map<String, dynamic> res = snapshot.data as Map<String, dynamic>;
+                      List<dynamic> strDoctorList = res["responseData"]["vacant_doctors"];
+                      print("type:${strDoctorList[0].runtimeType}");
+                      print("type:${strDoctorList[0]}");
+
+                      List<Doctor> doctorList = strDoctorList.map((e) => Doctor.fromJSON(e)).toList();
+                      return displayDoctors(context, doctorList);
+                      return Text("$res");
+                    }
+                  }
+
+                  return Center(
+                    child: Padding(
+                      padding:  EdgeInsets.only(top: MediaQuery.of(context).size.width*0.9),
+                      child: SpinKitCircle(
+                        color: Colors.blue,
+                        size: 50.0,
+                      ),
                     ),
-                  ),
-                );
+                  );
 
 
 
-              }),
+                }),
 
-        ],
+          ],
+        ),
       ),
     );
   }

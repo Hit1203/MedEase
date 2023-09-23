@@ -727,11 +727,8 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 );
 
                 print("user: ${user.toJSON(user)}");
-    
                 res = await user.signUp(user);
-
                 print("==============res: ${res}");
-
                 print("object: name ${user.name} ${user.nonWorkingDays}");
               }
               else{
