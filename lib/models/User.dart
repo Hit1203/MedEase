@@ -54,7 +54,7 @@ class User {
     email: json_["email"],
     name: json_["fullname"],
     isDoctor: json_["is_doctor"],
-    gender: json_["gender"],
+    gender: json_["g"],
 
     age: json_["age"],
     height: json_["height"],
@@ -84,7 +84,7 @@ class User {
         "password": user.pwd!,
         "fullname": user.name!,
         "is_doctor": user.isDoctor!,
-        "gender": user.gender!,
+        "g": user.gender!,
 
         "age": user.age,
         "weight": user.weight,
