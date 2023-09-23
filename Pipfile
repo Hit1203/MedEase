@@ -1,0 +1,28 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django-rest-framework = "*"
+django-crispy-forms = "*"
+django-sslserver = "*"
+django-imagekit = "*"
+pillow = "*"
+pymongo = "==3.12.3"
+dnspython = "*"
+django-crum = "*"
+django-currentuser = "*"
+python-social-auth = "*"
+django-utils-six = "*"
+djando = "*"
+djongo = "==1.3.6"
+django-jsonfield = "*"
+django-json-field = "*"
+python-dateutil = "*"
+six = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"
