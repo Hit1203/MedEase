@@ -5,6 +5,7 @@ import 'package:tic_tech_teo_2023/utils/constants.dart';
 
 class Appointment {
     String? doctorId;
+    String? doctorName;
     String? patientId;
     String? date;
     String? slot;
@@ -12,6 +13,7 @@ class Appointment {
 
     Appointment({
       this.doctorId,
+      this.doctorName,
       this.patientId,
       this.slot,
       this.date,
@@ -23,6 +25,15 @@ class Appointment {
       "patient_id": patientId,
       "datetime": reFormatDate(),
     };
+
+    factory Appointment.fromJSON(Map<String, dynamic> json_) => Appointment(
+      id: json_["custom_id"],
+      doctorId: json_["doctor"],
+      doctorName: json_["d_name"],
+      date: json_["date_time"].toString().split(" ")[0],
+      slot: json_["date_time"].toString().split(" ")[1],
+      patientId: json_["patient"],
+    );
 
     String reFormatDate(){
       print("Appointment: date: $date");
@@ -65,11 +76,11 @@ class AppointmentRequests{
 
   static Future isThereAppointment(String token) async {
     final res = await http.post(
-      Uri.parse('$BASIC_URL/signup/'),
+      Uri.parse('$BASIC_URL/api/get-user-appointments/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode({'token': token}),
+      body: jsonEncode({'patient': token}),
     );
     if (res.statusCode == 200)
       return jsonDecode(res.body);

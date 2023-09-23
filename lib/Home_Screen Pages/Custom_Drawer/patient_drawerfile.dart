@@ -4,7 +4,7 @@ import 'package:tic_tech_teo_2023/Home_Screen%20Pages/Custom_Drawer/sidemenu_opt
 import 'package:tic_tech_teo_2023/LoginRegister/Login_Register_Main_File.dart';
 import 'package:tic_tech_teo_2023/utils/constants.dart';
 
-import '../Profile/Doctor/Profile.dart';
+import '../Profile/Doctor/DoctorProfile.dart';
 import '../Profile/Patient/Patient_profile.dart';
 import 'Infocard.dart';
 import 'card.dart';
