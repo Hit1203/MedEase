@@ -272,7 +272,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
       margin: EdgeInsets.only(top: 20),
       child: Column(
         children: [
-          buildTextField(Icons.account_box_outlined, "a@b.com",
+          buildTextField(Icons.account_box_outlined, "Full Name",
               false, true,name),
           buildTextField(
               Icons.email, "email", false, true,email1),

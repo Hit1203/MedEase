@@ -25,16 +25,16 @@ class Doctor {
 }
 
 class DoctorRequests{
-  static DateTime today = DateTime.now(); //.add(Duration(days: 1));
-  // static DateTime date = DateTime(today.year, today.month, today.day).add(Duration(days: 1));
-  static String strDate = "${today.day}/${today.month}/${today.year}";
-  static Future getDoctors() async {
+  // static DateTime today = DateTime.now(); //.add(Duration(days: 1));
+  // static String strDate = "${today.day}/${today.month}/${today.year}";
+
+  static Future getDoctors(String date) async {
     final res = await http.post(
-      Uri.parse('$BASIC_URL/signup/'),
+      Uri.parse('$BASIC_URL/api/get-vacant-doctors/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode({'date': strDate}),
+      body: jsonEncode({'date': date}),
     );
     if (res.statusCode == 200)
       return jsonDecode(res.body);
