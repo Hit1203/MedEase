@@ -58,7 +58,7 @@ class User {
 
     age: json_["age"],
     height: json_["height"],
-    weight: json_["weight"]+0.0,
+    weight: json_["weight"]==null?null:json_["weight"]+0.0,
     bloodGroup: json_["blood_group"],
 
     qualification: json_["qualification"],

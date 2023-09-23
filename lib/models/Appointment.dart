@@ -7,17 +7,22 @@ class MyAppointment {
     String? doctorId;
     String? doctorName;
     String? patientId;
+    String? patientName;
     String? date;
     String? slot;
     String? id;
+
+    DateTime? dt;
 
     MyAppointment({
       this.doctorId,
       this.doctorName,
       this.patientId,
+      this.patientName,
       this.slot,
       this.date,
-      this.id
+      this.id,
+      this.dt
     });
 
     Map<String, String?> toJson() => {
@@ -33,6 +38,8 @@ class MyAppointment {
       date: json_["date_time"].toString().split(" ")[0],
       slot: json_["date_time"].toString().split(" ")[1],
       patientId: json_["patient"],
+      patientName: json_["patient_name"],
+      dt: DateTime.parse("${json_["date_time"].toString().split(" ")[0].split("/")[2]}-${json_["date_time"].toString().split(" ")[0].split("/")[1]}-${json_["date_time"].toString().split(" ")[0].split("/")[0]} ${json_["date_time"].toString().split(" ")[1]}"),
     );
 
     String reFormatDate(){
@@ -61,11 +68,11 @@ class AppointmentRequests{
 
   static Future cancel(String id) async {
     final res = await http.post(
-      Uri.parse('$BASIC_URL/signup/'),
+      Uri.parse('$BASIC_URL/appointments/delete/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode({'id': id}),
+      body: jsonEncode({'appointment_id': id, 'patient': !curUser.isDoctor!?curUser.userID:"", 'doctor': curUser.isDoctor!?curUser.userID:""}),
     );
     if (res.statusCode == 200)
       return jsonDecode(res.body);
@@ -88,6 +95,24 @@ class AppointmentRequests{
       throw Exception("Failed to check for appointment");
 
   }
+
+  static Future getAppointmentList(String token) async {
+    final res = await http.post(
+      Uri.parse('$BASIC_URL/api/get-doctor-appointments/'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({'custom_id': token}),
+    );
+
+    if (res.statusCode == 200)
+      return jsonDecode(res.body);
+    else
+      throw Exception("Failed to check for appointment");
+
+  }
+
+
 
   static Future getVacantSlots(String token, String date) async {
     final res = await http.post(

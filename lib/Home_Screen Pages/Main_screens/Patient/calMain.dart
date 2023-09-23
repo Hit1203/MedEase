@@ -41,6 +41,8 @@ class _CalPatientState extends State<CalPatient> {
     print("dt: ${widget.doctorToken}" );
 
     String strDate = "${today.day}/${today.month}/${today.year}";
+    String preDate = strDate;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -52,7 +54,9 @@ class _CalPatientState extends State<CalPatient> {
             Container(
               height: MediaQuery.of(context).size.height*0.40,
               child: SfCalendar(
+
                 onSelectionChanged: (details){
+
                   print(details.date) ;
                   setState(() {
                     strDate = "${details.date!.day}/${details.date!.month}/${details.date!.year}";
@@ -74,7 +78,7 @@ class _CalPatientState extends State<CalPatient> {
               child: Container(
                 height: MediaQuery.of(context).size.height*0.2,
 
-                child: slotList==null
+                child: (slotList==null || preDate!=strDate)
                     ?FutureBuilder(
                     future: AppointmentRequests.getVacantSlots(widget.doctorToken!, strDate),
                     builder: (context, snapshot){
@@ -87,6 +91,7 @@ class _CalPatientState extends State<CalPatient> {
 
                           List<dynamic> res = snapshot.data["responseData"]["vacant_slots"];
                           slotList = res;
+                          preDate = strDate;
                           print("res type: ${res[0].runtimeType}");
 
 

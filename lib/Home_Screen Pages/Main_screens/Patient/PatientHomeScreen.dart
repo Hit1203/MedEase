@@ -202,7 +202,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                         return Container();
                       }
                       else{
-                        return appointmentCard(MyAppointment.fromJSON(res[0]));
+                        return appointmentCard(context, MyAppointment.fromJSON(res[0]));
                       }
 
                     }
@@ -254,9 +254,11 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
 }
 
 
-Container appointmentCard(MyAppointment appointment){
+Container appointmentCard(context, MyAppointment appointment){
 
   return Container(
+    width: MediaQuery.of(context).size.width,
+
     child: Column(
       children: [
         Text("Up Coming Appointment"),
