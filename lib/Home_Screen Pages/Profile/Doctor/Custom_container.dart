@@ -11,7 +11,7 @@ class CustomContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Padding(
-      padding: EdgeInsets.only(top: 36.0),
+      padding: EdgeInsets.only(top: 10.0),
       child: Container(
         child: Row(
           children: [
