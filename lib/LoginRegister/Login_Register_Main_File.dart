@@ -635,8 +635,6 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                   ],
                 )
 
-
-
               ],
             ),
           ) :Container(
