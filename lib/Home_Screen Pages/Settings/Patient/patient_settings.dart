@@ -14,14 +14,14 @@ class PatientSettings extends StatefulWidget {
 }
 
 class _PatientSettingsState extends State<PatientSettings> {
-  final ageControl = TextEditingController();
-   String Age = curUser.age as String ;
+  final  ageControl = TextEditingController();
+  int? Age = curUser.age ;
 
   final weightControl = TextEditingController();
-  String Weigth = curUser.age as String ;
+  int? Weigth = curUser.age;
 
   final heigthControl = TextEditingController();
-  String heigth = curUser.age as String ;
+  int? heigth = curUser.age;
 
   final passControl = TextEditingController();
 
@@ -73,9 +73,7 @@ class _PatientSettingsState extends State<PatientSettings> {
                         TextButton(
                             onPressed: () {
                               setState(() {
-                                Age = ageControl.text;
-                                ageControl.clear();
-                                Navigator.pop(context);
+
                               });
                             },
                             child: Text("Save")),
@@ -112,9 +110,7 @@ class _PatientSettingsState extends State<PatientSettings> {
                         TextButton(
                             onPressed: () {
                               setState(() {
-                                Age = ageControl.text;
-                                ageControl.clear();
-                                Navigator.pop(context);
+
                               });
                             },
                             child: Text("Save")),
@@ -150,9 +146,7 @@ class _PatientSettingsState extends State<PatientSettings> {
                         TextButton(
                             onPressed: () {
                               setState(() {
-                                Age = ageControl.text;
-                                ageControl.clear();
-                                Navigator.pop(context);
+
                               });
                             },
                             child: Text("Save")),
@@ -188,9 +182,7 @@ class _PatientSettingsState extends State<PatientSettings> {
                         TextButton(
                             onPressed: () {
                               setState(() {
-                                Age = ageControl.text;
-                                ageControl.clear();
-                                Navigator.pop(context);
+
                               });
                             },
                             child: Text("Save")),
