@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:tic_tech_teo_2023/utils/constants.dart';
 
-class Appointment {
+class MyAppointment {
     String? doctorId;
     String? doctorName;
     String? patientId;
@@ -11,7 +11,7 @@ class Appointment {
     String? slot;
     String? id;
 
-    Appointment({
+    MyAppointment({
       this.doctorId,
       this.doctorName,
       this.patientId,
@@ -26,7 +26,7 @@ class Appointment {
       "datetime": reFormatDate(),
     };
 
-    factory Appointment.fromJSON(Map<String, dynamic> json_) => Appointment(
+    factory MyAppointment.fromJSON(Map<String, dynamic> json_) => MyAppointment(
       id: json_["custom_id"],
       doctorId: json_["doctor"],
       doctorName: json_["d_name"],
@@ -45,7 +45,7 @@ class Appointment {
 
 class AppointmentRequests{
 
-  static Future create(Appointment appointment) async {
+  static Future create(MyAppointment appointment) async {
     final res = await http.post(
       Uri.parse('$BASIC_URL/appointments/create/'),
       headers: <String, String>{

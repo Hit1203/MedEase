@@ -124,7 +124,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
 
   bool isThereAppointment = false;
 
-  Appointment appointment = Appointment();
+  MyAppointment appointment = MyAppointment();
   DateTime today = DateTime.now();
 
   final List<String>  Uninames = [
@@ -196,13 +196,13 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                     }
                     else if (snapshot.hasData){
                       //todo
-                      print("is Appo res: ${snapshot.data}");
+                      print("is Appo res: ${snapshot.data}  ${curUser.auth_token}");
                       final res = snapshot.data["responseData"]["appointments"];
                       if(res.length == 0){
                         return Container();
                       }
                       else{
-                        return appointmentCard(Appointment.fromJSON(res[0]));
+                        return appointmentCard(MyAppointment.fromJSON(res[0]));
                       }
 
                     }
@@ -254,7 +254,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
 }
 
 
-Container appointmentCard(Appointment appointment){
+Container appointmentCard(MyAppointment appointment){
 
   return Container(
     child: Column(

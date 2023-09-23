@@ -803,11 +803,13 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 user.storeUser(user);
                 user.auth_token = res["responseData"]["token"];
                 user.isDoctor = res["responseData"]["is_doctor"];
-                print(user.auth_token);
+                print("user authT:${user.auth_token}");
                 print(user.isDoctor);
                 print("stored user");
 
                 curUser = User.fromJSON(res["responseData"]);
+                curUser.auth_token = user.auth_token;
+
                 print("object: name ${curUser.name} ${curUser.nonWorkingDays}");
 
                 curUser.isDoctor! ? 

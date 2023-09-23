@@ -22,6 +22,8 @@ class CalPatient extends StatefulWidget {
 class _CalPatientState extends State<CalPatient> {
   DateTime today = DateTime.now();
   bool isSelected  = false;
+  int? _selectedIndex;
+  List<dynamic>? slotList;
 
   @override
   void initState(){
@@ -48,7 +50,7 @@ class _CalPatientState extends State<CalPatient> {
         child: Column(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height*0.5,
+              height: MediaQuery.of(context).size.height*0.40,
               child: SfCalendar(
                 onSelectionChanged: (details){
                   print(details.date) ;
@@ -68,74 +70,117 @@ class _CalPatientState extends State<CalPatient> {
 
             const Text("Vacant Slots", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
 
-            Container(
-              height: MediaQuery.of(context).size.height*0.2,
+            SingleChildScrollView(
+              child: Container(
+                height: MediaQuery.of(context).size.height*0.2,
 
-              child: FutureBuilder(
-                  future: AppointmentRequests.getVacantSlots(widget.doctorToken!, strDate),
-                  builder: (context, snapshot){
-                    if(snapshot.connectionState == ConnectionState.done){
-                      if(snapshot.hasError){
-                        Text("Unble to connet please again later");
-                      }
-                      else if(snapshot.hasData){
-                        print("res: ${snapshot.data}");
+                child: slotList==null
+                    ?FutureBuilder(
+                    future: AppointmentRequests.getVacantSlots(widget.doctorToken!, strDate),
+                    builder: (context, snapshot){
+                      if(snapshot.connectionState == ConnectionState.done){
+                        if(snapshot.hasError){
+                          Text("Unble to connet please again later");
+                        }
+                        else if(snapshot.hasData){
+                          print("res: ${snapshot.data}");
 
-                        List<dynamic> res = snapshot.data["responseData"]["vacant_slots"];
-                        print("res type: ${res[0].runtimeType}");
+                          List<dynamic> res = snapshot.data["responseData"]["vacant_slots"];
+                          slotList = res;
+                          print("res type: ${res[0].runtimeType}");
 
 
-                        return Container(
-                          width: MediaQuery.of(context).size.width,
-                          child: Expanded(
-                            child: Wrap(
-                              alignment: WrapAlignment.spaceEvenly,
-                              children: res.map((e) => Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                              child:  FilterChip(
-                                  label: Text(slotFormatString("$e"),style: TextStyle(color: Colors.white),),
-                                  selected: isSelected,
-                                  backgroundColor: Colors.black,
-                                  selectedColor: Colors.red,
-                                  onSelected: (bool value){
-                                    setState(()
-                                    {
-                                       isSelected = !isSelected ;
-                                    }
-                                    );}
+
+
+                          return Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height*0.2,
+                            child: Expanded(
+                              child: Wrap(
+                                alignment: WrapAlignment.spaceEvenly,
+                                children: displaySlots(res),
                               ),
-                                // Container(
-                                //   height: 30,
-                                //   width: 120,
-                                //   child: Center(
-                                //           child: Text(slotFormatString("$e"), style: TextStyle(fontSize: 20))),
-                                //
-                                //   decoration: BoxDecoration(
-                                //
-                                //       border: Border.all()
-                                //   )
-                                //   ,
-                                // ),
-
-                              )).toList(),
-
                             ),
-                          ),
-                        );
+                          );
+                        }
+                        else {
+                          Text("Sorry no slot avaible for the day");
+                        }
                       }
-                      else {
-                        Text("Sorry no slot avaible for the day");
-                      }
-                    }
 
-                    return Center(child: CircularProgressIndicator(),);
-                  }),
+                      return Center(child: CircularProgressIndicator(),);
+                    })
+                    : Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height*0.20,
+                      child: Expanded(
+                        child: Wrap(
+                        alignment: WrapAlignment.spaceEvenly,
+                        children: displaySlots(slotList!),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+            Expanded(child: Container()),
+
+            ElevatedButton(
+                child: Text("Confirm", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                onPressed: () async {
+                  print("${slotList![_selectedIndex!]}");
+                  MyAppointment appointment = MyAppointment(
+                    doctorId: widget.doctorToken,
+                    patientId: widget.patientToken,
+                    date: strDate,
+                    slot: slotList![_selectedIndex!]
+                  );
+                  final res = await AppointmentRequests.create(appointment);
+
+                  print("create appo: $res");
+
+                  if(res["responseData"]["created"] == true){
+                    //todo add snackbar and back to home
+                  }
+                  else{
+                    //todo failed to create appointment in snackbar
+                  }
+                }
+
             )
 
           ],
         ),
       ),
     );
+  }
+
+  List<Widget> displaySlots (List<dynamic> list){
+    List<Widget> chips = [];
+
+    for (int i=0; i<list.length; i++){
+      Widget item = Padding(
+        padding: EdgeInsets.all(1),
+        child: ChoiceChip(
+          label: Text(slotFormatString("${list[i]}")),
+          labelStyle: const TextStyle(color: Colors.white),
+          backgroundColor: Colors.black,
+          selected: _selectedIndex == i,
+          selectedColor: Colors.green,
+
+          onSelected: (bool value) {
+            setState(() {
+              _selectedIndex = i;
+            });
+          },
+        ),
+      );
+
+      chips.add(item);
+    }
+
+    return chips;
+
   }
 }
 
@@ -148,4 +193,5 @@ String slotFormatString(String time){
 
   return formate;
 }
+
 

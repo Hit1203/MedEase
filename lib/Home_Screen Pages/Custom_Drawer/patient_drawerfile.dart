@@ -7,7 +7,7 @@ import 'package:tic_tech_teo_2023/utils/constants.dart';
 
 import '../Profile/Doctor/DoctorProfile.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../Profile/Doctor/Profile.dart';
+import '../Profile/Doctor/DoctorProfile.dart';
 import '../Profile/Patient/Patient_profile.dart';
 import '../Settings/Patient/patient_settings.dart';
 import 'Infocard.dart';
