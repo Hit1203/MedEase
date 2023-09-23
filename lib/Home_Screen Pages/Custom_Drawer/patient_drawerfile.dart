@@ -111,7 +111,13 @@ class _drawerPatientState extends State<drawerPatient> {
                         SizedBox(width: 10,),
                         Icon(Icons.logout),
                         SizedBox(width: 10,),
-                        card(name: 'Sign Out',),
+                        InkWell(
+                            onTap: ()
+                            {
+
+                            },
+                            child: card(name: 'Sign Out',)
+                        ),
                       ],
 
                     ),

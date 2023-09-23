@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tic_tech_teo_2023/Color_File/colors.dart';
 import 'package:tic_tech_teo_2023/Home_Screen%20Pages/Custom_Drawer/sidemenu_options.dart';
+import 'package:tic_tech_teo_2023/utils/constants.dart';
 
 import '../Profile/Doctor/Profile.dart';
 import 'Infocard.dart';
@@ -52,7 +53,7 @@ class _drawerState extends State<drawer> {
                     onTap: (){
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile()));
                     },
-                      child: Infocard(name: ' Dr.Harsh Mori', profession: 'Doctor', icon: Icon(Icons.person),)),
+                      child: Infocard(name: curUser.name.toString(), profession: curUser.isDoctor! ?'Patient' :'Doctor' , icon: Icon(Icons.person),)),
                   Divider(height: 1,),
                   Sidemenuoptions(
                       menuname: 'Waiting List',
@@ -109,7 +110,9 @@ class _drawerState extends State<drawer> {
                         SizedBox(width: 10,),
                         Icon(Icons.logout),
                         SizedBox(width: 10,),
-                        card(name: 'Sign Out',),
+                        InkWell(
+                          onTap: (){},
+                            child: card(name: 'Sign Out',)),
                       ],
 
                     ),
