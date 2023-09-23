@@ -59,7 +59,7 @@ class _patientProfileState extends State<patientProfile> {
                               child: CircleAvatar(
                                 backgroundImage: curUser.gender == "Male"
                                     ? AssetImage("assets/images/Patient_male.jpg")
-                                    : AssetImage("assets/images/.jpg"),
+                                    : AssetImage("assets/images/Patient_female.jpg"),
                                 radius: 80,
                               )
                           ),
@@ -74,15 +74,15 @@ class _patientProfileState extends State<patientProfile> {
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            CustomContainer(Name: "Kenil Kaneriya", icon: Icon(Icons.account_box_outlined),),
-                            CustomContainer(Name: "kenil@kaneriya.com", icon: Icon(Icons.email)),
+                            CustomContainer(Name: curUser.name.toString(), icon: Icon(Icons.account_box_outlined),),
+                            CustomContainer(Name: curUser.email.toString(), icon: Icon(Icons.email)),
 
 
-                            CustomContainer(Name: "Weight : 100", icon: Icon(Icons.monitor_weight)),
+                            CustomContainer(Name: "Weight : ${curUser.weight}", icon: Icon(Icons.monitor_weight)),
 
-                            CustomContainer(Name: "Height : 1.3", icon: Icon(Icons.height)),
+                            CustomContainer(Name: "Height : ${curUser.height}", icon: Icon(Icons.height)),
 
-                            CustomContainer(Name: "Age : 19", icon: Icon(Icons.timelapse)),
+                            CustomContainer(Name: "Age : ${curUser.age}", icon: Icon(Icons.timelapse)),
 
 
 

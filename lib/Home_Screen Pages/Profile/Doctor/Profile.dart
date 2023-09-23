@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tic_tech_teo_2023/Home_Screen%20Pages/Profile/Doctor/Custom_container.dart';
+import 'package:tic_tech_teo_2023/utils/constants.dart';
+
+import 'NonWorkingCustomClass.dart';
 
 
 class Profile extends StatefulWidget {
@@ -54,10 +57,13 @@ class _ProfileState extends State<Profile> {
                             ],
                             shape: BoxShape.circle,
                           ),
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage("assets/images/male_doctor.jpg"),
-                            radius: 80,
-                          ),
+                            child: CircleAvatar(
+                              backgroundImage: curUser.gender == "Male"
+                                  ? AssetImage("assets/images/male_doctor.jpg")
+                                  : AssetImage("assets/images/female_doc.jpg"),
+                              radius: 80,
+                            )
+
                         ),
                       ),
                     ],
@@ -69,9 +75,9 @@ class _ProfileState extends State<Profile> {
                     color: Colors.white,
                     child: Column(
                       children: [
-                        CustomContainer(Name: "Dr. Harsh", icon: Icon(Icons.account_box_outlined),),
-                        CustomContainer(Name: "harsh@gmail.com", icon: Icon(Icons.email)),
-                        CustomContainer(Name: "9:00 AM - 18:00 PM", icon: Icon(Icons.timelapse)),
+                        CustomContainer(Name: curUser.name.toString(), icon: Icon(Icons.account_box_outlined),),
+                        CustomContainer(Name: curUser.email.toString(), icon: Icon(Icons.email)),
+                        CustomContainer(Name: "${curUser.whStart} - ${curUser.whEnd}", icon: Icon(Icons.timelapse)),
                         SizedBox(height: 20,),
                         Padding(
                           padding:  EdgeInsets.only(right:MediaQuery.of(context).size.width*0.4),
@@ -82,24 +88,7 @@ class _ProfileState extends State<Profile> {
                          children: [
                            Padding(
                              padding:  EdgeInsets.only(right: MediaQuery.of(context).size.width*0.02,left: 12),
-                             child: Container(
-                               width: 50,
-                               height: 35,
-                               decoration: BoxDecoration(
-                                 borderRadius: BorderRadius.circular(12),
-                                 border: Border.all(),
-                               ),
-                               child: Center(child: Text("Sat",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)),
-                             ),
-                           ),
-                           Container(
-                             width: 50,
-                             height: 35,
-                             decoration: BoxDecoration(
-                               borderRadius: BorderRadius.circular(12),
-                               border: Border.all(),
-                             ),
-                             child: Center(child: Text("Sun",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),)),
+                             child: CustomContainer2(),
                            ),
                          ],
                        )
