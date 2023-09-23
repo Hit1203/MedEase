@@ -781,12 +781,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
 
                 );
 
-                print("email: ${user.email} start: ${user.whStart} end ${user.whEnd}");
-
+                print("user: ${user.toJSON(user)}");
                 res = await user.signUp(user);
-
                 print("==============res: ${res}");
-
                 print("object: name ${user.name} ${user.nonWorkingDays}");
               }
               else{
@@ -813,7 +810,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 curUser = User.fromJSON(res["responseData"]);
                 print("object: name ${curUser.name} ${curUser.nonWorkingDays}");
 
-                curUser.isDoctor! ? Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>PatientHomeScreen())) : Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>PatientHomeScreen())) ;
+                curUser.isDoctor! ? 
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>PatientHomeScreen())) 
+                    : Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>PatientHomeScreen())) ;
 
               };
               print("ok");

@@ -16,7 +16,7 @@ class Doctor {
   });
 
   factory Doctor.fromJSON(Map<String, dynamic> json_) => Doctor(
-    id: json_["user_id"],
+    id: json_["id"],
     name: json_["name"],
   );
 

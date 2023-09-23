@@ -9,8 +9,8 @@ import 'LoginRegister/Login_Register_Main_File.dart';
 
 void main()
 async {
-  DateTime today = DateTime.now();
-  String strDate = "${today.day}/${today.month}/${today.year}";
+  // DateTime today = DateTime.now();
+  // String strDate = "${today.day}/${today.month}/${today.year}";
   // Appointment appointment = Appointment(doctorId: "RQXWZCNIMXXWMVOMWXTT",
   //     patientId: "WRBNUJOZYQHCVWCYXSRK",
   //     date: strDate,
@@ -18,8 +18,8 @@ async {
   // );
   //
   // final Map<String, dynamic> res = await AppointmentRequests.create(appointment);
-  final Map<String, dynamic> res = await DoctorRequests.getDoctors(strDate);
-  print("========res: $res");
+  // final Map<String, dynamic> res = await DoctorRequests.getDoctors(strDate);
+  // print("========res: $res");
 
   runApp(Myapp()) ;
 }

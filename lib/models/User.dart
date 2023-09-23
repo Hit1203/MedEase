@@ -28,7 +28,7 @@ class User {
   String? qualification;
   String? whStart;
   String? whEnd;
-  List<String>? nonWorkingDays;
+  List<dynamic>? nonWorkingDays;
 
 
   User({
@@ -64,7 +64,7 @@ class User {
     qualification: json_["qualification"],
     whStart: json_["wh_start"],
     whEnd: json_["wh_end"],
-    nonWorkingDays: json_["is_doctor"]?json.decode(json_["non_working_week_days"]??"[]").cast<String>().toList(): null,
+    nonWorkingDays: json_["non_working_week_days"],
 
     userID: json_["user_id"]
   );
@@ -117,6 +117,7 @@ class User {
   }
 
   Future signIn(User user) async {
+      print("Signing IN............................................");
       final res = await http.post(
         Uri.parse('$basicUri/login/'),
         headers: <String, String>{

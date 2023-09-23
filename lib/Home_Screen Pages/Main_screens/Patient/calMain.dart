@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:tic_tech_teo_2023/models/Appointment.dart';
 
 void main() {
   runApp(CalPatient());
@@ -7,14 +8,18 @@ void main() {
 
 class CalPatient extends StatefulWidget {
   String? doctorName;
+  String? doctorToken;
+  String? patientToken;
 
-  CalPatient({this.doctorName, super.key});
+
+  CalPatient({this.doctorName, this.doctorToken, this.patientToken,super.key});
 
   @override
   State<CalPatient> createState() => _CalPatientState();
 }
 
 class _CalPatientState extends State<CalPatient> {
+  DateTime today = DateTime.now();
 
   @override
   void initState(){
@@ -24,6 +29,9 @@ class _CalPatientState extends State<CalPatient> {
 
   @override
   Widget build(BuildContext context) {
+    print("dt: ${widget.doctorToken}" );
+
+    String strDate = "${today.day}/${today.month}/${today.year}";
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -33,21 +41,70 @@ class _CalPatientState extends State<CalPatient> {
         child: Column(
           children: [
             Container(
-              width: 500,
-              height: 500,
+              height: MediaQuery.of(context).size.height*0.5,
               child: SfCalendar(
                 onSelectionChanged: (details){
                   print(details.date) ;
+                  setState(() {
+                    strDate = "${details.date!.day}/${details.date!.month}/${details.date!.year}";
+                  });
                 },
                 view: CalendarView.month,
-                dataSource: MeetingDataSource(getAppointments()),
                 onTap: (CalendarTapDetails details) {
                   // Handle tap on a calendar element here, if needed.
                 },
+
               ),
             ),
 
-            displaySlots(),
+            // displaySlots(context),
+
+            const Text("Vacant Slots", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
+
+            Container(
+              height: MediaQuery.of(context).size.height*0.2,
+
+              child: FutureBuilder(
+                  future: AppointmentRequests.getVacantSlots(widget.doctorToken!, strDate),
+                  builder: (context, snapshot){
+                    if(snapshot.connectionState == ConnectionState.done){
+                      if(snapshot.hasError){
+                        Text("Unble to connet please again later");
+                      }
+                      else if(snapshot.hasData){
+                        print("res: ${snapshot.data}");
+
+                        List<dynamic> res = snapshot.data["responseData"]["vacant_slots"];
+                        print("res type: ${res[0].runtimeType}");
+
+
+                        return Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: Expanded(
+                            child: Wrap(
+                              alignment: WrapAlignment.spaceEvenly,
+                              children: res.map((e) => Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                              child: Container(
+                                height: 30,
+                                width: 120,
+                                child: Center(child: Text(slotFormatString("$e"), style: TextStyle(fontSize: 20))),
+                                decoration: BoxDecoration(border: Border.all()),
+                              )
+                              )).toList(),
+
+                            ),
+                          ),
+                        );
+                      }
+                      else {
+                        Text("Sorry no slot avaible for the day");
+                      }
+                    }
+
+                    return Center(child: CircularProgressIndicator(),);
+                  }),
+            )
 
           ],
         ),
@@ -56,73 +113,13 @@ class _CalPatientState extends State<CalPatient> {
   }
 }
 
-class MeetingDataSource extends CalendarDataSource {
-  MeetingDataSource(List<CalAppointment> source) {
-    appointments = source;
-  }
+String slotFormatString(String time){
+  print("date: ${DateTime.now().toString()}");
+  DateTime sT = DateTime.parse("2001-01-01 $time:00");
+  DateTime eT = sT.add(Duration(minutes: 30));
+
+  String formate = "${sT.hour}:${sT.minute==0?'00':sT.minute} - ${eT.hour}:${eT.minute==0?'00':eT.minute}";
+
+  return formate;
 }
 
-class CalAppointment {
-  final String subject;
-  final DateTime startTime;
-  final DateTime endTime;
-  final Color color;
-  final String description; // Add a description field.
-
-  CalAppointment({
-    required this.subject,
-    required this.startTime,
-    required this.endTime,
-    required this.color,
-    required this.description, // Initialize the description field.
-  });
-}
-
-List<CalAppointment> getAppointments() {
-  List<CalAppointment> meetings = <CalAppointment>[
-    CalAppointment(
-      subject: 'Meeting 1',
-      startTime: DateTime.now().add(Duration(hours: 1)),
-      endTime: DateTime.now().add(Duration(hours: 2)),
-      color: Colors.blue,
-      description: 'Discussion on project A',
-    ),
-    CalAppointment(
-      subject: 'Meeting 2',
-      startTime: DateTime.now().add(Duration(hours: 3)),
-      endTime: DateTime.now().add(Duration(hours: 4)),
-      color: Colors.green,
-      description: 'Planning for upcoming events',
-    ),
-    // Add more appointments as needed
-  ];
-
-  return meetings;
-}
-
-
-Container displaySlots(){
-  List<String> sarr = ["12:30-13:00", "13:00-13:30","12:30-13:00", "13:00-13:30","12:30-13:00", "13:00-13:30","12:30-13:00", "13:00-13:30","12:30-13:00", "13:00-13:30","12:30-13:00", "13:00-13:30","12:30-13:00", "13:00-13:30","12:30-13:00", "13:00-13:30",];
-
-  return Container(
-    height: 200,
-    width: 350,
-    child: GridView.builder(
-      gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4,
-        // childAspectRatio: 1,
-      ),
-      // scrollDirection: Axis.horizontal,
-
-      itemCount: sarr.length,
-      itemBuilder: (_,int index){
-        return Container(
-          // padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-          decoration: BoxDecoration(border: Border.all()),
-          child: Text(sarr[index]),
-        );
-      },
-    ),
-  );
-
-}
