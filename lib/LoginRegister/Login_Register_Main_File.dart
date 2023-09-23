@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart' ;
 import 'package:tic_tech_teo_2023/utils/constants.dart';
 import '../Color_File/colors.dart';
-import '../Home_Screen Pages/Home_Page_Main_Screen.dart';
+import '../Home_Screen Pages/Main_screens/Doctor/Home_Page_Main_Screen.dart';
+import '../Home_Screen Pages/Main_screens/Patient/PatientHomeScreen.dart';
 import '../models/User.dart';
 import 'forgotPasswordScreen.dart';
 
@@ -13,7 +14,7 @@ class LoginSignupScreen extends StatefulWidget {
 
 class _LoginSignupScreenState extends State<LoginSignupScreen> {
 
-  bool isSignupScreen = true;
+  bool isSignupScreen = false;
   bool isMale = true;
   bool isRememberMe = false;
   bool isDoctor = true ;
@@ -73,41 +74,43 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
               child: Container(
                 padding: EdgeInsets.only(top: 90, left: 20),
                 color: Color(0xFF3b5999).withOpacity(.4),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                          text: "Welcome",
-                          style: TextStyle(
-                            fontSize: 25,
-                            letterSpacing: 2,
-                            color: Colors.orange,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: isSignupScreen ? " to MedEase," : " Back,",
-                              style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            )
-                          ]),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      isSignupScreen
-                          ? "Sign Up to Continue"
-                          : "Sign In to Continue",
-                      style: TextStyle(
-                        letterSpacing: 1,
-                        color: Colors.white,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                            text: "Welcome",
+                            style: TextStyle(
+                              fontSize: 25,
+                              letterSpacing: 2,
+                              color: Colors.orange,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: isSignupScreen ? " to MedEase," : " Back,",
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              )
+                            ]),
                       ),
-                    )
-                  ],
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        isSignupScreen
+                            ? "Sign Up to Continue"
+                            : "Sign In to Continue",
+                        style: TextStyle(
+                          letterSpacing: 1,
+                          color: Colors.white,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -691,8 +694,16 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
           child: InkWell(
             onTap: () async {
               //todo: signIn/signUp
+
               User user;
               Map<String, dynamic> res;
+
+              showDialog(context: context, builder: (context)
+              {
+                return Center(child: CircularProgressIndicator());
+              } ,
+
+              );
 
               if(isSignupScreen){
                 // print("============age: ${int.tryParse(Age.text)}");
@@ -734,7 +745,6 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
               }
 
 
-
               print("res: $res");
               bool isCreated = isSignupScreen?res["responseData"]["created"]:res["responseData"]["isAuthenticated"];
               if(isCreated==true){
@@ -747,7 +757,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
 
                 curUser = User.fromJSON(res["responseData"]);
 
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage())) ;
+                curUser.isDoctor! ? Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage())) : Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>PatientHomeScreen())) ;
 
               };
               print("ok");

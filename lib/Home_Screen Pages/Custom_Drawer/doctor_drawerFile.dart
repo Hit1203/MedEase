@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tic_tech_teo_2023/Color_File/colors.dart';
 import 'package:tic_tech_teo_2023/Home_Screen%20Pages/Custom_Drawer/sidemenu_options.dart';
 
-import '../Profile/Profile.dart';
+import '../Profile/Doctor/Profile.dart';
 import 'Infocard.dart';
 import 'card.dart';
 
