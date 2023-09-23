@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tic_tech_teo_2023/Color_File/colors.dart';
 import 'package:tic_tech_teo_2023/Home_Screen%20Pages/Custom_Drawer/sidemenu_options.dart';
 import 'package:tic_tech_teo_2023/utils/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../Profile/Doctor/DoctorProfile.dart';
 import 'Infocard.dart';
@@ -53,7 +54,7 @@ class _drawerState extends State<drawer> {
                     onTap: (){
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>DoctorProfile()));
                     },
-                      child: Infocard(name: curUser.name.toString(), profession: curUser.isDoctor! ?'Patient' :'Doctor' , icon: Icon(Icons.person),)),
+                      child: Infocard(name: curUser.name.toString(), profession: curUser.isDoctor! ?'Doctor' :'Patient' , icon: Icon(Icons.person),)),
                   Divider(height: 1,),
                   Sidemenuoptions(
                       menuname: 'Waiting List',
@@ -98,9 +99,7 @@ class _drawerState extends State<drawer> {
                       index: 3,
                       onTap: () {
                         setActiveIndex(3) ;
-                        Future.delayed(Duration(milliseconds: 250), () {
-                          // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
-                        });
+                        launch('http://172.20.10.3:8070/help/',forceWebView: true);
                       }
                   ),
                   Padding(
