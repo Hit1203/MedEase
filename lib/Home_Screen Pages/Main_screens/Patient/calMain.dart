@@ -7,10 +7,8 @@ void main() {
 
 class CalPatient extends StatefulWidget {
   String? doctorName;
-  List<String>? nonWorkingDays;
-  List<String>? slots;
 
-  CalPatient({this.doctorName, this.slots, this.nonWorkingDays, super.key});
+  CalPatient({this.doctorName, super.key});
 
   @override
   State<CalPatient> createState() => _CalPatientState();
@@ -28,7 +26,7 @@ class _CalPatientState extends State<CalPatient> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Dr. Hersh Mori"),
+        title: Text("Dr. ${widget.doctorName}"),
       ),
       body: SafeArea(
         child: Column(

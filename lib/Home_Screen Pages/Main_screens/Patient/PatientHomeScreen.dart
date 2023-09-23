@@ -60,7 +60,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
       body: Column(
         children: [
           isThereAppointment? appointmentCard(appointment):Container(),
-          
+
           FutureBuilder(
               future: DoctorRequests.getDoctors(strDate),
               builder: (context, snapshot){
@@ -70,10 +70,13 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                     return Text("Error");
                   }
                   else if (snapshot.hasData){
-                    List<Doctor> l = [];
                     final Map<String, dynamic> res = snapshot.data as Map<String, dynamic>;
-                    List<String> strDoctorList = json.decode(res["responseData"]["vacant_doctors"]).cast<String>().toList();
-                    return displayDoctors(l);
+                    List<dynamic> strDoctorList = res["responseData"]["vacant_doctors"];
+                    print("type:${strDoctorList[0].runtimeType}");
+                    print("type:${strDoctorList[0]}");
+
+                    List<Doctor> doctorList = strDoctorList.map((e) => Doctor.fromJSON(e)).toList();
+                    return displayDoctors(context, doctorList);
                     return Text("$res");
                   }
                 }
@@ -110,15 +113,16 @@ Container appointmentCard(Appointment appointment){
 
 }
 
-Container displayDoctors(List<Doctor> doctorList){
+Container displayDoctors(context, List<Doctor> doctorList){
   return Container(
+    height: MediaQuery.of(context).size.height-100,
     child: ListView.builder(
       itemCount: doctorList.length,
       itemBuilder: (context, index) {
         return ListTile(
           title: Text("Dr. ${doctorList[index].name}"),
           onTap: () {
-            
+            Navigator.push(context, MaterialPageRoute(builder: (context) => CalPatient(doctorName: doctorList[index].name)));
           },
         );
       }),

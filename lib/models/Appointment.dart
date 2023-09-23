@@ -78,4 +78,19 @@ class AppointmentRequests{
 
   }
 
+  static Future getVacantSlots(String token) async {
+    final res = await http.post(
+      Uri.parse('$BASIC_URL/api/get-vacant-slots/'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({'token': token}),
+    );
+    if (res.statusCode == 200)
+      return jsonDecode(res.body);
+    else
+      throw Exception("Failed to check for appointment");
+
+  }
+
 }

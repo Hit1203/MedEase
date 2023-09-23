@@ -18,8 +18,6 @@ class Doctor {
   factory Doctor.fromJSON(Map<String, dynamic> json_) => Doctor(
     id: json_["user_id"],
     name: json_["name"],
-    nonWorkingDays: json.decode(json_["non_working_days"]).cast<String>().toList(),
-    slots: json.decode(json_["slots"]).cast<String>().toList(),
   );
 
 }
