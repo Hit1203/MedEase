@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:tic_tech_teo_2023/models/Doctor.dart';
+import 'package:tic_tech_teo_2023/utils/constants.dart';
 import '../../../Color_File/colors.dart';
 import '../../Custom_Drawer/patient_drawerfile.dart';
 import 'package:tic_tech_teo_2023/models/Appointment.dart';
@@ -59,7 +60,23 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
 
       body: Column(
         children: [
-          isThereAppointment? appointmentCard(appointment):Container(),
+          FutureBuilder(
+              future: AppointmentRequests.isThereAppointment(curUser.userID!),
+              builder: (context, snapshot){
+
+                if(snapshot.connectionState == ConnectionState.done){
+                  if(snapshot.hasError){
+                    return Container(child: Text("Error"),);
+                  }
+                  else if (snapshot.hasError){
+                    //todo
+                    return appointmentCard(appointment);
+                  }
+                }
+
+                return Container();
+              }
+          ),
           
           FutureBuilder(
               future: DoctorRequests.getDoctors(strDate),
