@@ -78,13 +78,13 @@ class AppointmentRequests{
 
   }
 
-  static Future getVacantSlots(String token) async {
+  static Future getVacantSlots(String token, String date) async {
     final res = await http.post(
       Uri.parse('$BASIC_URL/api/get-vacant-slots/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode({'token': token}),
+      body: jsonEncode({'doctor': token, 'date': date}),
     );
     if (res.statusCode == 200)
       return jsonDecode(res.body);

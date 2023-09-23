@@ -310,7 +310,8 @@ Container displayDoctors(context, List<Doctor> doctorList){
                         SizedBox(width: 20,),
                         OutlinedButton(
                             onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => CalPatient(doctorName: doctorList[index].name)));
+                              print("doctor: ${doctorList[index]}");
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => CalPatient(doctorName: doctorList[index].name, doctorToken: doctorList[index].id, patientToken: curUser.userID)));
                             },
                             child: Text("Take Appointment",style: TextStyle(color: Colors.black),)
                         ),
