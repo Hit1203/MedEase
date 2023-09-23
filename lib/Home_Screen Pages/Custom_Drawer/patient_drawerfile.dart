@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tic_tech_teo_2023/Color_File/colors.dart';
 import 'package:tic_tech_teo_2023/Home_Screen%20Pages/Custom_Drawer/sidemenu_options.dart';
+import 'package:tic_tech_teo_2023/LoginRegister/Login_Register_Main_File.dart';
 import 'package:tic_tech_teo_2023/utils/constants.dart';
 
 import '../Profile/Doctor/Profile.dart';
@@ -33,14 +34,7 @@ class _drawerPatientState extends State<drawerPatient> {
         backgroundColor: Colors.white70,
         body: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                HomeScreen.PrimaryColor,
-                Colors.grey,
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
+            color: Colors.black
           ),
           width: 310,
           height: double.infinity,
@@ -54,7 +48,7 @@ class _drawerPatientState extends State<drawerPatient> {
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>patientProfile()));
                       },
-                      child: Infocard(name: curUser.name.toString(), profession: curUser.isDoctor! ? 'Patient':"Doctor", icon: Icon(Icons.person),)),
+                      child: Infocard(name: curUser.name.toString(), profession: curUser.isDoctor! ? 'Doctor':"Patient", icon: Icon(Icons.person),)),
                   Divider(height: 1,),
                   Sidemenuoptions(
                       menuname: 'Appoinments',
@@ -64,7 +58,7 @@ class _drawerPatientState extends State<drawerPatient> {
                       onTap: () {
                         setActiveIndex(0) ;
                         Future.delayed(Duration(milliseconds: 250), () {
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => patientProfile()));
+                          // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => patientProfile()));
                         });
                       }
                   ),
@@ -105,21 +99,21 @@ class _drawerPatientState extends State<drawerPatient> {
                       }
                   ),
                   Padding(
-                    padding:  EdgeInsets.only(top:MediaQuery.of(context).size.width*0.9),
-                    child: Row(
-                      children: [
-                        SizedBox(width: 10,),
-                        Icon(Icons.logout),
-                        SizedBox(width: 10,),
-                        InkWell(
-                            onTap: ()
-                            {
+                    padding:  EdgeInsets.only(top:MediaQuery.of(context).size.width*0.9,left: 15),
+                    child: InkWell(
+                      onTap: ()
+                      {
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginSignupScreen()));
+                      },
+                      child: Row(
+                        children: [
+                          SizedBox(width: 10,),
+                          Icon(Icons.logout,color: Colors.white,),
+                          SizedBox(width: 10,),
+                           card(name: 'Sign Out',),
+                        ],
 
-                            },
-                            child: card(name: 'Sign Out',)
-                        ),
-                      ],
-
+                      ),
                     ),
                   )
 

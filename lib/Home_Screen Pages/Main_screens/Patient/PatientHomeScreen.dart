@@ -287,7 +287,7 @@ Container displayDoctors(context, List<Doctor> doctorList){
               children: [
                 SizedBox(width: 20,),
                 Padding(
-                  padding:  EdgeInsets.only(bottom: 42.0),
+                  padding:  EdgeInsets.only(bottom: 52.0),
                   child: CircleAvatar(child: Center(child: Icon(Icons.medical_services_outlined,color: Colors.white,),),backgroundColor: Colors.black,radius: 20,),
                 ),
                 SizedBox(width: 20,),
@@ -295,19 +295,19 @@ Container displayDoctors(context, List<Doctor> doctorList){
                   children: [
                     SizedBox(height: 10,),
                     Padding(
-                      padding: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.34,top:3),
+                      padding: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.34,top:15),
                       child: Text("Dr. ${doctorList[index].name}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                     ),
-                    SizedBox(height: 30,),
+                    SizedBox(height: 20,),
                     Row(
                       children: [
                         OutlinedButton(
                             onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile())) ;
+                              // Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile())) ;
                             },
                             child: Text("Veiw Profile",style: TextStyle(color: Colors.black),)
                         ),
-                        SizedBox(width: 10,),
+                        SizedBox(width: 20,),
                         OutlinedButton(
                             onPressed: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context) => CalPatient(doctorName: doctorList[index].name)));
