@@ -69,7 +69,7 @@ class _ProfileState extends State<Profile> {
                     color: Colors.white,
                     child: Column(
                       children: [
-                        CustomContainer(Name: "Dr. Harsh Mori", icon: Icon(Icons.account_box_outlined),),
+                        CustomContainer(Name: "Dr. Harsh", icon: Icon(Icons.account_box_outlined),),
                         CustomContainer(Name: "harsh@gmail.com", icon: Icon(Icons.email)),
                         CustomContainer(Name: "9:00 AM - 18:00 PM", icon: Icon(Icons.timelapse)),
                         SizedBox(height: 20,),

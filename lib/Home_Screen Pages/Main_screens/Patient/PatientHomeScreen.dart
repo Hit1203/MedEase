@@ -57,9 +57,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
         child: drawerPatient(),
       ) ,
 
-<<<<<<<<< Temporary merge branch 1
-      body: CalPatient(),
-=========
+
       body: Column(
         children: [
           isThereAppointment? appointmentCard(appointment):Container(),
@@ -87,7 +85,6 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
 
         ],
       ),
->>>>>>>>> Temporary merge branch 2
     );
   }
 }

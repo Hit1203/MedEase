@@ -35,11 +35,10 @@ class _MyappState extends State<Myapp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My Calendar App',
       debugShowCheckedModeBanner: false ,
-      // home: LoginSignupScreen(),
+      home: LoginSignupScreen(),
       // home: CalPatient(),
-      home: PatientHomeScreen(),
+      // home: PatientHomeScreen(),
     );
   }
 }
