@@ -12,6 +12,7 @@ class CalPatient extends StatefulWidget {
   String? patientToken;
 
 
+
   CalPatient({this.doctorName, this.doctorToken, this.patientToken,super.key});
 
   @override
@@ -20,11 +21,17 @@ class CalPatient extends StatefulWidget {
 
 class _CalPatientState extends State<CalPatient> {
   DateTime today = DateTime.now();
+  bool isSelected  = false;
 
   @override
   void initState(){
     super.initState();
 
+  }
+
+  Selectecheep()
+  {
+    print("asasas") ;
   }
 
   @override
@@ -85,12 +92,31 @@ class _CalPatientState extends State<CalPatient> {
                               alignment: WrapAlignment.spaceEvenly,
                               children: res.map((e) => Padding(
                                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                              child: Container(
-                                height: 30,
-                                width: 120,
-                                child: Center(child: Text(slotFormatString("$e"), style: TextStyle(fontSize: 20))),
-                                decoration: BoxDecoration(border: Border.all()),
-                              )
+                              child:  FilterChip(
+                                  label: Text(slotFormatString("$e"),style: TextStyle(color: Colors.white),),
+                                  selected: isSelected,
+                                  backgroundColor: Colors.black,
+                                  selectedColor: Colors.red,
+                                  onSelected: (bool value){
+                                    setState(()
+                                    {
+                                       isSelected = !isSelected ;
+                                    }
+                                    );}
+                              ),
+                                // Container(
+                                //   height: 30,
+                                //   width: 120,
+                                //   child: Center(
+                                //           child: Text(slotFormatString("$e"), style: TextStyle(fontSize: 20))),
+                                //
+                                //   decoration: BoxDecoration(
+                                //
+                                //       border: Border.all()
+                                //   )
+                                //   ,
+                                // ),
+
                               )).toList(),
 
                             ),
