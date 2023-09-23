@@ -192,7 +192,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
 
                   if(snapshot.connectionState == ConnectionState.done){
                     if(snapshot.hasError){
-                      return Container(child: Text("Error"),);
+                      return Container(child: Text(""),);
                     }
                     else if (snapshot.hasData){
                       //todo

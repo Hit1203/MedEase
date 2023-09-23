@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:tic_tech_teo_2023/Color_File/colors.dart';
 import 'package:tic_tech_teo_2023/Home_Screen%20Pages/Custom_Drawer/sidemenu_options.dart';
+import 'package:tic_tech_teo_2023/Home_Screen%20Pages/Main_screens/Patient/PatientHomeScreen.dart';
 import 'package:tic_tech_teo_2023/LoginRegister/Login_Register_Main_File.dart';
 import 'package:tic_tech_teo_2023/utils/constants.dart';
 
 import '../Profile/Doctor/DoctorProfile.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../Profile/Doctor/Profile.dart';
 import '../Profile/Patient/Patient_profile.dart';
+import '../Settings/Patient/patient_settings.dart';
 import 'Infocard.dart';
 import 'card.dart';
 
@@ -63,8 +67,8 @@ class _drawerPatientState extends State<drawerPatient> {
                       }
                   ),
                   Sidemenuoptions(
-                      menuname: 'Setting',
-                      menuicon: Icon(Icons.settings),
+                      menuname: 'Upcoming Appointment',
+                      menuicon: Icon(Icons.meeting_room_outlined),
                       isActive: activeIndex == 1,
                       index: 1,
                       onTap: () {
@@ -75,14 +79,14 @@ class _drawerPatientState extends State<drawerPatient> {
                       }
                   ),
                   Sidemenuoptions(
-                      menuname: 'Upcoming Appoinments',
-                      menuicon: Icon(Icons.meeting_room_outlined),
+                      menuname: 'Settings',
+                      menuicon: Icon(Icons.settings),
                       isActive: activeIndex == 2,
                       index: 2,
                       onTap: () {
                         setActiveIndex(2) ;
                         Future.delayed(Duration(milliseconds: 250), () {
-                          // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PatientSettings()));
                         });
                       }
                   ),
@@ -92,10 +96,7 @@ class _drawerPatientState extends State<drawerPatient> {
                       isActive: activeIndex == 3,
                       index: 3,
                       onTap: () {
-                        setActiveIndex(3) ;
-                        Future.delayed(Duration(milliseconds: 250), () {
-                          // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
-                        });
+                        launch('http://172.20.10.3:8070/help/',forceWebView: true);
                       }
                   ),
                   Padding(

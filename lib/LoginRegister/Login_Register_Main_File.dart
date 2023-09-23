@@ -5,8 +5,9 @@ import '../Color_File/colors.dart';
 import '../Home_Screen Pages/Main_screens/Doctor/Home_Page_Main_Screen.dart';
 import '../Home_Screen Pages/Main_screens/Patient/PatientHomeScreen.dart';
 import '../models/User.dart';
-import 'forgotPasswordScreen.dart';
-
+import 'package:tic_tech_teo_2023/utils/constants.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class LoginSignupScreen extends StatefulWidget {
   @override
@@ -54,6 +55,24 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
   TextEditingController Weight = TextEditingController() ;
   TextEditingController Age = TextEditingController() ;
 
+  TextEditingController email = TextEditingController();
+
+
+  Future postReq(String email) async {
+    final res = await http.post(
+      Uri.parse('$BASIC_URL/forgot-password/'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({"email": email}),
+    );
+    if (res.statusCode == 200) {
+      return jsonDecode(res.body);
+    } else {
+      throw Exception("Failed to request for password change");
+    }
+
+  }
 
 
   @override
@@ -74,7 +93,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                       fit: BoxFit.fill)),
               child: Container(
                 padding: EdgeInsets.only(top: 90, left: 20),
-                color: Color(0xFF3b5999).withOpacity(.4),
+                color: Colors.black.withOpacity(.4),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -253,12 +272,39 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 ],
               ),
               TextButton(
-                onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPasswordScreen()));
-                },
-                child: Text("Forgot Password?",
-                    style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold, color: Login_Palette.PrimaryColor)),
-              )
+                    child: Text("Forgot Password?",style: TextStyle(color: Colors.black),),
+                    onPressed: (){
+                      showDialog(context: context, builder: (context){
+                        return AlertDialog(
+                          title: Text("Forgot Password "),
+                          content: Container(
+                            height: 140,
+                            width: 450,
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding:  EdgeInsets.symmetric(horizontal: 18.0,vertical: 15),
+                                  child: buildTextField(Icons.mail_outline, "info@demouri.com", false, true,email),
+                                ),
+                                OutlinedButton(
+                                    onPressed: () async {
+                                      final res = await postReq(email.text);
+
+                                      print("res: $res");
+                                    },
+                                    child: const Text("Continue",style: TextStyle(color: Colors.black),)),
+                              ],
+                            ),
+                          ),
+                          actions: [
+                            TextButton(onPressed: (){
+                              Navigator.pop(context) ;
+                            }, child:Text("Close")) ,
+                          ],
+                        ) ;
+                      }) ;
+                    },
+                ),
             ],
           )
         ],
