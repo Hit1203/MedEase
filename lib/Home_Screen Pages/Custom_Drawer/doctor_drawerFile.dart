@@ -4,7 +4,7 @@ import 'package:tic_tech_teo_2023/Home_Screen%20Pages/Custom_Drawer/sidemenu_opt
 import 'package:tic_tech_teo_2023/utils/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../Profile/Doctor/Profile.dart';
+import '../Profile/Doctor/DoctorProfile.dart';
 import 'Infocard.dart';
 import 'card.dart';
 
@@ -52,7 +52,7 @@ class _drawerState extends State<drawer> {
 
                   InkWell(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>DoctorProfile()));
                     },
                       child: Infocard(name: curUser.name.toString(), profession: curUser.isDoctor! ?'Doctor' :'Patient' , icon: Icon(Icons.person),)),
                   Divider(height: 1,),

@@ -147,6 +147,25 @@ class User {
     prefs.remove("isDoctor");
   }
 
+}
 
 
+class UserRequest{
+  // static String? authToken = curUser.auth_token;
+  static String? authToken = "09995f28-e3d0-446a-920a-1f02183ffdc9";
+
+  static Future getUser(String token) async {
+    print("$authToken");
+    final res = await http.post(
+      Uri.parse('$BASIC_URL/api/get-user-data/'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({'jwt': authToken, 'custom_id': token}),
+    );
+    if (res.statusCode == 200)
+      return jsonDecode(res.body);
+    else
+      throw Exception("Failed to get user");
+  }
 }

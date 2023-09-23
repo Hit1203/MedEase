@@ -8,7 +8,7 @@ import '../../../Color_File/colors.dart';
 import '../../Custom_Drawer/patient_drawerfile.dart';
 import 'package:tic_tech_teo_2023/models/Appointment.dart';
 
-import '../../Profile/Doctor/Profile.dart';
+import '../../Profile/Doctor/DoctorProfile.dart';
 import 'calMain.dart';
 
 class CustomSearchDelegate extends SearchDelegate<String> {
@@ -124,7 +124,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
 
   bool isThereAppointment = false;
 
-  Appointment appointment = Appointment();
+  MyAppointment appointment = MyAppointment();
   DateTime today = DateTime.now();
 
   final List<String>  Uninames = [
@@ -155,7 +155,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
   @override
   Widget build(BuildContext context) {
     String strDate = "${today.day}/${today.month}/${today.year}";
-
+    print("uT: ${curUser.userID}");
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -194,9 +194,17 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                     if(snapshot.hasError){
                       return Container(child: Text(""),);
                     }
-                    else if (snapshot.hasError){
+                    else if (snapshot.hasData){
                       //todo
-                      return appointmentCard(appointment);
+                      print("is Appo res: ${snapshot.data}  ${curUser.auth_token}");
+                      final res = snapshot.data["responseData"]["appointments"];
+                      if(res.length == 0){
+                        return Container();
+                      }
+                      else{
+                        return appointmentCard(MyAppointment.fromJSON(res[0]));
+                      }
+
                     }
                   }
 
@@ -246,7 +254,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
 }
 
 
-Container appointmentCard(Appointment appointment){
+Container appointmentCard(MyAppointment appointment){
 
   return Container(
     child: Column(
@@ -303,7 +311,7 @@ Container displayDoctors(context, List<Doctor> doctorList){
                       children: [
                         OutlinedButton(
                             onPressed: (){
-                              // Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile())) ;
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>DoctorProfile(doctor: doctorList[index],))) ;
                             },
                             child: Text("Veiw Profile",style: TextStyle(color: Colors.black),)
                         ),

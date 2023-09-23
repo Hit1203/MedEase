@@ -3,15 +3,17 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:tic_tech_teo_2023/utils/constants.dart';
 
-class Appointment {
+class MyAppointment {
     String? doctorId;
+    String? doctorName;
     String? patientId;
     String? date;
     String? slot;
     String? id;
 
-    Appointment({
+    MyAppointment({
       this.doctorId,
+      this.doctorName,
       this.patientId,
       this.slot,
       this.date,
@@ -24,6 +26,15 @@ class Appointment {
       "datetime": reFormatDate(),
     };
 
+    factory MyAppointment.fromJSON(Map<String, dynamic> json_) => MyAppointment(
+      id: json_["custom_id"],
+      doctorId: json_["doctor"],
+      doctorName: json_["d_name"],
+      date: json_["date_time"].toString().split(" ")[0],
+      slot: json_["date_time"].toString().split(" ")[1],
+      patientId: json_["patient"],
+    );
+
     String reFormatDate(){
       print("Appointment: date: $date");
       String strDate = "$date $slot";
@@ -34,7 +45,7 @@ class Appointment {
 
 class AppointmentRequests{
 
-  static Future create(Appointment appointment) async {
+  static Future create(MyAppointment appointment) async {
     final res = await http.post(
       Uri.parse('$BASIC_URL/appointments/create/'),
       headers: <String, String>{
@@ -65,11 +76,11 @@ class AppointmentRequests{
 
   static Future isThereAppointment(String token) async {
     final res = await http.post(
-      Uri.parse('$BASIC_URL/signup/'),
+      Uri.parse('$BASIC_URL/api/get-user-appointments/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode({'token': token}),
+      body: jsonEncode({'patient': token}),
     );
     if (res.statusCode == 200)
       return jsonDecode(res.body);
