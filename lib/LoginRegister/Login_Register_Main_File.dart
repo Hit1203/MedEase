@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' ;
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tic_tech_teo_2023/utils/constants.dart';
 import '../Color_File/colors.dart';
 import '../Home_Screen Pages/Main_screens/Doctor/Home_Page_Main_Screen.dart';
@@ -700,7 +701,15 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
 
               showDialog(context: context, builder: (context)
               {
-                return Center(child: CircularProgressIndicator());
+                return Center(
+                  child: Padding(
+                    padding:  EdgeInsets.only(top: MediaQuery.of(context).size.width*0.2),
+                    child: SpinKitCircle(
+                      color: Colors.blue,
+                      size: 50.0,
+                    ),
+                  ),
+                );
               } ,
 
               );
