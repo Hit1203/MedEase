@@ -52,19 +52,19 @@ class User {
 
   factory User.fromJSON(Map<String, dynamic> json_) => User(
     email: json_["email"],
-    name: json_["name"],
+    name: json_["fullname"],
     isDoctor: json_["is_doctor"],
     gender: json_["gender"],
 
     age: json_["age"],
     height: json_["height"],
-    weight: json_["weight"],
+    weight: json_["weight"]+0.0,
     bloodGroup: json_["blood_group"],
 
     qualification: json_["qualification"],
     whStart: json_["wh_start"],
     whEnd: json_["wh_end"],
-    nonWorkingDays: json.decode(json_["non_working_days"]??"[]").cast<String>().toList(),
+    nonWorkingDays: json_["is_doctor"]?json.decode(json_["non_working_week_days"]??"[]").cast<String>().toList(): null,
 
     userID: json_["user_id"]
   );

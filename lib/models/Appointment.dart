@@ -4,26 +4,39 @@ import 'package:http/http.dart' as http;
 import 'package:tic_tech_teo_2023/utils/constants.dart';
 
 class Appointment {
-    String? doctorName;
-    String? patientToken;
+    String? doctorId;
+    String? patientId;
     String? date;
     String? slot;
     String? id;
 
+    Appointment({
+      this.doctorId,
+      this.patientId,
+      this.slot,
+      this.date,
+      this.id
+    });
+
     Map<String, String?> toJson() => {
-      "doctor_name": doctorName,
-      "patient_name": patientToken,
-      "data": date,
-      "slot": slot,
+      "doctor_id": doctorId,
+      "patient_id": patientId,
+      "datetime": reFormatDate(),
     };
+
+    String reFormatDate(){
+      print("Appointment: date: $date");
+      String strDate = "$date $slot";
+      return strDate;
+    }
 }
 
 
 class AppointmentRequests{
 
-  static Future book(Appointment appointment) async {
+  static Future create(Appointment appointment) async {
     final res = await http.post(
-      Uri.parse('$BASIC_URL/appointment/create/'),
+      Uri.parse('$BASIC_URL/appointments/create/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

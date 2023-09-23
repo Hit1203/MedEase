@@ -1,11 +1,9 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
+import 'package:tic_tech_teo_2023/models/Doctor.dart';
 import '../../../Color_File/colors.dart';
 import '../../Custom_Drawer/patient_drawerfile.dart';
 import 'package:tic_tech_teo_2023/models/Appointment.dart';
 
-import '../models/Doctor.dart';
 
 class PatientHomeScreen extends StatefulWidget {
   const PatientHomeScreen({super.key});
@@ -65,7 +63,7 @@ Container appointmentCard(Appointment appointment){
         Text("Up Coming Appointment"),
 
         Text("Doctor: "),
-        Text(appointment.doctorName!),
+        Text(appointment.doctorId!),
 
         Text("Date: "),
         Text(appointment.date!),
