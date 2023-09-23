@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tic_tech_teo_2023/Color_File/colors.dart';
 
-import 'Custom_Drawer/drawerFile.dart';
+import '../../Custom_Drawer/doctor_drawerFile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

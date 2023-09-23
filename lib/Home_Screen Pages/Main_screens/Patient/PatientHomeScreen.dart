@@ -1,6 +1,8 @@
 import 'dart:js';
 
 import 'package:flutter/material.dart';
+import '../../../Color_File/colors.dart';
+import '../../Custom_Drawer/patient_drawerfile.dart';
 import 'package:tic_tech_teo_2023/models/Appointment.dart';
 
 import '../models/Doctor.dart';
@@ -23,8 +25,25 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("MedEase"),
+        backgroundColor: Colors.transparent, // Make the AppBar background transparent
+        elevation: 0, // Remove the shadow
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                HomeScreen.Appbar_color1,
+                Colors.grey
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
+        title: Text('MedEase'),
       ),
+      drawer:Drawer(
+        child: drawerPatient(),
+      ) ,
 
       body: Column(
         children: [
