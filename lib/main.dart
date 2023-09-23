@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' ;
+import 'package:tic_tech_teo_2023/Home_Screen%20Pages/PatientHomeScreen.dart';
 import 'LoginRegister/Login_Register_Main_File.dart';
 
 
@@ -19,7 +20,8 @@ class _MyappState extends State<Myapp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false ,
-      home: LoginSignupScreen(),
+      // home: LoginSignupScreen(),
+          home: PatientHomeScreen(),
     );
   }
 }

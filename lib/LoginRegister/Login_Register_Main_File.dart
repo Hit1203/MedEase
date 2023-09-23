@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' ;
+import 'package:tic_tech_teo_2023/utils/constants.dart';
 import '../Color_File/colors.dart';
 import '../Home_Screen Pages/Home_Page_Main_Screen.dart';
 import '../models/User.dart';
@@ -249,7 +250,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPasswordScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPasswordScreen()));
                 },
                 child: Text("Forgot Password?",
                     style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold, color: Login_Palette.PrimaryColor)),
@@ -732,8 +733,6 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
 
                 res = await user.signIn(user);
 
-
-
               }
 
 
@@ -747,10 +746,14 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 print(user.auth_token);
                 print(user.isDoctor);
                 print("stored user");
+
+                curUser = User.fromJSON(res["responseData"]);
+
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage())) ;
+
               };
               print("ok");
 
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage())) ;
             },
 
             child: Container(
