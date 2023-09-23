@@ -11,5 +11,6 @@ urlpatterns = [
     path('', include('authentication.urls')),
     path('', include('frontend.urls')),
     path('appointments/', include('appointments.urls')),
+    path('api/', include('api.urls')),
 ] + staticfiles_urlpatterns() +\
               static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

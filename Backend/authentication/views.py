@@ -46,8 +46,10 @@ def register(request):
                 user.gender = gender
                 user.non_working_week_days = non_working_week_days
                 user.save()
-                return JsonResponse({"responseData" :{"created": True, "token": str(jwt.token)}})
+                print(non_working_week_days)
+                return JsonResponse({"responseData" :{"created": True, "token": str(jwt.token), 'user_id': str(user.custom_id), 'is_doctor': user.is_doctor, 'fullname': user.fullname, 'gender': user.gender, 'age': user.age, 'height': user.height, 'weight': user.weight, 'blood_group': user.blood_group, 'qualification': user.qualification, 'wh_start': user.wh_start, 'wh_end': user.wh_end, 'non_working_week_days': user.non_working_week_days, 'email': user.email}})
             except Exception as e:
+                print(e)
                 return JsonResponse({"responseData" : {"created": False}})
         else:
             weight = body["weight"]
@@ -65,7 +67,8 @@ def register(request):
                 user.gender = gender
                 user.blood_group = blood_group
                 user.save()
-                return JsonResponse({"responseData" :{"created": True, "token": str(jwt.token)}})
+                print(gender)
+                return JsonResponse({"responseData" :{"created": True, "token": str(jwt.token), 'user_id': str(user.custom_id), 'is_doctor': user.is_doctor, 'fullname': user.fullname, 'gender': user.gender, 'age': user.age, 'height': user.height, 'weight': user.weight, 'blood_group': user.blood_group, 'qualification': user.qualification, 'wh_start': user.wh_start, 'wh_end': user.wh_end, 'non_working_week_days': user.non_working_week_days, 'email': user.email}})
             except Exception as e:
                 print(e)
                 return JsonResponse({"responseData" : {"created": False}})
@@ -82,7 +85,9 @@ def login(request):
             for token in jwt:
                 token.delete()
             jwt = JWT.objects.create(user = user[0])
-            return JsonResponse({"responseData" :{"isAuthenticated": True, "token": str(jwt.token), 'is_doctor': user[0].is_doctor}})
+            user =  user[0]
+
+            return JsonResponse({"responseData" :{"isAuthenticated": True, "token": str(jwt.token), 'user_id': str(user.custom_id), 'is_doctor': user.is_doctor, 'fullname': user.fullname, 'gender': user.gender, 'age': user.age, 'height': user.height, 'weight': user.weight, 'blood_group': user.blood_group, 'qualification': user.qualification, 'wh_start': user.wh_start, 'wh_end': user.wh_end, 'non_working_week_days': user.non_working_week_days, 'email': user.email}})
         else:
             return JsonResponse({"responseData" : {"isAuthenticated": False}})
 
