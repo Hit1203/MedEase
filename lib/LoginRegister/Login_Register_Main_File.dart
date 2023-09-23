@@ -709,9 +709,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                   bloodGroup: BloodGroup.text,
 
                   qualification: RegistrationNumber.text,
-                  whStart: "${timeStart.hour}:${timeStart.minute}",
-                  whEnd: "${timeEnd.hour}:${timeEnd.minute}",
-                  nonWorkingDays: nonWorkingDays
+                  whStart: isDoctor?"${timeStart.hour}:${timeStart.minute}":null,
+                  whEnd: isDoctor?"${timeEnd.hour}:${timeEnd.minute}":null,
+                  nonWorkingDays: isDoctor?nonWorkingDays:null,
 
                 );
 

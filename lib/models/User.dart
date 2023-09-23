@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 class User {
   // String? username;
-  // String? userID;
+  String? userID;
   String? email;
   String? pwd;
   String? name;
@@ -47,6 +47,7 @@ class User {
     this.whStart,
     this.whEnd,
     this.nonWorkingDays,
+    this.userID,
   });
 
   factory User.fromJSON(Map<String, dynamic> json_) => User(
@@ -63,7 +64,9 @@ class User {
     qualification: json_["qualification"],
     whStart: json_["wh_start"],
     whEnd: json_["wh_end"],
-    nonWorkingDays: json.decode(json_["non_working_days"]??"[]").cast<String>().toList()
+    nonWorkingDays: json.decode(json_["non_working_days"]??"[]").cast<String>().toList(),
+
+    userID: json_["user_id"]
   );
 
   Map<String, String> toJSONLogIn(User user) {
@@ -93,6 +96,7 @@ class User {
         "wh_end":user.whEnd,
         "non_working_week_days": user.nonWorkingDays.toString(),
 
+        "user_id": userID,
       };
   }
 
@@ -140,7 +144,6 @@ class User {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove("auth_token");
     prefs.remove("isDoctor");
-
   }
 
 
