@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:tic_tech_teo_2023/Color_File/colors.dart';
 import 'package:tic_tech_teo_2023/models/Appointment.dart';
 import 'package:tic_tech_teo_2023/utils/constants.dart';
@@ -65,42 +66,62 @@ Appointment fromJSON(Map<String, dynamic> json_){
   return Appointment(startTime: sTime, endTime: eTime, subject: title);
 }
 
+
 Widget sfCalendarMonth() => FutureBuilder(
-  // future: AppointmentRequests.getAppointmentList(curUser.userID!),
-  future: AppointmentRequests.getAppointmentList("JATUIOKYCEPKCKDORQTW"),
-  builder: (context, snapshot) {
-    if(snapshot.hasData) {
-      List<dynamic> res = snapshot.data['responseData']['appointments'];
+      // future: AppointmentRequests.getAppointmentList(curUser.userID!),
+      future: AppointmentRequests.getAppointmentList("JATUIOKYCEPKCKDORQTW"),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          List<dynamic> res = snapshot.data['responseData']['appointments'];
 
-      print("doc home res: $res");
+          print("doc home res: $res");
 
-      List<Appointment> patientList = res.map((e) => fromJSON(e)).toList();
+          List<Appointment> patientList = res.map((e) => fromJSON(e)).toList();
 
-      return SfCalendar(
-        appointmentTextStyle: TextStyle(color: Colors.white), // Set text color for appointments
-        todayTextStyle: TextStyle(color: Colors.white),
-        todayHighlightColor : Colors.blueAccent,
-        firstDayOfWeek: 1,
-        dataSource: _AppointmentDataSource(patientList),
-        view: CalendarView.day,
-        onLongPress: (details) {
-        },
-      );
-    }
-    if(!snapshot.hasData) {
-      return const CircularProgressIndicator();
-    }
-    if(snapshot.hasError) {
-      return Text(snapshot.hasError.toString());
-    }
-    return Container();
-  },
-);
+          return SfCalendarTheme(
+            data: SfCalendarThemeData(
+              brightness: Brightness.dark,
+              backgroundColor: Colors.black,
+              activeDatesTextStyle: TextStyle(color: Colors.white),
+              headerTextStyle: TextStyle(color: Colors.white),
+              timeTextStyle: TextStyle(color: Colors.white),
+              timeIndicatorTextStyle: TextStyle(color: Colors.white),
+              displayNameTextStyle: TextStyle(color: Colors.white),
+              cellBorderColor: Colors.white,
+            ),
+            child: SfCalendar(
+              firstDayOfWeek: 1,
+              dataSource: _AppointmentDataSource(patientList),
+              view: CalendarView.day,
+
+              timeSlotViewSettings: TimeSlotViewSettings(
+                  startHour: hourFormString(curUser.whStart??'9'),
+                  endHour: hourFormString(curUser.whEnd??'18'),
+                  nonWorkingDays: <int>[DateTime.friday, DateTime.saturday]),
+            )
+
+              // onLongPress: (details) {},
+            );
+
+        }
+        if (!snapshot.hasData) {
+          return const CircularProgressIndicator();
+        }
+        if (snapshot.hasError) {
+          return Text(snapshot.hasError.toString());
+        }
+        return Container();
+      },
+    );
+
+double hourFormString(String str){
+  return int.parse("${str.split(":")[0]}")+int.parse("${str.split(":")[1]}")/60;
+}
 
 
 
 class _AppointmentDataSource extends CalendarDataSource {
-  _AppointmentDataSource(List<Appointment> source){
+  _AppointmentDataSource(List<Appointment> source) {
     appointments = source;
   }
 }

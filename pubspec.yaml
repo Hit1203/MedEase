@@ -38,6 +38,8 @@ dependencies:
   http: ^1.1.0
   shared_preferences: ^2.2.0
   syncfusion_flutter_calendar: ^23.1.36
+  syncfusion_flutter_core: ^23.1.36
+
   flutter_spinkit: ^5.2.0
   url_launcher: ^6.1.14
   intl: ^0.18.1
