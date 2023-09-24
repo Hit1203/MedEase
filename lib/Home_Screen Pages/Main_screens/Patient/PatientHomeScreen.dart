@@ -196,7 +196,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                     }
                     else if (snapshot.hasData){
                       //todo
-                      print("is Appo res: ${snapshot.data}  ${curUser.auth_token}");
+                      // print("is Appo res: ${snapshot.data}  ${curUser.auth_token}");
                       final res = snapshot.data["responseData"]["appointments"];
                       if(res.length == 0){
                         return Container();
