@@ -166,6 +166,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
     String strDate = "${today.day}/${today.month}/${today.year}";
     print("uT: ${curUser.userID}");
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
         actions: [
           Padding(
@@ -274,16 +275,17 @@ Container appointmentCard(context, MyAppointment appointment, Function callback)
       padding: EdgeInsets.symmetric(horizontal: 10.0),
       child: Column(
         children: [
+          SizedBox(height: 10,),
           Padding(
             padding: EdgeInsets.only(right: 105.0),
-            child: Text("Upcoming Appoinments",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
+            child: Text("Upcoming Appoinments",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.white),),
           ),
-          SizedBox(height: 10,),
+          SizedBox(height: 20,),
           Container(
             width: 450,
             height: 130,
             decoration: BoxDecoration(
-              border: Border.all(),
+              border: Border.all(color: Colors.white),
                   borderRadius: BorderRadius.circular(10),
             ),
             child: Row(
@@ -300,17 +302,17 @@ Container appointmentCard(context, MyAppointment appointment, Function callback)
                   children: [
                     Padding(
                       padding:  EdgeInsets.only(right: 36,top: 15),
-                      child: Text("Dr.${appointment.doctorName}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                      child: Text("Dr.${appointment.doctorName}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),),
                     ),
                  SizedBox(height: 10,),
                  Padding(
                    padding: EdgeInsets.only(right: 18.0),
-                   child: Text("Date : ${appointment.date}",style: TextStyle(fontSize: 15,),),
+                   child: Text("Date : ${appointment.date}",style: TextStyle(fontSize: 15,color: Colors.white),),
                  ),
                  SizedBox(height: 10,),
                  Padding(
                    padding: EdgeInsets.only(right: 18.0),
-                   child: Text("Time:${appointment.slot}",style: TextStyle(fontSize: 15,),),
+                   child: Text("Time:${appointment.slot}",style: TextStyle(fontSize: 15,color: Colors.white),),
                  ),
 
 
@@ -334,7 +336,15 @@ Container appointmentCard(context, MyAppointment appointment, Function callback)
 
 
                           },
-                          child: Text("Cancel",style: TextStyle(color: Colors.black),))
+                          style: ButtonStyle(
+                              side: MaterialStateProperty.all<BorderSide>(
+                                BorderSide(
+                                  color: Colors.white,)) // Border color
+
+                          ),
+                          child: Text("Cancel",style: TextStyle(color: Colors.white),)
+
+                      ),
                     ],
                   ),
                 )
@@ -356,9 +366,10 @@ Container appointmentCard(context, MyAppointment appointment, Function callback)
 Column displayDoctors(context, List<Doctor> doctorList){
   return Column(
     children: [
+      SizedBox(height: 10,),
       Padding(
         padding:  EdgeInsets.only(right: 188.0),
-        child: Text("Other Doctors ",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
+        child: Text("Other Doctors ",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.white),),
       ),
       Container(
         decoration: BoxDecoration(
@@ -383,7 +394,7 @@ Column displayDoctors(context, List<Doctor> doctorList){
                         SizedBox(height: 10,),
                         Padding(
                           padding: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.34,top:15),
-                          child: Text("Dr. ${doctorList[index].name}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                          child: Text("Dr. ${doctorList[index].name}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),),
                         ),
                         SizedBox(height: 20,),
                         Row(
@@ -392,7 +403,15 @@ Column displayDoctors(context, List<Doctor> doctorList){
                                 onPressed: (){
                                   Navigator.push(context, MaterialPageRoute(builder: (context)=>DoctorProfile(doctor: doctorList[index],))) ;
                                 },
-                                child: Text("Veiw Profile",style: TextStyle(color: Colors.black),)
+                              style: ButtonStyle(
+                                  side: MaterialStateProperty.all<BorderSide>(
+                                      BorderSide(
+                                        color: Colors.white,)) // Border color
+
+                              ),
+                                child: Text("Veiw Profile",style: TextStyle(color: Colors.white),
+
+                                )
                             ),
                             SizedBox(width: 20,),
                             OutlinedButton(
@@ -400,7 +419,13 @@ Column displayDoctors(context, List<Doctor> doctorList){
                                   print("doctor: ${doctorList[index]}");
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => CalPatient(doctorName: doctorList[index].name, doctorToken: doctorList[index].id, patientToken: curUser.userID)));
                                 },
-                                child: Text("Take Appointment",style: TextStyle(color: Colors.black),)
+                                style: ButtonStyle(
+                                    side: MaterialStateProperty.all<BorderSide>(
+                                        BorderSide(
+                                          color: Colors.white,)) // Border color
+
+                                ),
+                                child: Text("Take Appointment",style: TextStyle(color: Colors.white),)
                             ),
                           ],
                         )
@@ -413,7 +438,7 @@ Column displayDoctors(context, List<Doctor> doctorList){
                 height: MediaQuery.of(context).size.height*0.15,
                 decoration: BoxDecoration(
                   color: Colors.transparent,
-                  border: Border.all(),
+                  border: Border.all(color: Colors.white),
                   borderRadius: BorderRadius.circular(10),
 
                 ),
