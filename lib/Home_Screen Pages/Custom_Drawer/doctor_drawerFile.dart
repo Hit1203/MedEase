@@ -6,7 +6,7 @@ import 'package:tic_tech_teo_2023/utils/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../Profile/Doctor/DoctorProfile.dart';
-import '../Settings/Doctor/doctor_settings.dart';
+import '../Profile/Doctor/Profile.dart';
 import 'Infocard.dart';
 import 'card.dart';
 
@@ -47,7 +47,7 @@ class _drawerState extends State<drawer> {
 
                   InkWell(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>DoctorProfile()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile()));
                     },
                       child: Infocard(name: curUser.name.toString(), profession: curUser.isDoctor! ?'Doctor' :'Patient' , icon: Icon(Icons.person),)),
                   Divider(height: 1,),
@@ -65,49 +65,37 @@ class _drawerState extends State<drawer> {
                   ),
 
                   Sidemenuoptions(
-                      menuname: 'Settings',
-                      menuicon: Icon(Icons.settings),
+                      menuname: 'Help',
+                      menuicon: Icon(Icons.help),
                       isActive: activeIndex == 1,
                       index: 1,
                       onTap: () {
                         setActiveIndex(1) ;
-                        Future.delayed(Duration(milliseconds: 250), () {
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DoctorSettings()));
-                        });
-                      }
-                  ),
-                  Sidemenuoptions(
-                      menuname: 'Help',
-                      menuicon: Icon(Icons.help),
-                      isActive: activeIndex == 2,
-                      index: 2,
-                      onTap: () {
-                        setActiveIndex(2) ;
                         launch('http://172.20.10.3:8070/help/',forceWebView: true);
                       }
                   ),
                   Divider(height: 1,),
                   Padding(
-                    padding: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.34),
+                    padding: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.34,bottom: 10),
                     child: card(name: "Calendar View", color: Colors.grey,),
                   ),
                   Sidemenuoptions(
                       menuname: 'Daily View',
                       menuicon: Icon(Icons.calendar_today),
-                      isActive: activeIndex == 3,
-                      index: 3,
+                      isActive: activeIndex == 2,
+                      index: 2,
                       onTap: () {
-                        setActiveIndex(3) ;
+                        setActiveIndex(2) ;
 
                       }
                   ),
                   Sidemenuoptions(
                       menuname: 'Week View',
                       menuicon: Icon(Icons.calendar_view_week),
-                      isActive: activeIndex == 4,
-                      index: 4,
+                      isActive: activeIndex == 3,
+                      index: 3,
                       onTap: () {
-                        setActiveIndex(4) ;
+                        setActiveIndex(3) ;
 
                       }
                   ),
@@ -122,7 +110,7 @@ class _drawerState extends State<drawer> {
                       }
                   ),
                   Padding(
-                    padding:  EdgeInsets.only(top:MediaQuery.of(context).size.width*0.46,left: 15),
+                    padding:  EdgeInsets.only(top:MediaQuery.of(context).size.width*0.66,left: 15),
                     child: Row(
                       children: [
                         SizedBox(width: 10,),

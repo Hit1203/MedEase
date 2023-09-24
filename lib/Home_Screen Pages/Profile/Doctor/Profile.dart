@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:tic_tech_teo_2023/Home_Screen%20Pages/Profile/Doctor/Custom_container.dart';
 import 'package:tic_tech_teo_2023/utils/constants.dart';
 
-import 'NonWorkingCustomClass.dart';
 
 
 class Profile extends StatefulWidget {
