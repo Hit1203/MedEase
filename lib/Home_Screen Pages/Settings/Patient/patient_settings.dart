@@ -46,43 +46,6 @@ class _PatientSettingsState extends State<PatientSettings> {
           child: Column(
             children: [
               CustomCon(
-                Name: "Update Password",
-                icon: Icon(Icons.password),
-                padding: 0.15,
-                ontap: () {
-                  showDialog(context: context, builder: (context)
-                  {
-                    return AlertDialog(
-                      content: Container(
-                        width: MediaQuery.of(context).size.width*0.7,
-                        child: TextFormField(
-                          controller: passControl,
-                          decoration: InputDecoration(
-                            labelText: "Enter your Updated Password : ",
-                            border: OutlineInputBorder(),
-
-                          ),
-                          keyboardType: TextInputType.number,
-                          maxLines: null,
-                          // onChanged: ,
-                        ),
-
-                      ),
-                      title: Text("Set Password"),
-                      actions: [
-                        TextButton(
-                            onPressed: () {
-                              setState(() {
-
-                              });
-                            },
-                            child: Text("Save")),
-                      ],
-                    );
-                  }) ;
-                },
-              ),
-              CustomCon(
                 Name: "Weight :${curUser.weight}",
                 icon: Icon(Icons.monitor_weight),
                 padding: 0.25,
