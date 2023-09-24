@@ -37,6 +37,7 @@ class _HomePageState extends State<HomePage> {
           child: drawer(),
         ),
     appBar: AppBar(
+      backgroundColor: Colors.black,
     title: Text("Hello Dr. ${curUser.name}"),
     ),
 
@@ -76,6 +77,9 @@ Widget sfCalendarMonth() => FutureBuilder(
       List<Appointment> patientList = res.map((e) => fromJSON(e)).toList();
 
       return SfCalendar(
+        appointmentTextStyle: TextStyle(color: Colors.white), // Set text color for appointments
+        todayTextStyle: TextStyle(color: Colors.white),
+        todayHighlightColor : Colors.blueAccent,
         firstDayOfWeek: 1,
         dataSource: _AppointmentDataSource(patientList),
         view: CalendarView.day,
