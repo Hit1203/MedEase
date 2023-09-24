@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' ;
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:tic_tech_teo_2023/utils/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../Color_File/colors.dart';
 import '../Home_Screen Pages/Main_screens/Doctor/Home_Page_Main_Screen.dart';
 import '../Home_Screen Pages/Main_screens/Patient/PatientHomeScreen.dart';
@@ -247,7 +248,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
 
   Container buildSigninSection() {
     return Container(
-      margin: EdgeInsets.only(top: 20),
+      margin: EdgeInsets.only(top: 10),
       child: Column(
         children: [
           buildTextField(Icons.mail_outline, "info@demouri.com", false, true,email2),
@@ -300,13 +301,22 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                             TextButton(onPressed: (){
                               Navigator.pop(context) ;
                             }, child:Text("Close")) ,
+
                           ],
                         ) ;
                       }) ;
                     },
                 ),
             ],
-          )
+          ),
+          TextButton(
+              onPressed: ()
+              {
+                launch("http://172.20.10.3:8070/admin-panel/login/",
+                  forceWebView: true,
+                ) ;
+              }
+              , child: Text("Login as Admin"))
         ],
       ),
     );
