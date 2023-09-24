@@ -30,10 +30,10 @@ class _CalPatientState extends State<CalPatient> {
 
   }
 
-  Selectecheep()
-  {
-    print("asasas") ;
-  }
+  // Selectecheep()
+  // {
+  //   print("asasas") ;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +42,7 @@ class _CalPatientState extends State<CalPatient> {
     String strDate = "${today.day}/${today.month}/${today.year}";
     String preDate = strDate;
 
+    print("cal Main slotList==null || preDate!=strDate: ${(slotList==null || preDate!=strDate)} \n\tSlotlist:$slotList");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -70,6 +71,7 @@ class _CalPatientState extends State<CalPatient> {
                     setState(() {
                       strDate =
                       "${details.date!.day}/${details.date!.month}/${details.date!.year}";
+                      _selectedIndex = null;
                     });
                   },
                   view: CalendarView.month,
@@ -103,6 +105,8 @@ class _CalPatientState extends State<CalPatient> {
                               .data["responseData"]["vacant_slots"];
                           slotList = res;
                           preDate = strDate;
+                          print("cal main slotList ($strDate): $slotList");
+
                           print("res type: ${res[0].runtimeType}");
 
                           return Container(
@@ -113,6 +117,7 @@ class _CalPatientState extends State<CalPatient> {
                             ),
                           );
                         } else {
+
                           // Handle the case where snapshot.data is null or empty
                           return Text("No data available");
                         }
@@ -194,6 +199,7 @@ class _CalPatientState extends State<CalPatient> {
           selectedColor: Colors.green,
 
           onSelected: (bool value) {
+            print("sel Slot: ${list[i]}");
             setState(() {
               _selectedIndex = i;
             });
@@ -210,7 +216,7 @@ class _CalPatientState extends State<CalPatient> {
 }
 
 String slotFormatString(String time) {
-  print("date: ${DateTime.now().toString()}");
+  // print("date: ${DateTime.now().toString()}");
   DateTime sT = DateTime.parse("2001-01-01 $time:00");
   DateTime eT = sT.add(Duration(minutes: 30));
 

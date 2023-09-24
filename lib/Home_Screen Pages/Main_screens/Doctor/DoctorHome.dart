@@ -1,52 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-import 'package:tic_tech_teo_2023/Color_File/colors.dart';
 import 'package:tic_tech_teo_2023/models/Appointment.dart';
 import 'package:tic_tech_teo_2023/utils/constants.dart';
 
-import 'package:collection/collection.dart';
-import '../../../models/User.dart';
-import '../../Custom_Drawer/doctor_drawerFile.dart';
-import '../../Profile/Patient/Patient_profile.dart';
-
-import 'package:intl/intl.dart';
-
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class DoctorHome extends StatefulWidget {
+  const DoctorHome({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<DoctorHome> createState() => _DoctorHomeState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _DoctorHomeState extends State<DoctorHome> {
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+       title: Text("Hello Dr. ${curUser.name}"),
+      ),
 
-    int activeIndex  = -1 ;
+      body: Column(
+        children: [
+            Expanded(
 
-    void setActiveIndex(int index) {
-      setState(() {
-        activeIndex = index;
-      });
-    }
-
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-    appBar: AppBar(
-    title: Text("Hello Dr. ${curUser.name}"),
-    ),
-
-    body: Column(
-    children: [
-    Expanded(
-      child: Container(
-          
-          child: Center(child: sfCalendarMonth())),
-    )
-    ],
-    ),
-    ),
+                child: sfCalendarMonth())
+        ],
+      ),
     );
   }
 }
@@ -72,11 +50,43 @@ Widget sfCalendarMonth() => FutureBuilder(
 
       List<Appointment> patientList = res.map((e) => fromJSON(e)).toList();
 
+
+
+      // events.clear();
+      //
+      // for(var e in res){
+      //   final uid = e.get("uid");
+      //   final title = e.get("title");
+      //   final from = e.get("from");
+      //   final to = e.get("to");
+      //   final comment = e.get("comment");
+      //   final backgroundColor = e.get("backgroundColor");
+      //   final isAllDay = e.get("isAllDay");
+      //
+      //   event = Event(
+      //     uid: uid,
+      //     title: title,
+      //     from: Utils.stringToDateTime(from),
+      //     to: Utils.stringToDateTime(to),
+      //     comment: comment,
+      //     backgroundColor: backgroundColor,
+      //     isAllDay: isAllDay,
+      //   );
+      //   events.add(event);
+      // }
+
       return SfCalendar(
         firstDayOfWeek: 1,
         dataSource: _AppointmentDataSource(patientList),
         view: CalendarView.day,
         onLongPress: (details) {
+          // final eventViewModel = Provider.of<EventViewModel>(context, listen: false);
+          // eventViewModel.setDate(details.date!);
+
+          // showModalBottomSheet(
+          //   context: context,
+          //   // builder: (context) => const DailyWidget(),
+          // );
         },
       );
     }

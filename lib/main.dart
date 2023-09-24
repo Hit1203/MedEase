@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart' ;
+import 'package:tic_tech_teo_2023/Home_Screen%20Pages/Main_screens/Doctor/DoctorHome.dart';
 import 'package:tic_tech_teo_2023/models/User.dart';
 import 'LoginRegister/Login_Register_Main_File.dart';
 
 
 void main()
 async {
-  final res = await UserRequest.getUser("HOOJIYTCCFLPTFNSBDMO");
-  print("main res: $res");
+  // final res = await UserRequest.getUser("HOOJIYTCCFLPTFNSBDMO");
+  // print("main res: $res");
 
   runApp(Myapp()) ;
 }
@@ -27,6 +28,7 @@ class _MyappState extends State<Myapp> {
       // home: CalPatient(),
       // home: PatientHomeScreen(),
       // home: HomePage(),
+      // home: DoctorHome(),
     );
   }
 }
