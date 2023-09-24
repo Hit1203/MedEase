@@ -760,7 +760,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                   child: Padding(
                     padding:  EdgeInsets.only(top: MediaQuery.of(context).size.width*0.2),
                     child: SpinKitCircle(
-                      color: Colors.blue,
+                      color: Colors.black,
                       size: 50.0,
                     ),
                   ),
