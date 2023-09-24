@@ -24,7 +24,7 @@ class _UpcomingAppointmentsState extends State<UpcomingAppointments> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black,
         title: Text("Upcoming Appointments"),
       ),
 
@@ -57,7 +57,7 @@ class _UpcomingAppointmentsState extends State<UpcomingAppointments> {
                         return Container(
                           height: MediaQuery.of(context).size.height,
                           width: MediaQuery.of(context).size.width,
-                          child: Text("No Upcoming Appointments", style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),),);
+                          child: Text("No Upcoming Appointments", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),);
                       }
                       else{
                         return Column(
