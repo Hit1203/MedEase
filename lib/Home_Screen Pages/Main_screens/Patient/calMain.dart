@@ -23,7 +23,7 @@ class _CalPatientState extends State<CalPatient> {
   bool isSelected = false;
   int? _selectedIndex;
   List<dynamic>? slotList;
-
+  String? strDate;
   @override
   void initState() {
     super.initState();
@@ -39,8 +39,9 @@ class _CalPatientState extends State<CalPatient> {
   Widget build(BuildContext context) {
     print("dt: ${widget.doctorToken}");
 
-    String strDate = "${today.day}/${today.month}/${today.year}";
-    String preDate = strDate;
+    // strDate = "${today.day}/${today.month}/${today.year}";
+
+    String? preDate = strDate;
 
     print("cal Main slotList==null || preDate!=strDate: ${(slotList==null || preDate!=strDate)} \n\tSlotlist:$slotList");
     return Scaffold(
@@ -63,6 +64,10 @@ class _CalPatientState extends State<CalPatient> {
                 ),
                 height: MediaQuery.of(context).size.height * 0.40,
                 child: SfCalendar(
+                  data: SfCalendarThemeData(
+                    brightness: Brightness.dark,
+                    backgroundColor: Colors.black,
+                  ),
                   showDatePickerButton: true,
                   showTodayButton:true,
                     todayHighlightColor:Colors.black,
@@ -92,7 +97,7 @@ class _CalPatientState extends State<CalPatient> {
 
                 child: (slotList==null || preDate!=strDate)
                     ?FutureBuilder(
-                    future: AppointmentRequests.getVacantSlots(widget.doctorToken!, strDate),
+                    future: AppointmentRequests.getVacantSlots(widget.doctorToken!, strDate!),
                     builder: (context, snapshot){
                       if(snapshot.connectionState == ConnectionState.done){
                         if(snapshot.hasError){
@@ -153,7 +158,10 @@ class _CalPatientState extends State<CalPatient> {
                   date: strDate,
                   slot: slotList![_selectedIndex!],
                 );
+
+                print("cal main req slot: ${appointment.toJson()}");
                 final res = await AppointmentRequests.create(appointment);
+
 
                 print("create appo: $res");
 
@@ -199,7 +207,7 @@ class _CalPatientState extends State<CalPatient> {
           selectedColor: Colors.green,
 
           onSelected: (bool value) {
-            print("sel Slot: ${list[i]}");
+            print("sel Slot: ${list[i]} ${strDate!}");
             setState(() {
               _selectedIndex = i;
             });

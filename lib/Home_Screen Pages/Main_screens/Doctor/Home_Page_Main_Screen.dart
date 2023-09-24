@@ -21,8 +21,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-
-    int activeIndex  = -1 ;
+    int activeIndex = -1;
 
     void setActiveIndex(int index) {
       setState(() {
@@ -33,67 +32,66 @@ class _HomePageState extends State<HomePage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-    appBar: AppBar(
-    title: Text("Hello Dr. ${curUser.name}"),
-    ),
-
-    body: Column(
-    children: [
-    Expanded(
-      child: Container(
-          
-          child: Center(child: sfCalendarMonth())),
-    )
-    ],
-    ),
-    ),
+        appBar: AppBar(
+          title: Text("Hello Dr. ${curUser.name}"),
+        ),
+        drawer: const Drawer(
+          child: drawer(),
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: Container(child: Center(child: sfCalendarMonth())),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
 
-
-Appointment fromJSON(Map<String, dynamic> json_){
+Appointment fromJSON(Map<String, dynamic> json_) {
   String title = json_["patient_name"];
-  List<String> strDate  = json_["date_time"].toString().split(" ")[0].split("/");
-  String strTime  = json_["date_time"].toString().split(" ")[1]; //.split(":").map((e) => int.parse(e)).toList();
-  DateTime sTime  = DateTime.parse("${strDate[2]}-${strDate[1]}-${strDate[0]} $strTime");
+  List<String> strDate = json_["date_time"].toString().split(" ")[0].split("/");
+  String strTime = json_["date_time"]
+      .toString()
+      .split(" ")[1]; //.split(":").map((e) => int.parse(e)).toList();
+  DateTime sTime =
+      DateTime.parse("${strDate[2]}-${strDate[1]}-${strDate[0]} $strTime");
   DateTime eTime = sTime.add(Duration(minutes: 30));
   return Appointment(startTime: sTime, endTime: eTime, subject: title);
 }
 
 Widget sfCalendarMonth() => FutureBuilder(
-  // future: AppointmentRequests.getAppointmentList(curUser.userID!),
-  future: AppointmentRequests.getAppointmentList("JATUIOKYCEPKCKDORQTW"),
-  builder: (context, snapshot) {
-    if(snapshot.hasData) {
-      List<dynamic> res = snapshot.data['responseData']['appointments'];
+      // future: AppointmentRequests.getAppointmentList(curUser.userID!),
+      future: AppointmentRequests.getAppointmentList("JATUIOKYCEPKCKDORQTW"),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          List<dynamic> res = snapshot.data['responseData']['appointments'];
 
-      print("doc home res: $res");
+          print("doc home res: $res");
 
-      List<Appointment> patientList = res.map((e) => fromJSON(e)).toList();
+          List<Appointment> patientList = res.map((e) => fromJSON(e)).toList();
 
-      return SfCalendar(
-        firstDayOfWeek: 1,
-        dataSource: _AppointmentDataSource(patientList),
-        view: CalendarView.day,
-        onLongPress: (details) {
-        },
-      );
-    }
-    if(!snapshot.hasData) {
-      return const CircularProgressIndicator();
-    }
-    if(snapshot.hasError) {
-      return Text(snapshot.hasError.toString());
-    }
-    return Container();
-  },
-);
-
-
+          return SfCalendar(
+            firstDayOfWeek: 1,
+            dataSource: _AppointmentDataSource(patientList),
+            view: CalendarView.day,
+            onLongPress: (details) {},
+          );
+        }
+        if (!snapshot.hasData) {
+          return const CircularProgressIndicator();
+        }
+        if (snapshot.hasError) {
+          return Text(snapshot.hasError.toString());
+        }
+        return Container();
+      },
+    );
 
 class _AppointmentDataSource extends CalendarDataSource {
-  _AppointmentDataSource(List<Appointment> source){
+  _AppointmentDataSource(List<Appointment> source) {
     appointments = source;
   }
 }
