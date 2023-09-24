@@ -40,6 +40,8 @@ class _CalPatientState extends State<CalPatient> {
     print("dt: ${widget.doctorToken}");
 
     String strDate = "${today.day}/${today.month}/${today.year}";
+    String preDate = strDate;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,

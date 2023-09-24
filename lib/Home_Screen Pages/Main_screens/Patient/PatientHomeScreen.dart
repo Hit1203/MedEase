@@ -307,7 +307,11 @@ Container appointmentCard(context, MyAppointment appointment){
                 padding:  EdgeInsets.only(left: 38.0),
                 child: Row(
                   children: [
-                    OutlinedButton(onPressed: (){}, child: Text("Cancel",style: TextStyle(color: Colors.black),))
+                    OutlinedButton(
+                        onPressed: (){
+                          //todo: canal appo
+                        },
+                        child: Text("Cancel",style: TextStyle(color: Colors.black),))
                   ],
                 ),
               )
