@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tic_tech_teo_2023/Color_File/colors.dart';
 import 'package:tic_tech_teo_2023/Home_Screen%20Pages/Custom_Drawer/sidemenu_options.dart';
+import 'package:tic_tech_teo_2023/Home_Screen%20Pages/Custom_Drawer/upcoming_appointments.dart';
 import 'package:tic_tech_teo_2023/Home_Screen%20Pages/Main_screens/Patient/PatientHomeScreen.dart';
 import 'package:tic_tech_teo_2023/LoginRegister/Login_Register_Main_File.dart';
 import 'package:tic_tech_teo_2023/utils/constants.dart';
@@ -76,7 +77,7 @@ class _drawerPatientState extends State<drawerPatient> {
                         setActiveIndex(1) ;
                         Future.delayed(Duration(milliseconds: 250), () {
 
-                          // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => appointmentCard(context, MyAppointment.fromJSON(res[0]))));
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => UpcomingAppointments()));
 
                         });
                       }
