@@ -85,19 +85,24 @@ Widget sfCalendarMonth() => FutureBuilder(
               activeDatesTextStyle: TextStyle(color: Colors.white),
               headerTextStyle: TextStyle(color: Colors.white),
               timeTextStyle: TextStyle(color: Colors.white),
-              timeIndicatorTextStyle: TextStyle(color: Colors.white),
+              timeIndicatorTextStyle: TextStyle(color: Colors.white, fontSize: 13),
               displayNameTextStyle: TextStyle(color: Colors.white),
+              viewHeaderDateTextStyle: TextStyle(color: Colors.white, fontSize: 20),
+              viewHeaderDayTextStyle: TextStyle(color: Colors.white, fontSize: 15),
               cellBorderColor: Colors.white,
             ),
-            child: SfCalendar(
-              firstDayOfWeek: 1,
-              dataSource: _AppointmentDataSource(patientList),
-              view: CalendarView.day,
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              child: SfCalendar(
+                firstDayOfWeek: 1,
+                dataSource: _AppointmentDataSource(patientList),
+                view: CalendarView.day,
 
-              timeSlotViewSettings: TimeSlotViewSettings(
-                  startHour: hourFormString(curUser.whStart??'9'),
-                  endHour: hourFormString(curUser.whEnd??'18'),
-                  nonWorkingDays: <int>[DateTime.friday, DateTime.saturday]),
+                timeSlotViewSettings: TimeSlotViewSettings(
+                    startHour: hourFormString(curUser.whStart??'9'),
+                    endHour: hourFormString(curUser.whEnd??'18'),
+                    nonWorkingDays: <int>[DateTime.friday, DateTime.saturday]),
+              ),
             )
 
               // onLongPress: (details) {},

@@ -59,6 +59,7 @@ class _drawerState extends State<drawer> {
                       onTap: () {
                         setActiveIndex(0) ;
                         Future.delayed(Duration(milliseconds: 250), () {
+
                           // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
                         });
                       }
