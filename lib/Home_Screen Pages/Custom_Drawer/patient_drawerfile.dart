@@ -5,6 +5,7 @@ import 'package:tic_tech_teo_2023/Home_Screen%20Pages/Main_screens/Patient/Patie
 import 'package:tic_tech_teo_2023/LoginRegister/Login_Register_Main_File.dart';
 import 'package:tic_tech_teo_2023/utils/constants.dart';
 
+import '../../models/Appointment.dart';
 import '../Profile/Doctor/DoctorProfile.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../Profile/Doctor/DoctorProfile.dart';
@@ -74,7 +75,9 @@ class _drawerPatientState extends State<drawerPatient> {
                       onTap: () {
                         setActiveIndex(1) ;
                         Future.delayed(Duration(milliseconds: 250), () {
-                          // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => appointmentCard()));
+
+                          // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => appointmentCard(context, MyAppointment.fromJSON(res[0]))));
+
                         });
                       }
                   ),

@@ -176,7 +176,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
         ],
         backgroundColor: Colors.black, // Make the AppBar background transparent
         elevation: 0, // Remove the shadow,
-        title: Text('MedEase'),
+        title: Text('Hello , ${curUser.name}'),
       ),
       drawer:Drawer(
         child: drawerPatient(),
@@ -254,71 +254,74 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
 }
 
 
-Container appointmentCard(context, MyAppointment appointment){
+Container appointmentCard(context, MyAppointment appointment,){
 
   return Container(
     width: MediaQuery.of(context).size.width,
 
-    child: Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.only(right: 105.0),
-          child: Text("Upcoming Appoinments",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
-        ),
-        SizedBox(height: 10,),
-        Container(
-          width: 450,
-          height: 130,
-          decoration: BoxDecoration(
-            border: Border.all(),
-                borderRadius: BorderRadius.circular(10),
+    child: Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10.0),
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(right: 105.0),
+            child: Text("Upcoming Appoinments",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(width: 20,),
-              Padding(
-                padding:  EdgeInsets.only(bottom: 52.0),
-                child: CircleAvatar(child: Center(child: Icon(Icons.medical_services_outlined,color: Colors.white,),),backgroundColor: Colors.black,radius: 20,),
-              ),
-              SizedBox(width: 20,),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding:  EdgeInsets.only(right: 36,top: 15),
-                    child: Text("Dr.${appointment.doctorName}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-                  ),
-               SizedBox(height: 10,),
-               Padding(
-                 padding: EdgeInsets.only(right: 18.0),
-                 child: Text("Date : ${appointment.date}",style: TextStyle(fontSize: 15,),),
-               ),
-               SizedBox(height: 10,),
-               Padding(
-                 padding: EdgeInsets.only(right: 18.0),
-                 child: Text("Time:${appointment.slot}",style: TextStyle(fontSize: 15,),),
-               ),
-
-
-                ],
-              ),
-              Padding(
-                padding:  EdgeInsets.only(left: 38.0),
-                child: Row(
+          SizedBox(height: 10,),
+          Container(
+            width: 450,
+            height: 130,
+            decoration: BoxDecoration(
+              border: Border.all(),
+                  borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: 20,),
+                Padding(
+                  padding:  EdgeInsets.only(bottom: 52.0),
+                  child: CircleAvatar(child: Center(child: Icon(Icons.medical_services_outlined,color: Colors.white,),),backgroundColor: Colors.black,radius: 20,),
+                ),
+                SizedBox(width: 20,),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    OutlinedButton(
-                        onPressed: (){
-                          //todo: canal appo
-                        },
-                        child: Text("Cancel",style: TextStyle(color: Colors.black),))
+                    Padding(
+                      padding:  EdgeInsets.only(right: 36,top: 15),
+                      child: Text("Dr.${appointment.doctorName}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                    ),
+                 SizedBox(height: 10,),
+                 Padding(
+                   padding: EdgeInsets.only(right: 18.0),
+                   child: Text("Date : ${appointment.date}",style: TextStyle(fontSize: 15,),),
+                 ),
+                 SizedBox(height: 10,),
+                 Padding(
+                   padding: EdgeInsets.only(right: 18.0),
+                   child: Text("Time:${appointment.slot}",style: TextStyle(fontSize: 15,),),
+                 ),
+
+
                   ],
                 ),
-              )
-            ],
+                Padding(
+                  padding:  EdgeInsets.only(left: 38.0),
+                  child: Row(
+                    children: [
+                      OutlinedButton(
+                          onPressed: (){
+                            //todo: canal appo
+                          },
+                          child: Text("Cancel",style: TextStyle(color: Colors.black),))
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 
@@ -333,8 +336,8 @@ Column displayDoctors(context, List<Doctor> doctorList){
   return Column(
     children: [
       Padding(
-        padding:  EdgeInsets.only(right: 118.0),
-        child: Text("Other Doctors for you",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
+        padding:  EdgeInsets.only(right: 188.0),
+        child: Text("Other Doctors ",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
       ),
       Container(
         decoration: BoxDecoration(
