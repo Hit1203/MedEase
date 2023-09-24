@@ -1,0 +1,34 @@
+.whole {
+  width: 100vw !important;
+  height: max(100vh, auto) !important;
+  background-color: whitesmoke;
+  /* overflow: hidden; */
+}
+
+.logoimg {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.tabs {
+  width: 100% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.tab {
+  width: 400px;
+}
+
+@media only screen and (max-width: 768px) {
+  .navbar {
+    height: 10vh !important;
+  }
+  .logoimg {
+    width: 35px !important;
+  }
+}
