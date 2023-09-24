@@ -23,11 +23,11 @@ class _CalPatientState extends State<CalPatient> {
   bool isSelected = false;
   int? _selectedIndex;
   List<dynamic>? slotList;
-  String? strDate;
+  String? strDate = "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}";
+
   @override
   void initState() {
     super.initState();
-
   }
 
   // Selectecheep()
@@ -37,13 +37,14 @@ class _CalPatientState extends State<CalPatient> {
 
   @override
   Widget build(BuildContext context) {
-    print("dt: ${widget.doctorToken}");
+    print("dt: ${widget.doctorToken} pt:${widget.patientToken} ${widget.doctorName}");
+
 
     // strDate = "${today.day}/${today.month}/${today.year}";
 
     String? preDate = strDate;
 
-    print("cal Main slotList==null || preDate!=strDate: ${(slotList==null || preDate!=strDate)} \n\tSlotlist:$slotList");
+    print("cal Main slotList==null || preDate!=strDate: ${(slotList==null || preDate!=strDate)} \n\tSlotlist:$slotList \n\tstrDate$strDate");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -68,11 +69,12 @@ class _CalPatientState extends State<CalPatient> {
                   showDatePickerButton: true,
                   showTodayButton:true,
                     todayHighlightColor:Colors.black,
+
                   onSelectionChanged: (details) {
                     print(details.date);
                     setState(() {
-                      strDate =
-                      "${details.date!.day}/${details.date!.month}/${details.date!.year}";
+                      if(details.date != null)
+                      strDate = "${details.date!.day}/${details.date!.month}/${details.date!.year}";
                       _selectedIndex = null;
                     });
                   },

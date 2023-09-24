@@ -121,13 +121,14 @@ class PatientHomeScreen extends StatefulWidget {
 
 class _PatientHomeScreenState extends State<PatientHomeScreen> {
 
+  Future futureData = AppointmentRequests.isThereAppointment(curUser.userID!);
 
   bool isThereAppointment = false;
 
   MyAppointment appointment = MyAppointment();
   DateTime today = DateTime.now();
 
-  final List<String>  Uninames = [
+  List<String>  Uninames = [
     'Dr.D1',
     'Dr.D2',
     'Dr.D3',
@@ -138,6 +139,14 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
   ] ;
 
   List<String> filterednames = [];
+
+  void callback(){
+    print("callback triggerd");
+
+    setState(() {});
+  }
+
+
 
   @override
   void initState() {
@@ -202,7 +211,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                         return Container();
                       }
                       else{
-                        return appointmentCard(context, MyAppointment.fromJSON(res[0]));
+                        return appointmentCard(context, MyAppointment.fromJSON(res[0]), callback);
                       }
 
                     }
@@ -227,6 +236,8 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                       print("type:${strDoctorList[0]}");
 
                       List<Doctor> doctorList = strDoctorList.map((e) => Doctor.fromJSON(e)).toList();
+                      Uninames = doctorList.map((e) => e.name??"-1").toList();
+                      Uninames.remove("-1");
                       return displayDoctors(context, doctorList);
                       return Text("$res");
                     }
@@ -254,7 +265,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
 }
 
 
-Container appointmentCard(context, MyAppointment appointment,){
+Container appointmentCard(context, MyAppointment appointment, Function callback){
 
   return Container(
     width: MediaQuery.of(context).size.width,
@@ -310,8 +321,18 @@ Container appointmentCard(context, MyAppointment appointment,){
                   child: Row(
                     children: [
                       OutlinedButton(
-                          onPressed: (){
+                          onPressed: () async {
                             //todo: canal appo
+                            final res = await AppointmentRequests.cancel(appointment.id!);
+                            print("res: $res");
+
+                            bool isdeleted = res["responseData"]["deleted"];
+                            // if(isdeleted){
+                              callback.call();
+                            // }
+
+
+
                           },
                           child: Text("Cancel",style: TextStyle(color: Colors.black),))
                     ],
