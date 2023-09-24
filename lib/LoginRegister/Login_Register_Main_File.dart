@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart' ;
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:tic_tech_teo_2023/utils/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../Color_File/colors.dart';
-import '../Home_Screen Pages/Home_Page_Main_Screen.dart';
+import '../Home_Screen Pages/Main_screens/Doctor/Home_Page_Main_Screen.dart';
+import '../Home_Screen Pages/Main_screens/Patient/PatientHomeScreen.dart';
 import '../models/User.dart';
-import 'forgotPasswordScreen.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class LoginSignupScreen extends StatefulWidget {
   @override
@@ -12,7 +16,7 @@ class LoginSignupScreen extends StatefulWidget {
 
 class _LoginSignupScreenState extends State<LoginSignupScreen> {
 
-  bool isSignupScreen = true;
+  bool isSignupScreen = false;
   bool isMale = true;
   bool isRememberMe = false;
   bool isDoctor = true ;
@@ -51,6 +55,24 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
   TextEditingController Weight = TextEditingController() ;
   TextEditingController Age = TextEditingController() ;
 
+  TextEditingController email = TextEditingController();
+
+
+  Future postReq(String email) async {
+    final res = await http.post(
+      Uri.parse('$BASIC_URL/forgot-password/'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({"email": email}),
+    );
+    if (res.statusCode == 200) {
+      return jsonDecode(res.body);
+    } else {
+      throw Exception("Failed to request for password change");
+    }
+
+  }
 
 
   @override
@@ -71,42 +93,44 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                       fit: BoxFit.fill)),
               child: Container(
                 padding: EdgeInsets.only(top: 90, left: 20),
-                color: Color(0xFF3b5999).withOpacity(.4),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                          text: "Welcome",
-                          style: TextStyle(
-                            fontSize: 25,
-                            letterSpacing: 2,
-                            color: Colors.orange,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: isSignupScreen ? " to MedEase," : " Back,",
-                              style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            )
-                          ]),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      isSignupScreen
-                          ? "Sign Up to Continue"
-                          : "Sign In to Continue",
-                      style: TextStyle(
-                        letterSpacing: 1,
-                        color: Colors.white,
+                color: Colors.black.withOpacity(.4),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                            text: "Welcome",
+                            style: TextStyle(
+                              fontSize: 25,
+                              letterSpacing: 2,
+                              color: Colors.orange,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: isSignupScreen ? " to MedEase," : " Back,",
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              )
+                            ]),
                       ),
-                    )
-                  ],
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        isSignupScreen
+                            ? "Sign Up to Continue"
+                            : "Sign In to Continue",
+                        style: TextStyle(
+                          letterSpacing: 1,
+                          color: Colors.white,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -163,7 +187,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                   margin: EdgeInsets.only(top: 3),
                                   height: 2,
                                   width: 55,
-                                  color: Colors.orange,
+                                  color: Colors.blue,
                                 )
                             ],
                           ),
@@ -190,7 +214,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                   margin: EdgeInsets.only(top: 3),
                                   height: 2,
                                   width: 55,
-                                  color: Colors.orange,
+                                  color: Colors.blue,
                                 )
                             ],
                           ),
@@ -223,7 +247,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
 
   Container buildSigninSection() {
     return Container(
-      margin: EdgeInsets.only(top: 20),
+      margin: EdgeInsets.only(top: 10),
       child: Column(
         children: [
           buildTextField(Icons.mail_outline, "info@demouri.com", false, true,email2),
@@ -248,14 +272,50 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 ],
               ),
               TextButton(
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPasswordScreen()));
-                },
-                child: Text("Forgot Password?",
-                    style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold, color: Login_Palette.PrimaryColor)),
-              )
+                    child: Text("Forgot Password?",style: TextStyle(color: Colors.black),),
+                    onPressed: (){
+                      showDialog(context: context, builder: (context){
+                        return AlertDialog(
+                          title: Text("Forgot Password "),
+                          content: Container(
+                            height: 140,
+                            width: 450,
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding:  EdgeInsets.symmetric(horizontal: 18.0,vertical: 15),
+                                  child: buildTextField(Icons.mail_outline, "info@demouri.com", false, true,email),
+                                ),
+                                OutlinedButton(
+                                    onPressed: () async {
+                                      final res = await postReq(email.text);
+
+                                      print("res: $res");
+                                    },
+                                    child: const Text("Continue",style: TextStyle(color: Colors.black),)),
+                              ],
+                            ),
+                          ),
+                          actions: [
+                            TextButton(onPressed: (){
+                              Navigator.pop(context) ;
+                            }, child:Text("Close")) ,
+
+                          ],
+                        ) ;
+                      }) ;
+                    },
+                ),
             ],
-          )
+          ),
+          TextButton(
+              onPressed: ()
+              {
+                launch("http://172.20.10.3:8070/admin-panel/login/",
+                  forceWebView: true,
+                ) ;
+              }
+              , child: Text("Login as Admin"))
         ],
       ),
     );
@@ -268,7 +328,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
       margin: EdgeInsets.only(top: 20),
       child: Column(
         children: [
-          buildTextField(Icons.account_box_outlined, "a@b.com",
+          buildTextField(Icons.account_box_outlined, "Full Name",
               false, true,name),
           buildTextField(
               Icons.email, "email", false, true,email1),
@@ -444,7 +504,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 buildTextField(
-                    Icons.app_registration_outlined, "Registration Number", false, true,RegistrationNumber),
+                    Icons.app_registration_outlined, "Registration Number", false, false,RegistrationNumber),
                 Column(
                   children: [
                     SizedBox(height: 20,),
@@ -634,8 +694,6 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                   ],
                 )
 
-
-
               ],
             ),
           ) :Container(
@@ -691,19 +749,25 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
         child: Center(
           child: InkWell(
             onTap: () async {
-
-
               //todo: signIn/signUp
+
               User user;
               Map<String, dynamic> res;
 
               showDialog(context: context, builder: (context)
               {
                 return Center(
-                    child: CircularProgressIndicator(),
+                  child: Padding(
+                    padding:  EdgeInsets.only(top: MediaQuery.of(context).size.width*0.2),
+                    child: SpinKitCircle(
+                      color: Colors.black,
+                      size: 50.0,
+                    ),
+                  ),
                 );
-              } );
+              } ,
 
+              );
 
               if(isSignupScreen){
                 // print("============age: ${int.tryParse(Age.text)}");
@@ -720,50 +784,49 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                   bloodGroup: BloodGroup.text,
 
                   qualification: RegistrationNumber.text,
-                  whStart: "${timeStart.hour}:${timeStart.minute}",
-                  whEnd: "${timeEnd.hour}:${timeEnd.minute}",
-                  nonWorkingDays: nonWorkingDays
+                  whStart: isDoctor?"${timeStart.hour}:${timeStart.minute}":null,
+                  whEnd: isDoctor?"${timeEnd.hour}:${timeEnd.minute}":null,
+                  nonWorkingDays: isDoctor?nonWorkingDays:null,
 
                 );
 
-                print("email: ${user.email} start: ${user.whStart} end ${user.whEnd}");
-
+                print("user: ${user.toJSON(user)}");
                 res = await user.signUp(user);
-
                 print("==============res: ${res}");
-
-                print("object: name ${user.name} ${user.nonWorkingDays.toString()}");
+                print("object: name ${user.name} ${user.nonWorkingDays}");
               }
               else{
-
                 user = User(
                     email: email2.text,
                     pwd: password2.text
                 );
 
-
                 res = await user.signIn(user);
-
-
 
               }
 
 
-
               print("res: $res");
-              bool isCreated = res["responseData"]["isAuthenticated"];
+              bool isCreated = isSignupScreen?res["responseData"]["created"]:res["responseData"]["isAuthenticated"];
               if(isCreated==true){
                 user.storeUser(user);
                 user.auth_token = res["responseData"]["token"];
                 user.isDoctor = res["responseData"]["is_doctor"];
-                print(user.auth_token);
+                print("user authT:${user.auth_token}");
                 print(user.isDoctor);
                 print("stored user");
+
+                curUser = User.fromJSON(res["responseData"]);
+                curUser.auth_token = user.auth_token;
+
+                print("object: name ${curUser.name} ${curUser.nonWorkingDays}");
+
+                curUser.isDoctor! ?
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage()))
+                    : Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>PatientHomeScreen())) ;
+
               };
               print("ok");
-
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage())) ;
-
 
             },
 

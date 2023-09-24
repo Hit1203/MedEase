@@ -38,7 +38,7 @@ class _SidemenuoptionsState extends State<Sidemenuoptions> {
             AnimatedPositioned(
               height: 65,
               width: widget.isActive ? 305 : 0,
-              duration: Duration(milliseconds: 10),
+              duration: Duration(milliseconds: 200),
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.blueAccent,

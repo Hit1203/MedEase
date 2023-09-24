@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 class User {
   // String? username;
-  // String? userID;
+  String? userID;
   String? email;
   String? pwd;
   String? name;
@@ -28,7 +28,7 @@ class User {
   String? qualification;
   String? whStart;
   String? whEnd;
-  List<String>? nonWorkingDays;
+  List<dynamic>? nonWorkingDays;
 
 
   User({
@@ -47,7 +47,27 @@ class User {
     this.whStart,
     this.whEnd,
     this.nonWorkingDays,
+    this.userID,
   });
+
+  factory User.fromJSON(Map<String, dynamic> json_) => User(
+    email: json_["email"],
+    name: json_["fullname"],
+    isDoctor: json_["is_doctor"],
+    gender: json_["gender"],
+
+    age: json_["age"],
+    height: json_["height"],
+    weight: json_["weight"]==null?null:json_["weight"]+0.0,
+    bloodGroup: json_["blood_group"],
+
+    qualification: json_["qualification"],
+    whStart: json_["wh_start"],
+    whEnd: json_["wh_end"],
+    nonWorkingDays: json_["non_working_week_days"],
+
+    userID: json_["user_id"]
+  );
 
   Map<String, String> toJSONLogIn(User user) {
     return {
@@ -58,7 +78,6 @@ class User {
     }
 
   Map<String, dynamic> toJSON(User user) {
-    // if (isDoctor!){
       return {
         // "username": user.username!,
         "email": user.email!,
@@ -77,22 +96,12 @@ class User {
         "wh_end":user.whEnd,
         "non_working_week_days": user.nonWorkingDays.toString(),
 
+        "user_id": userID,
       };
-    // }
-    // else {
-    //   return {
-    //     "email":user.email!,
-    //     "password": user.pwd!,
-    //     "name": user.name!,
-    //     "address": user.gender!,
-    //     "website": user.bloodGroup!
-    //   };
-    // }
   }
 
 
   Future signUp(User user) async {
-    // if(isDoctor!){
       print("Signing up..");
       final res = await http.post(
         Uri.parse('$basicUri/signup/'),
@@ -105,29 +114,10 @@ class User {
         return jsonDecode(res.body);
       else
         throw Exception("Failed to register");
-    // }
-    // else{
-    //   final res = await http.post(
-    //     Uri.parse('$basicUri/signup/uni/'),
-    //     headers: <String, String>{
-    //       'Content-Type': 'application/json; charset=UTF-8',
-    //     },
-    //     body: jsonEncode(user.toJSON(user)),
-    //   );
-    //   if (res.statusCode == 200)
-    //     return jsonDecode(res.body);
-    //   else
-    //     throw Exception("Failed to register");
-    // }
-
-
   }
 
   Future signIn(User user) async {
-  // if(isStudent){
-  //
-  //
-  // }
+      print("Signing IN............................................");
       final res = await http.post(
         Uri.parse('$basicUri/login/'),
         headers: <String, String>{
@@ -147,17 +137,35 @@ class User {
   Future storeUser(User user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("auth_token", auth_token!);
-    prefs.setBool("isStudent", isDoctor!);
+    prefs.setBool("isDoctor", isDoctor!);
   }
 
 
   Future removeUser () async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove("auth_token");
-    prefs.remove("isStudent");
-
+    prefs.remove("isDoctor");
   }
 
+}
 
 
+class UserRequest{
+  // static String? authToken = curUser.auth_token;
+  static String? authToken = "09995f28-e3d0-446a-920a-1f02183ffdc9";
+
+  static Future getUser(String token) async {
+    print("$authToken");
+    final res = await http.post(
+      Uri.parse('$BASIC_URL/api/get-user-data/'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({'jwt': authToken, 'custom_id': token}),
+    );
+    if (res.statusCode == 200)
+      return jsonDecode(res.body);
+    else
+      throw Exception("Failed to get user");
+  }
 }
