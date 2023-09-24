@@ -1,0 +1,83 @@
+.container {
+  width: min(90%, 600px);
+  /* background-color: aqua; */
+  height: 80px;
+  margin: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+}
+
+.logo {
+  width: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid lightgray;
+}
+
+.hover :hover {
+  cursor: pointer;
+}
+
+.logoimg {
+  width: 40px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.midPanel {
+  width: 70%;
+  height: 100%;
+  border-right: 1px solid lightgray;
+  padding: 2px 0px;
+  overflow-y: hidden;
+}
+
+.delContainer {
+  width: 15% !important;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.top {
+  width: 100% !important;
+  height: 50%;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 20px;
+  overflow-y: hidden;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+}
+
+.bottom {
+  width: 100% !important;
+  height: 50%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+@media only screen and (max-width: 768px) {
+  .logo {
+    width: 18%;
+  }
+  .midPanel {
+    width: 66%;
+    padding: 0;
+  }
+  .delContainr {
+    width: 16%;
+  }
+  .para {
+    font-size: small;
+  }
+  .date {
+    font-size: medium;
+  }
+}

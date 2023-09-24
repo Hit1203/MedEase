@@ -1,0 +1,14 @@
+.tab-content {
+  /* overflow: hidden !important; */
+  width: 100%;
+}
+
+.fade {
+  width: 100% !important;
+  height: 100% !important;
+  overflow: auto;
+}
+
+div {
+  overflow: auto;
+}

@@ -1,0 +1,6 @@
+{
+  "SECRET_KEY": "django-insecure-h_^$zqw^8wr)egtxmm!+uh4@33^&jp-3j+bv5ypa15pp@ebd$j",
+  "CONNECTION_STRING": "mongodb+srv://MP_1612:3cQjFku7UkkqVazq@cluster0.2acafqn.mongodb.net/?retryWrites=true&w=majority",
+  "EMAIL_HOST_USER": "teamsolutionhunters@gmail.com",
+  "EMAIL_HOST_PASSWORD": "rhwp gofi gkzf tgyh"
+}
