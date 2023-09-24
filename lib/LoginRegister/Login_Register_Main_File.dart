@@ -6,7 +6,6 @@ import '../Color_File/colors.dart';
 import '../Home_Screen Pages/Main_screens/Doctor/Home_Page_Main_Screen.dart';
 import '../Home_Screen Pages/Main_screens/Patient/PatientHomeScreen.dart';
 import '../models/User.dart';
-import 'package:tic_tech_teo_2023/utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -822,9 +821,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
 
                 print("object: name ${curUser.name} ${curUser.nonWorkingDays}");
 
-                !curUser.isDoctor! ?
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>PatientHomeScreen()))
-                    : Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage())) ;
+                curUser.isDoctor! ?
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage()))
+                    : Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>PatientHomeScreen())) ;
 
               };
               print("ok");

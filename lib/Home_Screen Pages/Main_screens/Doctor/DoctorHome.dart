@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:tic_tech_teo_2023/models/Appointment.dart';
 import 'package:tic_tech_teo_2023/utils/constants.dart';
@@ -91,7 +92,15 @@ Widget sfCalendarMonth() => FutureBuilder(
       );
     }
     if(!snapshot.hasData) {
-      return const CircularProgressIndicator();
+        return Center(
+          child: Padding(
+            padding:  EdgeInsets.only(top: MediaQuery.of(context).size.width*0.2),
+            child: SpinKitCircle(
+              color: Colors.blue,
+              size: 50.0,
+            ),
+          ),
+        );
     }
     if(snapshot.hasError) {
       return Text(snapshot.hasError.toString());

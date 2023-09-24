@@ -3,7 +3,6 @@ import 'package:tic_tech_teo_2023/Home_Screen%20Pages/Profile/Doctor/Custom_cont
 import 'package:tic_tech_teo_2023/models/Doctor.dart';
 import 'package:tic_tech_teo_2023/utils/constants.dart';
 
-import 'NonWorkingCustomClass.dart';
 
 class DoctorProfile extends StatefulWidget {
   Doctor? doctor;
