@@ -33,6 +33,9 @@ class _HomePageState extends State<HomePage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        drawer: Drawer(
+          child: drawer(),
+        ),
     appBar: AppBar(
     title: Text("Hello Dr. ${curUser.name}"),
     ),
