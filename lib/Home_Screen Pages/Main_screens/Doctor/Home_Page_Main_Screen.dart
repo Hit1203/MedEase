@@ -34,26 +34,13 @@ class _HomePageState extends State<HomePage> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.transparent, // Make the AppBar background transparent
+          backgroundColor: Colors.black, // Make the AppBar background transparent
           elevation: 0, // Remove the shadow
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  HomeScreen.Appbar_color1,
-                   Colors.grey
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-            ),
-          ),
-          title: const Text('MedEase'),
+          title: Text('MedEase',style: TextStyle(color: Colors.white),),
         ),
         drawer: const Drawer(
            child : drawer(),
             ),
-
 
         body: Column(
           children: [

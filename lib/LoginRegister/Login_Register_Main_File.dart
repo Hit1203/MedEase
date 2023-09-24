@@ -810,7 +810,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 curUser = User.fromJSON(res["responseData"]);
                 curUser.auth_token = user.auth_token;
 
-                print("object: name ${curUser.name} ${curUser.nonWorkingDays} ${curUser.isDoctor}");
+                print("object: name ${curUser.name} ${curUser.nonWorkingDays}");
 
                 !curUser.isDoctor! ?
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>PatientHomeScreen()))
