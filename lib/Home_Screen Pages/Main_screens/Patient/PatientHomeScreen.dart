@@ -166,7 +166,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
     String strDate = "${today.day}/${today.month}/${today.year}";
     print("uT: ${curUser.userID}");
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         actions: [
           Padding(
@@ -278,14 +278,14 @@ Container appointmentCard(context, MyAppointment appointment, Function callback)
           SizedBox(height: 10,),
           Padding(
             padding: EdgeInsets.only(right: 105.0),
-            child: Text("Upcoming Appoinments",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.white),),
+            child: Text("Upcoming Appoinments",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.black),),
           ),
           SizedBox(height: 20,),
           Container(
             width: 450,
             height: 130,
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.white),
+              border: Border.all(color: Colors.black),
                   borderRadius: BorderRadius.circular(10),
             ),
             child: Row(
@@ -302,17 +302,17 @@ Container appointmentCard(context, MyAppointment appointment, Function callback)
                   children: [
                     Padding(
                       padding:  EdgeInsets.only(right: 36,top: 15),
-                      child: Text("Dr.${appointment.doctorName}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),),
+                      child: Text("Dr.${appointment.doctorName}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.black),),
                     ),
                  SizedBox(height: 10,),
                  Padding(
                    padding: EdgeInsets.only(right: 18.0),
-                   child: Text("Date : ${appointment.date}",style: TextStyle(fontSize: 15,color: Colors.white),),
+                   child: Text("Date : ${appointment.date}",style: TextStyle(fontSize: 15,color: Colors.black),),
                  ),
                  SizedBox(height: 10,),
                  Padding(
                    padding: EdgeInsets.only(right: 18.0),
-                   child: Text("Time:${appointment.slot}",style: TextStyle(fontSize: 15,color: Colors.white),),
+                   child: Text("Time:${appointment.slot}",style: TextStyle(fontSize: 15,color: Colors.black),),
                  ),
 
 
@@ -339,10 +339,10 @@ Container appointmentCard(context, MyAppointment appointment, Function callback)
                           style: ButtonStyle(
                               side: MaterialStateProperty.all<BorderSide>(
                                 BorderSide(
-                                  color: Colors.white,)) // Border color
+                                  color: Colors.black,)) // Border color
 
                           ),
-                          child: Text("Cancel",style: TextStyle(color: Colors.white),)
+                          child: Text("Cancel",style: TextStyle(color: Colors.black),)
 
                       ),
                     ],
@@ -394,7 +394,7 @@ Column displayDoctors(context, List<Doctor> doctorList){
                         SizedBox(height: 10,),
                         Padding(
                           padding: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.34,top:15),
-                          child: Text("Dr. ${doctorList[index].name}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.white),),
+                          child: Text("Dr. ${doctorList[index].name}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.black),),
                         ),
                         SizedBox(height: 20,),
                         Row(
@@ -406,10 +406,10 @@ Column displayDoctors(context, List<Doctor> doctorList){
                               style: ButtonStyle(
                                   side: MaterialStateProperty.all<BorderSide>(
                                       BorderSide(
-                                        color: Colors.white,)) // Border color
+                                        color: Colors.black,)) // Border color
 
                               ),
-                                child: Text("Veiw Profile",style: TextStyle(color: Colors.white),
+                                child: Text("Veiw Profile",style: TextStyle(color: Colors.black),
 
                                 )
                             ),
@@ -422,10 +422,10 @@ Column displayDoctors(context, List<Doctor> doctorList){
                                 style: ButtonStyle(
                                     side: MaterialStateProperty.all<BorderSide>(
                                         BorderSide(
-                                          color: Colors.white,)) // Border color
+                                          color: Colors.black,)) // Border color
 
                                 ),
-                                child: Text("Take Appointment",style: TextStyle(color: Colors.white),)
+                                child: Text("Take Appointment",style: TextStyle(color: Colors.black),)
                             ),
                           ],
                         )
@@ -438,7 +438,7 @@ Column displayDoctors(context, List<Doctor> doctorList){
                 height: MediaQuery.of(context).size.height*0.15,
                 decoration: BoxDecoration(
                   color: Colors.transparent,
-                  border: Border.all(color: Colors.white),
+                  border: Border.all(color: Colors.black),
                   borderRadius: BorderRadius.circular(10),
 
                 ),

@@ -24,7 +24,7 @@ class _UpcomingAppointmentsState extends State<UpcomingAppointments> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         title: Text("Upcoming Appointments"),
       ),
 
