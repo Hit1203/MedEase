@@ -111,7 +111,7 @@ class _drawerPatientState extends State<drawerPatient> {
                           SizedBox(width: 10,),
                           Icon(Icons.logout,color: Colors.white,),
                           SizedBox(width: 10,),
-                           card(name: 'Sign Out',),
+                           card(name: 'Sign Out', color: Colors.white,),
                         ],
 
                       ),
