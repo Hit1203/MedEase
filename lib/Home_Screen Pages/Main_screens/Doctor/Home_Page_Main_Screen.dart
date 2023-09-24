@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:tic_tech_teo_2023/Color_File/colors.dart';
 import 'package:tic_tech_teo_2023/models/Appointment.dart';
 import 'package:tic_tech_teo_2023/utils/constants.dart';
@@ -73,12 +74,31 @@ Widget sfCalendarMonth() => FutureBuilder(
 
           List<Appointment> patientList = res.map((e) => fromJSON(e)).toList();
 
-          return SfCalendar(
-            firstDayOfWeek: 1,
-            dataSource: _AppointmentDataSource(patientList),
-            view: CalendarView.day,
-            onLongPress: (details) {},
-          );
+          return SfCalendarTheme(
+            data: SfCalendarThemeData(
+              brightness: Brightness.dark,
+              backgroundColor: Colors.black,
+              activeDatesTextStyle: TextStyle(color: Colors.white),
+              headerTextStyle: TextStyle(color: Colors.white),
+              timeTextStyle: TextStyle(color: Colors.white),
+              timeIndicatorTextStyle: TextStyle(color: Colors.white),
+              displayNameTextStyle: TextStyle(color: Colors.white),
+              cellBorderColor: Colors.white,
+            ),
+            child: SfCalendar(
+              firstDayOfWeek: 1,
+              dataSource: _AppointmentDataSource(patientList),
+              view: CalendarView.day,
+
+              timeSlotViewSettings: TimeSlotViewSettings(
+                  startHour: hourFormString(curUser.whStart??'9'),
+                  endHour: hourFormString(curUser.whEnd??'18'),
+                  nonWorkingDays: <int>[DateTime.friday, DateTime.saturday]),
+            )
+
+              // onLongPress: (details) {},
+            );
+
         }
         if (!snapshot.hasData) {
           return const CircularProgressIndicator();
@@ -89,6 +109,12 @@ Widget sfCalendarMonth() => FutureBuilder(
         return Container();
       },
     );
+
+double hourFormString(String str){
+  return int.parse("${str.split(":")[0]}")+int.parse("${str.split(":")[1]}")/60;
+}
+
+
 
 class _AppointmentDataSource extends CalendarDataSource {
   _AppointmentDataSource(List<Appointment> source) {

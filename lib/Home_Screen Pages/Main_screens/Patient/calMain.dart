@@ -64,10 +64,7 @@ class _CalPatientState extends State<CalPatient> {
                 ),
                 height: MediaQuery.of(context).size.height * 0.40,
                 child: SfCalendar(
-                  data: SfCalendarThemeData(
-                    brightness: Brightness.dark,
-                    backgroundColor: Colors.black,
-                  ),
+
                   showDatePickerButton: true,
                   showTodayButton:true,
                     todayHighlightColor:Colors.black,
