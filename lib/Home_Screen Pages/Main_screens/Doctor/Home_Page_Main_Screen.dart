@@ -33,151 +33,67 @@ class _HomePageState extends State<HomePage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.black, // Make the AppBar background transparent
-          elevation: 0, // Remove the shadow
-          title: Text('MedEase',style: TextStyle(color: Colors.white),),
-        ),
-        drawer: const Drawer(
-           child : drawer(),
-            ),
+    appBar: AppBar(
+    title: Text("Hello Dr. ${curUser.name}"),
+    ),
 
-        body: Column(
-          children: [
-
-            SingleChildScrollView(
-              child: FutureBuilder(
-                  future: AppointmentRequests.getAppointmentList(curUser.userID!),
-                  builder: (context, snapshot){
-                    if(snapshot.hasError){
-                      return const Text("error");
-                    }
-
-                    else if(snapshot.hasData){
-                      print("doc home screen: ${snapshot.data}");
-                      List<dynamic> res = snapshot.data["responseData"]["appointments"];
-                      print("doc home screen type: ${res[0].runtimeType}");
-                      List<MyAppointment> userList = res.map((e) => MyAppointment.fromJSON(e)).toList();
-
-                      Map<DateTime, List<MyAppointment>> groupedUser = groupBy<MyAppointment, DateTime>(
-                          userList,
-                              (appointment) => DateTime(
-                                appointment.dt!.year,
-                                appointment.dt!.month,
-                                appointment.dt!.day,
-                          ));
-
-                      return Container(
-                        height: MediaQuery.of(context).size.height-100,
-                        child: ListView.builder(
-                            itemCount: groupedUser.length,
-                            itemBuilder: (context, index) {
-                              DateTime date = groupedUser.keys.elementAt(index);
-                              List<MyAppointment> userForDate = groupedUser[date]!;
-
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: 8,
-                                      horizontal: 12,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Text(
-                                      formatDate(date),
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  ...userForDate.map((appo) {
-                                    return Dismissible(
-                                      direction: DismissDirection.horizontal,
-                                      confirmDismiss: (direction) async {
-                                        if (direction == DismissDirection.startToEnd) {
-                                          final res = await AppointmentRequests.cancel(appo.id!);
-                                          print("doc res: $res");
-                                          if(res["deleted"] == true) userList.remove(index);
-                                        }
-                                        setState(() {
-                                        });
-
-
-                                      },
-                                      key: UniqueKey(),
-                                      background: Container(
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(top: 10.0, bottom: 10, right: 300),
-                                          child: Icon(Icons.delete),
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: Colors.red,
-                                          borderRadius: BorderRadius.circular(20),
-                                        ),
-                                      ),
-                                      child: InkWell(
-                                        onTap: (){
-                                          print("hello") ;
-                                        },
-                                        child: Card(
-                                          child: ListTile(
-                                            title: Text(appo.patientName!),
-                                            subtitle: SingleChildScrollView(
-                                              child: Text(appo.slot!),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }).toList(),
-                                ],
-                              );
-                            }),
-                      );
-
-
-                    }
-
-                    return const Center(child: CircularProgressIndicator(),);
-
-              }),
-            )
-
-          ],
-        ),
-      ),
+    body: Column(
+    children: [
+    Expanded(
+      child: Container(
+          
+          child: Center(child: sfCalendarMonth())),
+    )
+    ],
+    ),
+    ),
     );
   }
 }
 
-String formatDate(DateTime date) {
-  final now = DateTime.now();
-  if (date.year == now.year &&
-      date.month == now.month &&
-      date.day == now.day) {
-    return 'Today';
-  } else if (date.year == now.year &&
-      date.month == now.month &&
-      date.day == now.day - 1) {
-    return 'Yesterday';
-  } else if (date.year == now.year &&
-      date.month == now.month &&
-      date.day > now.day - 7) {
-    return DateFormat('EEEE').format(date);
-  } else if (date.year == now.year) {
-    return DateFormat('dd/MM').format(date);
-  } else {
-    return DateFormat.yMMMEd().format(date);
-  }
+
+Appointment fromJSON(Map<String, dynamic> json_){
+  String title = json_["patient_name"];
+  List<String> strDate  = json_["date_time"].toString().split(" ")[0].split("/");
+  String strTime  = json_["date_time"].toString().split(" ")[1]; //.split(":").map((e) => int.parse(e)).toList();
+  DateTime sTime  = DateTime.parse("${strDate[2]}-${strDate[1]}-${strDate[0]} $strTime");
+  DateTime eTime = sTime.add(Duration(minutes: 30));
+  return Appointment(startTime: sTime, endTime: eTime, subject: title);
 }
 
-// Container displayPatient(context, Map<DateTime, List<MyAppointment>> userList){
-//   return
-// }
+Widget sfCalendarMonth() => FutureBuilder(
+  // future: AppointmentRequests.getAppointmentList(curUser.userID!),
+  future: AppointmentRequests.getAppointmentList("JATUIOKYCEPKCKDORQTW"),
+  builder: (context, snapshot) {
+    if(snapshot.hasData) {
+      List<dynamic> res = snapshot.data['responseData']['appointments'];
+
+      print("doc home res: $res");
+
+      List<Appointment> patientList = res.map((e) => fromJSON(e)).toList();
+
+      return SfCalendar(
+        firstDayOfWeek: 1,
+        dataSource: _AppointmentDataSource(patientList),
+        view: CalendarView.day,
+        onLongPress: (details) {
+        },
+      );
+    }
+    if(!snapshot.hasData) {
+      return const CircularProgressIndicator();
+    }
+    if(snapshot.hasError) {
+      return Text(snapshot.hasError.toString());
+    }
+    return Container();
+  },
+);
+
+
+
+class _AppointmentDataSource extends CalendarDataSource {
+  _AppointmentDataSource(List<Appointment> source){
+    appointments = source;
+  }
+}
