@@ -1,4 +1,4 @@
-# tic_tech_teo_2023
+# tic_tech_toe_2023
 
 A new Flutter project.
 
